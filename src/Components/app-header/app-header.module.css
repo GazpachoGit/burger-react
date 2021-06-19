@@ -1,0 +1,13 @@
+.nav {
+    display: flex;
+    padding: 10px;
+}
+
+.navItem {
+    flex: 1 1 0px;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: space-around;
+}
