@@ -9,15 +9,15 @@ export default class IngredientsTabs extends React.Component {
     render() {
         const { current } = this.state;
         return (
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex' }} className={'mt-5'}>
                 <Tab value="one" active={current === 'one'} onClick={() => this.setCurrent('one')}>
-                    One
+                    Булки
                 </Tab>
                 <Tab value="two" active={current === 'two'} onClick={() => this.setCurrent('two')}>
-                    Two
+                    Начинки
                 </Tab>
                 <Tab value="three" active={current === 'three'} onClick={() => this.setCurrent('three')}>
-                    Three
+                    Соусы
                 </Tab>
             </div>
         )

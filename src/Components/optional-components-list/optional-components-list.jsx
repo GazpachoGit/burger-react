@@ -5,7 +5,7 @@ import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-
 export default class BurgerConstructor extends React.Component {
     render() {
         return (
-            <div className={styles.list}>{
+            <div className={styles.list + ' scrollable'}>{
                 this.props.data.map(item => (
                     <ConstructorElementWrappar key={item.id} item={item} isLocked={false} />
                 ))

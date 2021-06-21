@@ -17,7 +17,7 @@ export default class AppHeader extends React.Component {
                             <p className="text text_type_main-default">Лента заказов</p>
                         </a>
                     </div>
-                    <div className={styles.navContainer}>
+                    <div className={styles.logo}>
                         <Logo />
                     </div>
                     <div className={styles.navContainer}>

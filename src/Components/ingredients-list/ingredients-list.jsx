@@ -11,22 +11,22 @@ export default class IngredientsList extends React.Component {
     render() {
 
         return (
-            <div className={styles.list + ' p-5'}>
-                <div className={styles.section + ' mb-3 mt-3'}>
+            <div className={styles.list + ' scrollable'}>
+                <div className={' mt-10 pb-10'}>
                     <p className="text text_type_main-medium">Основные</p>
-                    <div className={styles['section-list']}>
+                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
                         {this.mains.map(item => (<IngredientsListItem item={item} />))}
                     </div>
                 </div>
-                <div className={styles.section}>
+                <div className={' mt-10 pb-10'}>
                     <p className="text text_type_main-medium">Булки</p>
-                    <div className={styles['section-list']}>
+                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
                         {this.buns.map(item => (<IngredientsListItem item={item} />))}
                     </div>
                 </div>
-                <div className={styles.section}>
+                <div className={' mt-10 pb-10'}>
                     <p className="text text_type_main-medium">Соусы</p>
-                    <div className={styles['section-list']}>
+                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
                         {this.souces.map(item => (<IngredientsListItem item={item} />))}
                     </div>
                 </div>

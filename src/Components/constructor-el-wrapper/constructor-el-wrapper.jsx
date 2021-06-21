@@ -8,7 +8,7 @@ export default class ConstructorElementWrapper extends React.Component {
 
         return (
             <div style={{ display: 'flex' }}>
-                <div style={{ width: '10%' }}>
+                <div style={{display: 'flex',  alignItems: 'center', width: 32 }}>
                     <span hidden={this.props.isLocked}><DragIcon type="primary" /></span>
                 </div>
                 <ConstructorElement

@@ -5,6 +5,7 @@
 
 .section-list {
     display: grid;
-    grid-template-columns: repeat(2, calc(100% / 2));
+    grid-template-columns: auto auto;
+    gap: 24px;
     text-align: center;
 }

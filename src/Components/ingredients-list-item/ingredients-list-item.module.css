@@ -1,10 +1,10 @@
 .general {
     display: flex;
+    flex-direction: column;
     position: relative;
 }
 
 .info {
-    width: 100%;
     display: flex;
     flex-flow: column;
 }

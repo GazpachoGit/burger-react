@@ -7,6 +7,7 @@ export default class BurgerIngredients extends React.Component {
     render() {
         return (
             <section>
+                <p className="text text_type_main-large mt-10 ">Собери бургер</p>
                 <IngredientsTabs />
                 <IngredientsList data={this.props.data} />
             </section>

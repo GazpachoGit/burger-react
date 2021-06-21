@@ -1,6 +1,6 @@
 .list {
     overflow-y: auto;
-    height: 200px;
+    height: 400px;
     display: flex;
     flex-flow: column;
     gap: 10px;
