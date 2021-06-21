@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
 
 export default class BurgerConstructor extends React.Component {
     ingridiens = this.props.data.slice(0, 4);
@@ -12,17 +12,9 @@ export default class BurgerConstructor extends React.Component {
         return (
             <section className={styles.section}>
                 <div className={styles.mainList}>
-                    <ConstructorElement type="top"
-                        isLocked={true}
-                        text={this.bun.name}
-                        price={200}
-                        thumbnail={this.bun.image} />
+                    <ConstructorElementWrappar item={this.bun} isLocked={true} />
                     <OptionalComponentsList data={this.optional} />
-                    <ConstructorElement type="bottom"
-                        isLocked={true}
-                        text={this.bun.name}
-                        price={200}
-                        thumbnail={this.bun.image} />
+                    <ConstructorElementWrappar item={this.bun} isLocked={true} />
                     <ConstructorTotal />
                 </div>
             </section>
