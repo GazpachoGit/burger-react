@@ -1,0 +1,15 @@
+.general {
+    display: flex;
+    position: relative;
+}
+
+.info {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+.cost {
+    display: flex;
+    justify-content: center;
+}

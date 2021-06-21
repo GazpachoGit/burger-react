@@ -1,0 +1,13 @@
+.list {
+    overflow-y: auto;
+    height: 200px;
+    display: flex;
+    flex-flow: column;
+    gap: 10px;
+}
+
+.dragIcon {
+    position: absolute;
+    top: 30px;
+    left: -30px
+}
