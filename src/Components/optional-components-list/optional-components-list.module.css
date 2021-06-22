@@ -1,9 +1,12 @@
 .list {
-    overflow-y: auto;
-    height: 300px;
     display: flex;
     flex-flow: column;
     gap: 10px;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    overflow-y: auto;
+    min-height: 200px;
 }
 
 .dragIcon {
