@@ -7,10 +7,10 @@ import Data from '../../utils/data'
 function App() {
   const data = Data.data
   return (
-    <div>
+    <>
       <AppHeader />
       <Main data={data} />
-    </div>
+    </>
   );
 }
 

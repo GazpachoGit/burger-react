@@ -1,9 +1,24 @@
+html,
+body {
+	height: 100vh;
+	margin: 0;
+}
+
+#root {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+
 .scrollable::-webkit-scrollbar {
 	width: 12px;
 }
+
 .scrollable::-webkit-scrollbar-track {
 	background: #2F2F37;
 }
+
 .scrollable::-webkit-scrollbar-thumb {
 	background: #8585AD;
 	border: 3px solid #2F2F37;
