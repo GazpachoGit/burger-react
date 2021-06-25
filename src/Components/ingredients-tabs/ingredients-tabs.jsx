@@ -1,25 +1,17 @@
 import React from 'react';
+import styles from './ingredients-tabs.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default class IngredientsTabs extends React.Component {
-    state = { current: 'one' }
-    setCurrent = (value) => {
-        this.setState({ current: value })
-    }
-    render() {
-        const { current } = this.state;
-        return (
-            <div style={{ display: 'flex' }} className={'mt-5'}>
-                <Tab value="one" active={current === 'one'} onClick={() => this.setCurrent('one')}>
-                    Булки
+export default function IngredientsTabs(props){
+const [current, setCurrent] = React.useState(props.tabs[0].id);
+console.log(current);
+    return (
+        <div className={styles.tabs + ' mt-5'}>
+            {props.tabs.map(({id, title}) => (
+                <Tab key={id} value={id} active={current === id} onClick={() => setCurrent(id)}>
+                    {title}
                 </Tab>
-                <Tab value="two" active={current === 'two'} onClick={() => this.setCurrent('two')}>
-                    Начинки
-                </Tab>
-                <Tab value="three" active={current === 'three'} onClick={() => this.setCurrent('three')}>
-                    Соусы
-                </Tab>
-            </div>
-        )
-    }
+            ))}
+        </div>
+    )
 }

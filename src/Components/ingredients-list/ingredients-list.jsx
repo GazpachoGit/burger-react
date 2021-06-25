@@ -1,36 +1,26 @@
 import React from 'react';
 
 import styles from './ingredients-list.module.css';
-import IngredientsListItem from '../ingredients-list-item/ingredients-list-item';
+import IngredientsSection from '../ingredients-section/ingredients-section';
 
-export default class IngredientsList extends React.Component {
-    data = this.props.data;
-    buns = this.data.filter(item => item.type === 'bun');
-    souces = this.data.filter(item => item.type === 'sauce');
-    mains = this.data.filter(item => item.type === 'main');
-    render() {
+export default function IngredientsList({data, tabs}) {
 
-        return (
-            <div className={styles.list + ' scrollable'}>
-                <div className={' mt-10 pb-10'}>
-                    <p className="text text_type_main-medium">Основные</p>
-                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
-                        {this.mains.map(item => (<IngredientsListItem item={item} />))}
-                    </div>
-                </div>
-                <div className={' mt-10 pb-10'}>
-                    <p className="text text_type_main-medium">Булки</p>
-                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
-                        {this.buns.map(item => (<IngredientsListItem item={item} />))}
-                    </div>
-                </div>
-                <div className={' mt-10 pb-10'}>
-                    <p className="text text_type_main-medium">Соусы</p>
-                    <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
-                        {this.souces.map(item => (<IngredientsListItem item={item} />))}
-                    </div>
-                </div>
-            </div>
-        )
-    }
+    const sectionList = React.useMemo(() => {
+        const arr = []
+        tabs.forEach((tab, i) =>{
+            arr.push({
+                id: tab.title,
+                ingredients: data.filter(item => item.type === tab.id)
+            });
+        });
+        return arr;
+    },[])
+
+    return (
+        <div className={styles.list + ' scrollable'}>
+            {sectionList.map(item => (
+                <IngredientsSection key={item.id} {...item} />
+            ))}
+        </div>
+    )
 }
