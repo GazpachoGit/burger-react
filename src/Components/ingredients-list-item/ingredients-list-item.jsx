@@ -11,7 +11,7 @@ export default function IngredientsListItem(props) {
     function showHandler(e) {
         setShowDitails(!showDitails);
     }
-    const currentIngredientDetails = <ModalOverlay children={<IngredientDetails closeHandler={showHandler} item={props.item}/>} closeHandler={showHandler} />
+    const currentIngredientDetails = <ModalOverlay title="Детали ингредиента" children={<IngredientDetails item={props.item}/>} closeHandler={showHandler} />
     return (
         <div className={styles.general } style={{width: 250}} onClick={showHandler}>
             <div className={styles.info + ' pr-4 pl-4'}>

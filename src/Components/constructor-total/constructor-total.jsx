@@ -14,7 +14,7 @@ export default function ConstructorTotal(props) {
         //...
         showHandler();
     }
-    const orderModal = <ModalOverlay children={<OrderDetails closeHandler={showHandler} orderId={11111}/>} closeHandler={showHandler} />
+    const orderModal = <ModalOverlay children={<OrderDetails orderId={11111}/>} closeHandler={showHandler} />
     return (
         <>
         <div className={ styles.wrap +' mt-5'}>
