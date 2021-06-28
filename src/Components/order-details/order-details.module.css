@@ -1,0 +1,12 @@
+.modal{
+    text-align: center;
+    position: relative;
+    background-color:#131316;
+    border-radius:15px;
+}
+
+.close{
+    position: absolute;
+    top:60px;
+    right: 40px;
+}
