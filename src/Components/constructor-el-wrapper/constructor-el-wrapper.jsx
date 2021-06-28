@@ -2,6 +2,9 @@ import React from 'react';
 import styles from './constructor-el-wrapper.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/local-types';
+
 export default function ConstructorElementWrapper(props){
     const item = props.item;
 
@@ -20,3 +23,10 @@ export default function ConstructorElementWrapper(props){
         </div>
     )
 }
+
+ConstructorElementWrapper.propTypes ={
+    type: PropTypes.string,
+    isLocked: PropTypes.bool,
+    item: ingredientType
+}
+

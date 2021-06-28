@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
 import Modal from '../modal/modal';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -11,3 +12,8 @@ export default function ModalOverlay(props){
         </div>
     ), modalRoot)
 }
+
+ModalOverlay.propTypes = {
+    children: PropTypes.node,
+    closeHandler: PropTypes.func
+};

@@ -3,6 +3,9 @@ import React from 'react';
 import styles from './ingredients-list.module.css';
 import IngredientsSection from '../ingredients-section/ingredients-section';
 
+import PropTypes from 'prop-types';
+import {tabType, ingredientType} from '../../utils/local-types';
+
 export default function IngredientsList({data, tabs}) {
 
     const sectionList = React.useMemo(() => {
@@ -23,4 +26,10 @@ export default function IngredientsList({data, tabs}) {
             ))}
         </ul>
     )
+}
+
+IngredientsList.propTypes = {
+    data: PropTypes.arrayOf(ingredientType),
+    tabs: PropTypes.arrayOf(tabType)
+
 }

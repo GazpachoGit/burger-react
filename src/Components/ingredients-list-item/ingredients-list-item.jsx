@@ -3,6 +3,7 @@ import styles from './ingredients-list-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import {ingredientType} from '../../utils/local-types';
 
 export default function IngredientsListItem(props) {
     const { name, price, image} = props.item
@@ -25,4 +26,8 @@ export default function IngredientsListItem(props) {
             {showDitails && currentIngredientDetails}
         </div>
     )
+}
+
+IngredientsListItem.propTypes = {
+    item: ingredientType
 }

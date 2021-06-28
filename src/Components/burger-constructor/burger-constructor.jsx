@@ -3,6 +3,8 @@ import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
 import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
+import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/local-types';
 
 export default function BurgerConstructor(props) {
     const ingridiens = props.data;
@@ -17,3 +19,7 @@ export default function BurgerConstructor(props) {
             </section>
         )
 }
+
+BurgerConstructor.propTypes ={
+    data: PropTypes.arrayOf(ingredientType)
+} 

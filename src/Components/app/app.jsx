@@ -29,8 +29,8 @@ function App() {
       <AppHeader />
       {state.isLoading && 'Загрузка...'}
       {state.hasError && 'Произошла ошибка при загрузке ингридиентов'}
-      {//!state.isLoading && !state.hasError && state.data.length && <Main data={state.data} />
-        <Main data={testData}/>
+      {!state.isLoading && !state.hasError && state.data.length && <Main data={state.data} />
+        //<Main data={testData}/>
       }
     </>
   );

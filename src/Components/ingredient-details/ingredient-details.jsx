@@ -1,13 +1,14 @@
 import styles from './ingredient-details.module.css';
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components'
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import { ingredientType } from "../../utils/local-types";
 
-export default function IngredientDetails(props) {
-    const {item} = props;
+export default function IngredientDetails({closeHandler, item}) {
     return (
         <div className={styles.modal + ' pr-10 pl-10 pt-10 pb-15'}>
             <div className={styles.modalHead}>
                 <span className="text text_type_main-medium ">Детали игредиента</span>
-                <CloseIcon onClick={props.closeHandler} type="primary" />
+                <CloseIcon onClick={closeHandler} type="primary" />
             </div>
             <img alt={item.name} src={item.image} />
             <p className="text text_type_main-default pt-4">{item.name}</p>
@@ -21,3 +22,11 @@ export default function IngredientDetails(props) {
         
     )
 }
+IngredientDetails.propTypes ={
+    closeHandler: PropTypes.func,
+    item: ingredientType
+}
+
+
+
+

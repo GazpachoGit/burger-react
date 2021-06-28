@@ -1,7 +1,7 @@
 import React from 'react';
-
 import styles from './ingredients-section.module.css';
 import IngredientsListItem from '../ingredients-list-item/ingredients-list-item';
+import {ingredientsSectionType} from '../../utils/local-types';
 
 export default function IngredientsSection(props) {
     return(
@@ -12,5 +12,9 @@ export default function IngredientsSection(props) {
             </div>
         </li>
     )
-    
 }
+
+IngredientsSection.propTypes = {
+    item: ingredientsSectionType
+}
+
