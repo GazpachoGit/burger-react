@@ -10,6 +10,11 @@ body {
 	flex-direction: column;
 }
 
+#react-modals {
+	position: relative;
+  	z-index: 999;
+}
+
 ul {
 	padding: 0px;
 }
