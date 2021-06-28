@@ -1,0 +1,9 @@
+.wrapper{
+    display: flex
+}
+
+.drag{
+    display: flex;
+    align-items: center;
+    width: 32px;
+}

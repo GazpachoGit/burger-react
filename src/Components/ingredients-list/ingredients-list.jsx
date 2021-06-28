@@ -17,10 +17,10 @@ export default function IngredientsList({data, tabs}) {
     },[])
 
     return (
-        <div className={styles.list + ' scrollable'}>
+        <ul className={styles.list + ' scrollable'}>
             {sectionList.map(item => (
                 <IngredientsSection key={item.id} {...item} />
             ))}
-        </div>
+        </ul>
     )
 }
