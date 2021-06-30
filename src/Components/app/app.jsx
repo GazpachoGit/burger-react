@@ -15,7 +15,11 @@ function App() {
     const getData= () => {
       setState({ ...state, hasError: false, isLoading: true });
       fetch(mainUrl)
-        .then(res => res.json())
+        .then(res => {
+          if(res.ok)
+            return res.json();
+          return Promise.reject(res.status);
+        })
         .then(({data}) => setState({ ...state, data, isLoading: false }))
         .catch(e => {
       setState({ ...state, hasError: true, isLoading: false });
