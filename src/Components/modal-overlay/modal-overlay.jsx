@@ -1,36 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import styles from './modal-overlay.module.css';
-import Modal from '../modal/modal';
 import PropTypes from 'prop-types';
-
-const modalRoot = document.getElementById("react-modals");
+import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function ModalOverlay(props){
-
-    const listener = function(event) {
-        const key = event.key;
-        if (key === "Escape") {
-            props.closeHandler();
-        }
-    }
-
-    React.useEffect(() => {
-        document.addEventListener('keydown', listener);
-        return () => {
-            document.removeEventListener('keydown', listener);
-        } 
-    })
-
-    return ReactDOM.createPortal((
-        <div className={styles.overlay} onClick={props.closeHandler}>
-        <Modal title={props.title} children={props.children} closeHandler={props.closeHandler}/>
+    return (
+        <div onClick={e => e.stopPropagation()} className={styles.wrap}>
+            <div className={styles.modal + ' pr-10 pl-10 pt-10 pb-15'}>
+                <div className={styles.modalHead}>
+                    <span className="text text_type_main-medium ">{props.title}</span>
+                    <CloseIcon onClick={props.closeHandler} type="primary" />
+                </div>
+                {props.children}
+            </div>           
         </div>
-    ), modalRoot)
+    )
 }
 
 ModalOverlay.propTypes = {
-    title: PropTypes.string,
     children: PropTypes.node,
-    closeHandler: PropTypes.func
 };

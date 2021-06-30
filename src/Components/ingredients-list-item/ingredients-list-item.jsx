@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ingredients-list-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import {ingredientType} from '../../utils/local-types';
 
@@ -11,7 +11,7 @@ export default function IngredientsListItem(props) {
     function showHandler(e) {
         setShowDitails(!showDitails);
     }
-    const currentIngredientDetails = <ModalOverlay title="Детали ингредиента" children={<IngredientDetails item={props.item}/>} closeHandler={showHandler} />
+    const currentIngredientDetails = <Modal title="Детали ингредиента" children={<IngredientDetails item={props.item}/>} closeHandler={showHandler} />
     return (
         <div className={styles.general } style={{width: 250}} onClick={showHandler}>
             <div className={styles.info + ' pr-4 pl-4'}>

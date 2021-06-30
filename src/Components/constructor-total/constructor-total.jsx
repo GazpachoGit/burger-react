@@ -1,20 +1,20 @@
 import React from 'react'
 import styles from './constructor-total.module.css'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 
 export default function ConstructorTotal(props) {
     const [showDitails, setShowDitails] = React.useState(false);
 
-    function showHandler(e) {
+    function showHandler() {
         setShowDitails(!showDitails);
     }
     function confirmOrder(){
         //...
         showHandler();
     }
-    const orderModal = <ModalOverlay children={<OrderDetails orderId={11111}/>} closeHandler={showHandler} />
+    const orderModal = <Modal children={<OrderDetails orderId={11111}/>} closeHandler={showHandler} />
     return (
         <>
         <div className={ styles.wrap +' mt-5'}>
