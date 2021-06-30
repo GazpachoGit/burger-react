@@ -7,14 +7,11 @@ import OrderDetails from '../order-details/order-details';
 export default function ConstructorTotal(props) {
     const [showDitails, setShowDitails] = React.useState(false);
 
-    function showHandler() {
-        setShowDitails(!showDitails);
-    }
     function confirmOrder(){
         //...
-        showHandler();
+        setShowDitails(!showDitails);
     }
-    const orderModal = <Modal children={<OrderDetails orderId={11111}/>} closeHandler={showHandler} />
+    const orderModal = <Modal children={<OrderDetails orderId={11111}/>} closeHandler={()=> setShowDitails(!showDitails)} />
     return (
         <>
         <div className={ styles.wrap +' mt-5'}>
