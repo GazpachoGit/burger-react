@@ -2,7 +2,7 @@ import React from 'react';
 import AppHeader from '../app-header/app-header';
 import Main from '../main/main';
 //import testData from '../../utils/data';
-import {mainUrl} from '../../utils/constants';
+import { mainUrl } from '../../utils/constants';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details'
@@ -15,20 +15,25 @@ function App() {
     data: []
   });
   //tabs
-  const [stateTabs, ] = React.useState([
-        {
-            id: 'bun',
-            title: 'Булки'
-        },
-        {
-            id: 'sauce',
-            title: 'Соусы'
-        },
-        {
-            id: 'main',
-            title: 'Начинки'
-        }
-    ]);
+  const [stateTabs,] = React.useState([
+    {
+      id: 'bun',
+      title: 'Булки'
+    },
+    {
+      id: 'sauce',
+      title: 'Соусы'
+    },
+    {
+      id: 'main',
+      title: 'Начинки'
+    }
+  ]);
+  //constructor
+  const [stateBurgerComponents, setBurgerComponents] = React.useState({
+    bun: stateData.data.find(item => item.type === 'bun'),
+    optional: []
+  });
   //modal ingredients details
   const [stateModalDetails, setModalDetails] = React.useState(
     {
@@ -44,45 +49,61 @@ function App() {
     }
   )
 
-  const showIngredientModal = React.useCallback((item)=>{ 
+  const addBurgerComponent = React.useCallback((item) => {
+    if (item.type === 'bun') {
+      setBurgerComponents({
+        ...stateBurgerComponents,
+        bun: item
+      });
+    } else {
+      if (!stateBurgerComponents.optional.find(comp => comp._id === item._id)) {
+        setBurgerComponents({
+          ...stateBurgerComponents,
+          optional: [...stateBurgerComponents.optional, item]
+        })
+      }
+    }
+  }, [stateBurgerComponents]);
+
+  const showIngredientModal = React.useCallback((item) => {
     setModalDetails({
       showModal: !stateModalDetails.showModal,
       ingredient: item
     })
-  },[stateModalDetails]);
+  }, [stateModalDetails]);
 
-  const showOrderModal = React.useCallback(()=>{
+  const showOrderModal = React.useCallback(() => {
     setModalOrder({
-           ...stateModalOrder,
-           showModal: !stateModalOrder.showModal
-         });
-  },[stateModalOrder]);
+      ...stateModalOrder,
+      showModal: !stateModalOrder.showModal
+    });
+  }, [stateModalOrder]);
 
-  const currentIngredientDetails = React.useMemo(()=> {
-    return <Modal title="Детали ингредиента" children={<IngredientDetails item={stateModalDetails.ingredient}/>} closeHandler={() => showIngredientModal(null)} />
+  const currentIngredientDetails = React.useMemo(() => {
+    return <Modal title="Детали ингредиента" children={<IngredientDetails item={stateModalDetails.ingredient} />} closeHandler={() => showIngredientModal(null)} />
   }, [stateModalDetails.ingredient, showIngredientModal]);
 
-  const currentOrder  = React.useMemo(()=> { 
-    return <Modal children={<OrderDetails orderId={stateModalOrder.orderId}/>} closeHandler={showOrderModal} /> 
-  },[stateModalOrder.orderId, showOrderModal]);
-  
+  const currentOrder = React.useMemo(() => {
+    return <Modal children={<OrderDetails orderId={stateModalOrder.orderId} />} closeHandler={showOrderModal} />
+  }, [stateModalOrder.orderId, showOrderModal]);
+
 
   React.useEffect(() => {
-    const getData= () => {
+    const getData = () => {
       setStateData({ ...stateData, hasError: false, isLoading: true });
       fetch(mainUrl)
         .then(res => {
-          if(res.ok)
+          if (res.ok)
             return res.json();
           return Promise.reject(res.status);
         })
-        .then(({data}) => setStateData({ ...stateData, data, isLoading: false }))
+        .then(({ data }) => setStateData({ ...stateData, data, isLoading: false }))
         .catch(e => {
-      setStateData({ ...stateData, hasError: true, isLoading: false });
-      })
-     }
-     getData();
-  },[]) 
+          setStateData({ ...stateData, hasError: true, isLoading: false });
+        })
+    }
+    getData();
+  }, [])
 
   return (
     <>
@@ -94,8 +115,8 @@ function App() {
       {stateModalDetails.showModal && currentIngredientDetails}
       {stateModalOrder.showModal && currentOrder}
     </>
-        //<Main data={testData}/>
-      
+    //<Main data={testData}/>
+
   );
 }
 
