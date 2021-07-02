@@ -15,7 +15,7 @@ export default function BurgerConstructor(props) {
                 <ConstructorElementWrappar item={bun} isLocked={true} type="top" key="topbun"/>
                 <OptionalComponentsList data={optional} />
                 <ConstructorElementWrappar item={bun} isLocked={true} type="bottom" key="bottombun"/>
-                <ConstructorTotal />
+                <ConstructorTotal showOrderModal={props.showOrderModal}/>
             </section>
         )
 }

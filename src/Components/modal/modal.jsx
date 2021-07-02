@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal(props){
+export default function Modal({title, children, closeHandler}){
 
-    const listener = function(event) {
+    const listener = React.useCallback((event)=>{
         const key = event.key;
         if (key === "Escape") {
-            props.closeHandler();
+            closeHandler();
         }
-    }
+    },[closeHandler]);
 
     React.useEffect(() => {
         document.addEventListener('keydown', listener);
@@ -23,8 +23,8 @@ export default function Modal(props){
     })
 
     return ReactDOM.createPortal((
-        <div className={styles.overlay} onClick={props.closeHandler}>
-        <ModalOverlay title={props.title} children={props.children} closeHandler={props.closeHandler}/>
+        <div className={styles.overlay} onClick={closeHandler}>
+        <ModalOverlay title={title} children={children} closeHandler={closeHandler}/>
         </div>
     ), modalRoot)
 }

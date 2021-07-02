@@ -6,7 +6,7 @@ import IngredientsSection from '../ingredients-section/ingredients-section';
 import PropTypes from 'prop-types';
 import {tabType, ingredientType} from '../../utils/local-types';
 
-export default function IngredientsList({data, tabs}) {
+export default function IngredientsList({data, tabs, showIngredientModal}) {
 
     const sectionList = React.useMemo(() => {
         const arr = []
@@ -17,12 +17,12 @@ export default function IngredientsList({data, tabs}) {
             });
         });
         return arr;
-    },[])
+    },[tabs, data])
 
     return (
         <ul className={styles.list + ' scrollable'}>
             {sectionList.map(item => (
-                <IngredientsSection key={item.id} {...item} />
+                <IngredientsSection key={item.id} {...item} showIngredientModal={showIngredientModal}/>
             ))}
         </ul>
     )
