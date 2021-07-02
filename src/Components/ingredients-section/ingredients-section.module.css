@@ -1,0 +1,6 @@
+.section-list {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 24px;
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+.nav {
+    display: grid;
+    grid-template-columns: repeat(3, calc(100% / 3));
+}
+
+.navItem {
+    flex: 1 1 0px;
+}
+
+.navContainer {
+    display: flex;
+    justify-content: center;
+    gap:8px
+}
+
+.link {
+    display: flex;
+    padding: 20px;
+    gap:8px;
+}
+.logo{
+   display: flex;
+   justify-content: center;
+   align-items: center; 
+}
