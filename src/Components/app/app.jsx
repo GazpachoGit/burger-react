@@ -31,8 +31,9 @@ function App() {
   ]);
   //constructor
   const [stateBurgerComponents, setBurgerComponents] = React.useState({
-    bun: stateData.data.find(item => item.type === 'bun'),
-    optional: []
+    bun: {},
+    optional: [],
+    total: 0
   });
   //modal ingredients details
   const [stateModalDetails, setModalDetails] = React.useState(
@@ -49,6 +50,21 @@ function App() {
     }
   )
 
+  const updateOrderTotal = () => {
+    let total = 0;
+    stateBurgerComponents.optional.forEach(item => {
+      total += item.price;
+    })
+    if (stateBurgerComponents.bun)
+      total += stateBurgerComponents.bun.price * 2;
+    setBurgerComponents({
+      ...stateBurgerComponents,
+      total
+    });
+  }
+
+  React.useEffect(updateOrderTotal, [stateBurgerComponents.optional, stateBurgerComponents.bun])
+
   const addBurgerComponent = React.useCallback((item) => {
     if (item.type === 'bun') {
       setBurgerComponents({
@@ -63,7 +79,24 @@ function App() {
         })
       }
     }
+    //updateOrderTotal();
   }, [stateBurgerComponents]);
+
+  const removeBurgerComponent = React.useCallback((item) => {
+    if (item.type === 'bun') {
+      setBurgerComponents({
+        ...stateBurgerComponents,
+        bun: null
+      });
+    } else {
+      const newList = stateBurgerComponents.optional.filter(comp => comp._id !== item._id);
+      setBurgerComponents({
+        ...stateBurgerComponents,
+        optional: newList
+      })
+
+    }
+  }, [stateBurgerComponents])
 
   const showIngredientModal = React.useCallback((item) => {
     setModalDetails({
@@ -71,6 +104,11 @@ function App() {
       ingredient: item
     })
   }, [stateModalDetails]);
+
+  const ingredientClickHandler = React.useCallback((item) => {
+    addBurgerComponent(item);
+    showIngredientModal(item);
+  }, [addBurgerComponent, showIngredientModal]);
 
   const showOrderModal = React.useCallback(() => {
     setModalOrder({
@@ -87,7 +125,6 @@ function App() {
     return <Modal children={<OrderDetails orderId={stateModalOrder.orderId} />} closeHandler={showOrderModal} />
   }, [stateModalOrder.orderId, showOrderModal]);
 
-
   React.useEffect(() => {
     const getData = () => {
       setStateData({ ...stateData, hasError: false, isLoading: true });
@@ -97,13 +134,23 @@ function App() {
             return res.json();
           return Promise.reject(res.status);
         })
-        .then(({ data }) => setStateData({ ...stateData, data, isLoading: false }))
+        .then(({ data }) => {
+          setStateData({ ...stateData, data, isLoading: false });
+          setBurgerComponents({
+            ...stateBurgerComponents,
+            bun: stateData.data.find(item => item.type === 'bun')
+          })
+        })
         .catch(e => {
           setStateData({ ...stateData, hasError: true, isLoading: false });
         })
     }
     getData();
-  }, [])
+  }, []);
+
+  function test() {
+    return 11;
+  }
 
   return (
     <>
@@ -111,7 +158,12 @@ function App() {
       {stateData.isLoading && 'Загрузка...'}
       {stateData.hasError && 'Произошла ошибка при загрузке ингридиентов'}
       {!stateData.isLoading && !stateData.hasError && stateData.data.length &&
-        <Main tabs={stateTabs} data={stateData.data} showIngredientModal={showIngredientModal} showOrderModal={showOrderModal} />}
+        <Main
+          tabs={stateTabs}
+          data={stateData.data}
+          burgerComponents={stateBurgerComponents}
+          showIngredientModal={ingredientClickHandler}
+          showOrderModal={showOrderModal} />}
       {stateModalDetails.showModal && currentIngredientDetails}
       {stateModalOrder.showModal && currentOrder}
     </>
