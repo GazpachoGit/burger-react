@@ -5,14 +5,11 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/local-types'
 
-export default function Main({ data, tabs, burgerComponents, showIngredientModal, showOrderModal, removeBurgerComponent }) {
+export default function Main({ tabs}) {
     return (
         <main className={styles.main}>
-            <BurgerIngredients data={data} tabs={tabs} showIngredientModal={showIngredientModal} />
-            <BurgerConstructor
-                data={data}
-                burgerComponents={burgerComponents}
-                showOrderModal={showOrderModal} />
+            <BurgerIngredients tabs={tabs} />
+            <BurgerConstructor />
         </main>
     )
 }

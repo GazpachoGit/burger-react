@@ -5,8 +5,18 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/local-types';
 
+import {useDispatch} from 'react-redux';
+import {REMOVE_COMPONENT} from '../../services/actions';
+
 export default function ConstructorElementWrapper(props) {
     const item = props.item;
+
+    const dispatch = useDispatch();
+
+    const removeComponent = () => dispatch({
+        type: REMOVE_COMPONENT,
+        item: props.item
+    });
 
     return (
         <div className={styles.wrapper}>
@@ -18,7 +28,8 @@ export default function ConstructorElementWrapper(props) {
                 isLocked={props.isLocked}
                 text={item.name}
                 price={item.price}
-                thumbnail={item.image}>
+                thumbnail={item.image}
+                handleClose={removeComponent}>
             </ConstructorElement>
         </div>
     )

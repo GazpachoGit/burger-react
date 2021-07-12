@@ -5,15 +5,10 @@ import Main from '../main/main';
 import { mainUrl } from '../../utils/constants';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import OrderDetails from '../order-details/order-details'
+import OrderDetails from '../order-details/order-details';
 
 function App() {
-  //data
-  const [stateData, setStateData] = React.useState({
-    isLoading: false,
-    hasError: false,
-    data: []
-  });
+
   //tabs
   const [stateTabs,] = React.useState([
     {
@@ -125,45 +120,11 @@ function App() {
     return <Modal children={<OrderDetails orderId={stateModalOrder.orderId} />} closeHandler={showOrderModal} />
   }, [stateModalOrder.orderId, showOrderModal]);
 
-  React.useEffect(() => {
-    const getData = () => {
-      setStateData({ ...stateData, hasError: false, isLoading: true });
-      fetch(mainUrl)
-        .then(res => {
-          if (res.ok)
-            return res.json();
-          return Promise.reject(res.status);
-        })
-        .then(({ data }) => {
-          setStateData({ ...stateData, data, isLoading: false });
-          setBurgerComponents({
-            ...stateBurgerComponents,
-            bun: stateData.data.find(item => item.type === 'bun')
-          })
-        })
-        .catch(e => {
-          setStateData({ ...stateData, hasError: true, isLoading: false });
-        })
-    }
-    getData();
-  }, []);
-
-  function test() {
-    return 11;
-  }
-
   return (
     <>
       <AppHeader />
-      {stateData.isLoading && 'Загрузка...'}
-      {stateData.hasError && 'Произошла ошибка при загрузке ингридиентов'}
-      {!stateData.isLoading && !stateData.hasError && stateData.data.length &&
         <Main
-          tabs={stateTabs}
-          data={stateData.data}
-          burgerComponents={stateBurgerComponents}
-          showIngredientModal={ingredientClickHandler}
-          showOrderModal={showOrderModal} />}
+          tabs={stateTabs} />
       {stateModalDetails.showModal && currentIngredientDetails}
       {stateModalOrder.showModal && currentOrder}
     </>

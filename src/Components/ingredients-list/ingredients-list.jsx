@@ -6,25 +6,43 @@ import IngredientsSection from '../ingredients-section/ingredients-section';
 import PropTypes from 'prop-types';
 import {tabType, ingredientType} from '../../utils/local-types';
 
-export default function IngredientsList({data, tabs, showIngredientModal}) {
+
+import {useDispatch, useSelector} from 'react-redux';
+import {getIngredients} from '../../services/actions';
+
+
+export default function IngredientsList({tabs}) {
+
+    const dispatch = useDispatch();
+    const {ingredientsRequest, ingredients, ingredientsFailed} = useSelector(state => state.ingredients);
+
+    React.useEffect(() => {
+        dispatch(getIngredients());
+      }, [dispatch]);
 
     const sectionList = React.useMemo(() => {
         const arr = []
         tabs.forEach((tab, i) =>{
             arr.push({
                 id: tab.title,
-                ingredients: data.filter(item => item.type === tab.id)
+                ingredients: ingredients.filter(item => item.type === tab.id)
             });
         });
         return arr;
-    },[tabs, data])
+    },[tabs, ingredients]);
 
     return (
+        <>
+        {ingredientsRequest && 'Загрузка...'}
+      {ingredientsFailed && 'Произошла ошибка при загрузке ингридиентов'}
+      {!ingredientsRequest && !ingredientsFailed && ingredients.length &&
         <ul className={styles.list + ' scrollable'}>
-            {sectionList.map(item => (
-                <IngredientsSection key={item.id} {...item} showIngredientModal={showIngredientModal}/>
-            ))}
-        </ul>
+        {sectionList.map(item => (
+            <IngredientsSection key={item.id} {...item} />
+        ))}
+        </ul>}
+        </>
+        
     )
 }
 
