@@ -6,24 +6,16 @@ import { mainUrl } from '../../utils/constants';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { useSelector, useDispatch } from 'react-redux';
+import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
+
 
 function App() {
 
-  //tabs
-  const [stateTabs,] = React.useState([
-    {
-      id: 'bun',
-      title: 'Булки'
-    },
-    {
-      id: 'sauce',
-      title: 'Соусы'
-    },
-    {
-      id: 'main',
-      title: 'Начинки'
-    }
-  ]);
+  const { showIngredientModal, currentIngredient, showOrderModal, currentOrder } = useSelector(state => state.ingredients);
+
+  const dispatch = useDispatch();
+
   //constructor
   const [stateBurgerComponents, setBurgerComponents] = React.useState({
     bun: {},
@@ -93,40 +85,36 @@ function App() {
     }
   }, [stateBurgerComponents])
 
-  const showIngredientModal = React.useCallback((item) => {
-    setModalDetails({
-      showModal: !stateModalDetails.showModal,
-      ingredient: item
+
+
+  const closeIngredientHandler = React.useCallback(() => {
+    dispatch({
+      type: SHOW_INGREDIENT_MODAL,
+      item: null
     })
-  }, [stateModalDetails]);
+  }, [dispatch]);
 
-  const ingredientClickHandler = React.useCallback((item) => {
-    addBurgerComponent(item);
-    showIngredientModal(item);
-  }, [addBurgerComponent, showIngredientModal]);
-
-  const showOrderModal = React.useCallback(() => {
-    setModalOrder({
-      ...stateModalOrder,
-      showModal: !stateModalOrder.showModal
-    });
-  }, [stateModalOrder]);
+  const closeOrderHandler = React.useCallback(() => {
+    dispatch({
+      type: SHOW_ORDER_MODAL,
+      order: null
+    })
+  }, [dispatch]);
 
   const currentIngredientDetails = React.useMemo(() => {
-    return <Modal title="Детали ингредиента" children={<IngredientDetails item={stateModalDetails.ingredient} />} closeHandler={() => showIngredientModal(null)} />
-  }, [stateModalDetails.ingredient, showIngredientModal]);
+    return <Modal title="Детали ингредиента" children={<IngredientDetails item={currentIngredient} />} closeHandler={closeIngredientHandler} />
+  }, [currentIngredient, closeIngredientHandler]);
 
-  const currentOrder = React.useMemo(() => {
-    return <Modal children={<OrderDetails orderId={stateModalOrder.orderId} />} closeHandler={showOrderModal} />
-  }, [stateModalOrder.orderId, showOrderModal]);
+  const currentOrderModal = React.useMemo(() => {
+    return <Modal children={<OrderDetails />} closeHandler={closeOrderHandler} />
+  }, [closeOrderHandler]);
 
   return (
     <>
       <AppHeader />
-        <Main
-          tabs={stateTabs} />
-      {stateModalDetails.showModal && currentIngredientDetails}
-      {stateModalOrder.showModal && currentOrder}
+      <Main />
+      {showIngredientModal && currentIngredientDetails}
+      {showOrderModal && currentOrderModal}
     </>
     //<Main data={testData}/>
 

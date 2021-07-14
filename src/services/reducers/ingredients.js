@@ -1,13 +1,30 @@
-import { stat } from 'fs'
+import { act } from 'react-dom/test-utils'
 import {GET_INGREDIENTS_REQUEST,
         GET_INGREDIENTS_SUCCESS,
         GET_INGREDIENTS_FAILED,
-        DECREASE_INGREDIENTS,
-        INCREASE_INGREDIENTS,
         ADD_COMPONENT,
-        REMOVE_COMPONENT} from '../actions'
+        REMOVE_COMPONENT,
+        SHOW_INGREDIENT_MODAL,
+        SHOW_ORDER_MODAL,
+        CREATE_ORDER_FAILED,
+        CLEAN_CONSTRUCTOR} from '../actions'
 
 const initialState = {
+
+    tabs: [
+        {
+            id: 'bun',
+            title: 'Булки'
+        },
+        {
+            id: 'sauce',
+            title: 'Соусы'
+        },
+        {
+            id: 'main',
+            title: 'Начинки'
+        }
+    ],
 
     ingredients:[],
     ingredientsRequest: false,
@@ -17,8 +34,14 @@ const initialState = {
         bun: null,
         optional: []
     },
+
+    showIngredientModal: false,
     currentIngredient:{},
-    currentOrder:{}
+
+    showOrderModal: false,
+    orderFailed: false,
+    currentOrder:{},
+    orderNumber: null
 }
 
 export const ingredientsReducer = (state= initialState, action) => {
@@ -45,7 +68,8 @@ export const ingredientsReducer = (state= initialState, action) => {
             if (action.item.type === 'bun') {
                 return {
                     ...state,
-                    ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: 1}: item),
+                    ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: 2}:
+                        (state.burgerComponents.bun && item._id === state.burgerComponents.bun._id) ? {...item, qty: 0} : item ),
                     burgerComponents:{
                         ...state.burgerComponents,
                         bun: action.item
@@ -97,6 +121,35 @@ export const ingredientsReducer = (state= initialState, action) => {
                         }
             }
         }
+        case SHOW_INGREDIENT_MODAL:
+            return {
+                ...state,
+                showIngredientModal: !state.showIngredientModal,
+                currentIngredient: action.item
+            }
+        case SHOW_ORDER_MODAL:
+            return {
+                ...state,
+                orderFailed: false,
+                showOrderModal: !state.showOrderModal,
+                currentOrder:action.order,
+                orderNumber: action.order ? action.order.order.number : null
+            }
+        case CLEAN_CONSTRUCTOR:
+            return{
+                ...state,
+                burgerComponents: initialState.burgerComponents,
+                ingredients: state.ingredients.map(item => ({...item, qty: 0}))
+            }
+        case CREATE_ORDER_FAILED:
+            return {
+                ...state,
+                currentOrder: null,
+                orderFailed: true,
+                orderNumber: null,
+                showOrderModal: !state.showOrderModal,
+                orderFailedMessage: action.message
+            }
         default:
             return state;
     }

@@ -3,18 +3,22 @@ import styles from './ingredients-list-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ingredientType} from '../../utils/local-types';
 import {useDispatch} from 'react-redux';
-import {ADD_COMPONENT} from '../../services/actions';
+import {ADD_COMPONENT, SHOW_INGREDIENT_MODAL} from '../../services/actions';
 
-export default function IngredientsListItem(props) {
-    const { name, price, image} = props.item;
+export default function IngredientsListItem({item}) {
+    const { name, price, image, qty} = item;
     
     const dispatch = useDispatch();
     const showIngredientModal = React.useCallback(() => {
         dispatch({
             type: ADD_COMPONENT,
-            item:props.item
-        })
-    },[dispatch, props.item])
+            item:item
+        });
+        dispatch({
+            type: SHOW_INGREDIENT_MODAL,
+            item:item
+        });
+    },[dispatch, item])
 
     return (
         <div className={styles.general } style={{width: 250}} onClick={showIngredientModal}>
@@ -26,7 +30,7 @@ export default function IngredientsListItem(props) {
                 </span>                                    
             </div>
             <span className="text text_type_main-default">{name}</span>
-            <Counter count={1} size="default" />
+            {qty && <Counter count={qty} size="default" />}
         </div>
     )
 }

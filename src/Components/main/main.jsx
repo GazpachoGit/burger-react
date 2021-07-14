@@ -8,7 +8,7 @@ import { ingredientType } from '../../utils/local-types'
 export default function Main({ tabs}) {
     return (
         <main className={styles.main}>
-            <BurgerIngredients tabs={tabs} />
+            <BurgerIngredients />
             <BurgerConstructor />
         </main>
     )

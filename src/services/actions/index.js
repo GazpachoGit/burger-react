@@ -1,15 +1,17 @@
-import { mainUrl } from '../../utils/constants';
+import { mainUrl, createOrderUrl } from '../../utils/constants';
+import {data} from '../../utils/data';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-export const DECREASE_INGREDIENTS = 'DECREASE_INGREDIENTS';
-export const INCREASE_INGREDIENTS = 'INCREASE_INGREDIENTS';
 
 export const ADD_COMPONENT = 'ADD_COMPONENT';
 export const REMOVE_COMPONENT = 'REMOVE_COMPONENT';
 
-
+export const SHOW_INGREDIENT_MODAL = 'SHOW_INGREDIENT_MODAL';
+export const SHOW_ORDER_MODAL = 'SHOW_ORDER_MODAL';
+export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
+export const CLEAN_CONSTRUCTOR = 'CLEAN_CONSTRUCTOR';
 
 export function getIngredients() {
     return function(dispatch) {
@@ -34,4 +36,45 @@ export function getIngredients() {
           })
         })
     }
+}
+
+export function createOrder(Ids) {
+  return function(dispatch) {
+    fetch(createOrderUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"ingredients": Ids})
+    })
+        .then(res => {
+          if (res.ok)
+            return res.json();
+          return res.json().then(res => {throw res});
+        })
+        .then(res => {
+          dispatch({
+              type:SHOW_ORDER_MODAL,
+              order: res
+          });
+          dispatch({
+            type: CLEAN_CONSTRUCTOR
+          });
+        })
+        .catch(res => {
+          dispatch({
+              type:CREATE_ORDER_FAILED,
+              message: res.message
+          });
+        })
+  }
+}
+
+export function getIngredientsWhenYandexAFK(){
+  return function(dispatch) {
+    dispatch({
+      type:GET_INGREDIENTS_SUCCESS,
+      items: data
+    })
+ }
 }
