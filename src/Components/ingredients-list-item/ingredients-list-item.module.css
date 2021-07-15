@@ -3,6 +3,7 @@
     flex-direction: column;
     position: relative;
     width: 250px;
+    cursor: pointer;
 }
 
 .info {

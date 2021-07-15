@@ -20,8 +20,6 @@ const current = useSelector(state => state.ingredients.tabs.reduce((current, tab
     )
 }
 
-
-
 IngredientsTabs.propTypes = {
     tabs: PropTypes.arrayOf(tabType)
 }

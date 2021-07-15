@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './optional-components-list.module.css';
 import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
-
 import PropTypes from 'prop-types';
 import {ingredientType} from '../../utils/local-types';
 import {useCallback} from 'react';

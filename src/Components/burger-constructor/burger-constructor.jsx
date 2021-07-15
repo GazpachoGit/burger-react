@@ -3,8 +3,6 @@ import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
 import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/local-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import {ADD_COMPONENT} from '../../services/actions/'
@@ -36,6 +34,3 @@ export default function BurgerConstructor() {
     )
 }
 
-BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(ingredientType)
-}

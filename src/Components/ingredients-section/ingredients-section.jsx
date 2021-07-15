@@ -4,7 +4,7 @@ import IngredientsListItem from '../ingredients-list-item/ingredients-list-item'
 import {ingredientsSectionType} from '../../utils/local-types';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {UPDATE_CURRENT_TAB} from '../../services/actions/';
 
 export default function IngredientsSection(props) {

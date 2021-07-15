@@ -1,24 +1,22 @@
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import { ingredientType } from "../../utils/local-types";
+import { useSelector } from 'react-redux';
 
-export default function IngredientDetails({item}) {
+export default function IngredientDetails() {
+    const currentIngredient = useSelector(state => state.ingredients.currentIngredient);
     return (
         <>
-            <img alt={item.name} src={item.image} />
-            <p className="text text_type_main-default pt-4">{item.name}</p>
+            <img alt={currentIngredient.name} src={currentIngredient.image} />
+            <p className="text text_type_main-default pt-4">{currentIngredient.name}</p>
             <div className={styles.composition + ' pt-8'}>
-                <span className="text text_type_main-default">Калории, ккал<br/>{item.calories}</span>
-                <span className="text text_type_main-default">Белки, г<br/>{item.proteins}</span>
-                <span className="text text_type_main-default">Жиры, г<br/>{item.fat}</span>
-                <span className="text text_type_main-default">Углеводы, г<br/>{item.carbohydrates}</span>
+                <span className="text text_type_main-default">Калории, ккал<br/>{currentIngredient.calories}</span>
+                <span className="text text_type_main-default">Белки, г<br/>{currentIngredient.proteins}</span>
+                <span className="text text_type_main-default">Жиры, г<br/>{currentIngredient.fat}</span>
+                <span className="text text_type_main-default">Углеводы, г<br/>{currentIngredient.carbohydrates}</span>
             </div>
         </>
     )
 }
-IngredientDetails.propTypes ={
-    item: ingredientType
-}
+
 
 
 

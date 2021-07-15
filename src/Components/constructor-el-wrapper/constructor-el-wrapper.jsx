@@ -95,8 +95,11 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
 }
 
 ConstructorElementWrapper.propTypes = {
+    item: ingredientType,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    moveCard: PropTypes.func,
     type: PropTypes.string,
-    isLocked: PropTypes.bool,
-    item: ingredientType
+    isLocked: PropTypes.bool
 }
 

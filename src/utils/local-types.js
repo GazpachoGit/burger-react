@@ -19,10 +19,12 @@ export const ingredientType = PropTypes.shape({
 export const tabType = PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    ratio: PropTypes.number.isRequired
 })
 
 export const ingredientsSectionType = PropTypes.shape({
-        id:PropTypes.string,
+        id:PropTypes.string.isRequired,
+        title:PropTypes.string.isRequired,
         ingredients: PropTypes.arrayOf(ingredientType)
     }
 )
