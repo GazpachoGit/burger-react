@@ -6,6 +6,8 @@ import {GET_INGREDIENTS_REQUEST,
         REMOVE_COMPONENT,
         SHOW_INGREDIENT_MODAL,
         SHOW_ORDER_MODAL,
+        CREATE_ORDER_REQUEST,
+        CREATE_ORDER_SUCCESS,
         CREATE_ORDER_FAILED,
         CLEAN_CONSTRUCTOR,
         UPDATE_OPTIONAL,
@@ -44,10 +46,12 @@ const initialState = {
     showIngredientModal: false,
     currentIngredient:{},
 
-    showOrderModal: false,
+    orderRequest: false,
     orderFailed: false,
+
     currentOrder:{},
-    orderNumber: null
+    orderNumber: null,
+    showOrderModal: false
 }
 
 export const ingredientsReducer = (state= initialState, action) => {
@@ -55,13 +59,13 @@ export const ingredientsReducer = (state= initialState, action) => {
         case GET_INGREDIENTS_REQUEST:
             return {
                 ...state,
-                ingredientsRequest: true
+                ingredientsRequest: true,
+                ingredientsFailed: false
             }
         case GET_INGREDIENTS_SUCCESS:
             return {
                 ...state,
                 ingredientsRequest: false,
-                ingredientsFailed: false,
                 ingredients: action.items
             }
         case GET_INGREDIENTS_FAILED: 
@@ -136,10 +140,7 @@ export const ingredientsReducer = (state= initialState, action) => {
         case SHOW_ORDER_MODAL:
             return {
                 ...state,
-                orderFailed: false,
-                showOrderModal: !state.showOrderModal,
-                currentOrder:action.order,
-                orderNumber: action.order ? action.order.order.number : null
+                showOrderModal: !state.showOrderModal
             }
         case CLEAN_CONSTRUCTOR:
             return{
@@ -147,13 +148,27 @@ export const ingredientsReducer = (state= initialState, action) => {
                 burgerComponents: initialState.burgerComponents,
                 ingredients: state.ingredients.map(item => ({...item, qty: 0}))
             }
+        case CREATE_ORDER_REQUEST:
+            return {
+                ...state,
+                orderRequest: true,
+                orderFailed: false,
+                currentOrder: null,
+                orderNumber: null,
+                orderFailedMessage: null
+            }
+        case CREATE_ORDER_SUCCESS:
+            return{
+                ...state,
+                orderRequest: false,
+                currentOrder:action.order,
+                orderNumber: action.order ? action.order.order.number : null
+            }
         case CREATE_ORDER_FAILED:
             return {
                 ...state,
-                currentOrder: null,
+                orderRequest: false,
                 orderFailed: true,
-                orderNumber: null,
-                showOrderModal: !state.showOrderModal,
                 orderFailedMessage: action.message
             }
         case UPDATE_OPTIONAL:

@@ -7,11 +7,15 @@ export default function OrderDetails() {
 
     const number = useSelector(state => state.ingredients.orderNumber);
     const orderFailed = useSelector(state => state.ingredients.orderFailed);
+    const orderRequest = useSelector(state => state.ingredients.orderRequest);
     const orderFailedMessage = useSelector(state => state.ingredients.orderFailedMessage)
 
     return (
         <>
-        {orderFailed ?
+        {orderRequest?
+        <>
+            <p className="text text_type_main-medium pt-8 pb-15">Обработка заказа...</p>
+        </> : orderFailed ?
             <> 
                 <p className="text text_type_main-medium pt-8 pb-15">Произошла ошибка</p>
                 <p className="text text_type_main-default pt-15 pb-2">{orderFailedMessage}</p>
