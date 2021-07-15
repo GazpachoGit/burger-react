@@ -24,7 +24,8 @@ export default function IngredientsList({ tabs }) {
         const arr = []
         tabs.forEach((tab, i) => {
             arr.push({
-                id: tab.title,
+                id: tab.id,
+                title: tab.title,
                 ingredients: ingredients.filter(item => item.type === tab.id)
             });
         });

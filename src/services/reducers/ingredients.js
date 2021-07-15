@@ -8,24 +8,29 @@ import {GET_INGREDIENTS_REQUEST,
         SHOW_ORDER_MODAL,
         CREATE_ORDER_FAILED,
         CLEAN_CONSTRUCTOR,
-        UPDATE_OPTIONAL} from '../actions'
+        UPDATE_OPTIONAL,
+        UPDATE_CURRENT_TAB} from '../actions'
 
 const initialState = {
 
     tabs: [
         {
             id: 'bun',
-            title: 'Булки'
+            title: 'Булки',
+            ratio: 0
         },
         {
             id: 'sauce',
-            title: 'Соусы'
+            title: 'Соусы',
+            ratio: 0
         },
         {
             id: 'main',
-            title: 'Начинки'
+            title: 'Начинки',
+            ratio: 0
         }
     ],
+    currentTab: null,
 
     ingredients:[],
     ingredientsRequest: false,
@@ -158,6 +163,11 @@ export const ingredientsReducer = (state= initialState, action) => {
                     ...state.burgerComponents,
                     optional: action.optional
                 }
+            }
+        case UPDATE_CURRENT_TAB:
+            return{
+                ...state,
+                tabs: state.tabs.map(tab => tab.id === action.id ? {...tab, ratio: action.ratio} : tab)
             }
         default:
             return state;

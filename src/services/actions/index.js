@@ -13,6 +13,7 @@ export const SHOW_ORDER_MODAL = 'SHOW_ORDER_MODAL';
 export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 export const CLEAN_CONSTRUCTOR = 'CLEAN_CONSTRUCTOR';
 export const UPDATE_OPTIONAL = 'UPDATE_OPTIONAL';
+export const UPDATE_CURRENT_TAB = 'UPDATE_CURRENT_TAB';
 
 export function getIngredients() {
     return function(dispatch) {
