@@ -4,6 +4,7 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import {ingredientType} from '../../utils/local-types';
 import {useDispatch} from 'react-redux';
 import {ADD_COMPONENT, SHOW_INGREDIENT_MODAL} from '../../services/actions';
+import { useDrag } from 'react-dnd';
 
 export default function IngredientsListItem({item}) {
     const { name, price, image, qty} = item;
@@ -18,10 +19,19 @@ export default function IngredientsListItem({item}) {
             type: SHOW_INGREDIENT_MODAL,
             item:item
         });
-    },[dispatch, item])
+    },[dispatch, item]);
+
+    //drag
+    const [{opacity}, dragRef] = useDrag({
+        type:'ingredient',
+        item: {...item},
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    })
 
     return (
-        <div className={styles.general } style={{width: 250}} onClick={showIngredientModal}>
+        <div ref={dragRef} className={styles.general } style={{opacity}} onClick={showIngredientModal}>
             <div className={styles.info + ' pr-4 pl-4'}>
                 <img alt={name} src={image} />
                 <span className="text text_type_digits-default mt-1 mb-1">

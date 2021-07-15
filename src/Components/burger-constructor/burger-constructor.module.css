@@ -3,3 +3,7 @@
     flex-flow: column;
     gap: 10px;
 }
+.onHover{
+    border: 5px solid #8585AD;
+    border-radius: 10px;
+}

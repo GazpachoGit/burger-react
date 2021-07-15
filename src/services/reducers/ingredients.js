@@ -7,7 +7,8 @@ import {GET_INGREDIENTS_REQUEST,
         SHOW_INGREDIENT_MODAL,
         SHOW_ORDER_MODAL,
         CREATE_ORDER_FAILED,
-        CLEAN_CONSTRUCTOR} from '../actions'
+        CLEAN_CONSTRUCTOR,
+        UPDATE_OPTIONAL} from '../actions'
 
 const initialState = {
 
@@ -149,6 +150,14 @@ export const ingredientsReducer = (state= initialState, action) => {
                 orderNumber: null,
                 showOrderModal: !state.showOrderModal,
                 orderFailedMessage: action.message
+            }
+        case UPDATE_OPTIONAL:
+            return {
+                ...state,
+                burgerComponents:{
+                    ...state.burgerComponents,
+                    optional: action.optional
+                }
             }
         default:
             return state;
