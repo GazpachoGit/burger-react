@@ -92,7 +92,7 @@ export const ingredientsReducer = (state= initialState, action) => {
                             ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: ++item.qty} : item),
                             burgerComponents:{
                                 ...state.burgerComponents,
-                                optional:[...state.burgerComponents.optional, action.item]
+                                optional:[...state.burgerComponents.optional, {...action.item, id: action.item._id+state.burgerComponents.optional.length}]
                             }
                         }
                     else 
@@ -101,7 +101,7 @@ export const ingredientsReducer = (state= initialState, action) => {
                             ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: 1} : item),
                             burgerComponents: {
                                 ...state.burgerComponents,
-                                optional: [...state.burgerComponents.optional, action.item]
+                                optional: [...state.burgerComponents.optional, {...action.item, id: action.item._id+state.burgerComponents.optional.length}]
                             }
                         }
                 }
@@ -117,25 +117,16 @@ export const ingredientsReducer = (state= initialState, action) => {
                     }
                 }
             } else {
-                const currentItem = state.ingredients.find(({_id}) => _id === action.item._id);
-                    if (currentItem.qty !== 1)
-                        return {
-                            ...state,
-                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: --item.qty} : item),
-                            burgerComponents: {
-                                ...state.burgerComponents,
-                                optional: state.burgerComponents.optional.filter((item, index) => index !== action.index)
-                            }
-                        }
-                    else 
-                        return {
-                            ...state,
-                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: 0} : item),
-                            burgerComponents: {
-                                ...state.burgerComponents,
-                                optional: state.burgerComponents.optional.filter((item, index) => index !== action.index)
-                            }
-                        }
+                return {
+                    ...state,
+                    ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: --item.qty} : item),
+                    burgerComponents: {
+                        ...state.burgerComponents,
+                        optional: state.burgerComponents.optional
+                            .filter((item, index) => index !== action.index)
+                            .map((item, index) => ({...item, id: item._id+index}))
+                    }
+                }
             }
         }
         case SHOW_INGREDIENT_MODAL:

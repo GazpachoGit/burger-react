@@ -26,7 +26,7 @@ export default function OptionalComponentsList({data}) {
     return (
         <ul className={styles.list + ' scrollable'}>{
             data.map((item, index) => (
-                <ConstructorElementWrappar key={index} index={index} id={item._id} item={item} moveCard={moveCard} isLocked={false} />
+                <ConstructorElementWrappar key={item.id} index={index} id={item.id} item={item} moveCard={moveCard} isLocked={false} />
             ))
         }</ul>
     )
