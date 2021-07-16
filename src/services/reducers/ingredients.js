@@ -89,7 +89,11 @@ export const ingredientsReducer = (state= initialState, action) => {
                     if (currentItem.qty)
                         return {
                             ...state,
-                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: ++item.qty} : item)
+                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: ++item.qty} : item),
+                            burgerComponents:{
+                                ...state.burgerComponents,
+                                optional:[...state.burgerComponents.optional, action.item]
+                            }
                         }
                     else 
                         return {
@@ -117,7 +121,11 @@ export const ingredientsReducer = (state= initialState, action) => {
                     if (currentItem.qty !== 1)
                         return {
                             ...state,
-                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: --item.qty} : item)
+                            ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: --item.qty} : item),
+                            burgerComponents: {
+                                ...state.burgerComponents,
+                                optional: state.burgerComponents.optional.filter((item, index) => index !== action.index)
+                            }
                         }
                     else 
                         return {
@@ -125,7 +133,7 @@ export const ingredientsReducer = (state= initialState, action) => {
                             ingredients: state.ingredients.map(item => item._id === action.item._id ? {...item, qty: 0} : item),
                             burgerComponents: {
                                 ...state.burgerComponents,
-                                optional: state.burgerComponents.optional.filter(item => item._id !== action.item._id)
+                                optional: state.burgerComponents.optional.filter((item, index) => index !== action.index)
                             }
                         }
             }

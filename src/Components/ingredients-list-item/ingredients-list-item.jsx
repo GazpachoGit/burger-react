@@ -12,10 +12,6 @@ export default function IngredientsListItem({item}) {
     const dispatch = useDispatch();
     const showIngredientModal = React.useCallback(() => {
         dispatch({
-            type: ADD_COMPONENT,
-            item:item
-        });
-        dispatch({
             type: SHOW_INGREDIENT_MODAL,
             item:item
         });

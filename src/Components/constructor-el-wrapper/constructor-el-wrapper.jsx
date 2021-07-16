@@ -5,7 +5,7 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/local-types';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {REMOVE_COMPONENT} from '../../services/actions';
 
 import { useRef } from 'react';
@@ -14,10 +14,12 @@ import { useDrag, useDrop } from 'react-dnd';
 export default function ConstructorElementWrapper({item, id, index, moveCard, type, isLocked}) {
 
     const dispatch = useDispatch();
+    const optional = useSelector(state => state.ingredients.burgerComponents.optional)
 
     const removeComponent = () => dispatch({
         type: REMOVE_COMPONENT,
-        item: item
+        item: item,
+        index: optional.indexOf(item)
     });
 
     const ref = useRef(null);
