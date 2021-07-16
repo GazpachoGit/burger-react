@@ -40,7 +40,7 @@ export default function IngredientsListItem({item}) {
                 </span>                                    
             </div>
             <span className="text text_type_main-default">{name}</span>
-            {qty && <Counter count={qty} size="default" />}
+            {!!qty && <Counter count={qty} size="default" />}
         </div>
     )
 }
