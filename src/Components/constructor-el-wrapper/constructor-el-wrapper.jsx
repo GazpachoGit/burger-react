@@ -77,8 +77,9 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
     });
     const opacity = isDragging ? 0 : 1;
     if(item.type !== 'bun') drag(drop(ref));
+    const preventDefault = (e) => e.preventDefault();
     return (
-        <div ref={ref} style={{opacity}} className={styles.wrapper} data-handler-id={handlerId}>
+        <div ref={ref} style={{opacity}} onDrop={preventDefault} className={styles.wrapper} data-handler-id={handlerId}>
             <div className={styles.drag}>
                 <span hidden={isLocked}><DragIcon type="primary" /></span>
             </div>

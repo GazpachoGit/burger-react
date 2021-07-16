@@ -20,7 +20,7 @@ export default function ConstructorTotal() {
         else {
             dispatch({
                 type:CREATE_ORDER_FAILED,
-                message: "Для оформления заказа требуется добавлние булки"
+                message: "Для оформления заказа требуется добавить булку"
             })
             dispatch({type: SHOW_ORDER_MODAL})
         }  

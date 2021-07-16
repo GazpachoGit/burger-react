@@ -33,7 +33,7 @@ export default function IngredientsListItem({item}) {
     return (
         <div ref={dragRef} className={styles.general } style={{opacity}} onClick={showIngredientModal}>
             <div className={styles.info + ' pr-4 pl-4'}>
-                <img alt={name} src={image} />
+                <img className={styles.preventPointerEvent} alt={name} src={image} />
                 <span className="text text_type_digits-default mt-1 mb-1">
                     {price}
                     <CurrencyIcon type="primary" />
