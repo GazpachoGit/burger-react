@@ -39,7 +39,7 @@ export default function IngredientsList({ tabs }) {
             {!ingredientsRequest && !ingredientsFailed && ingredients.length &&
                 <ul className={styles.list + ' scrollable'}>
                     {sectionList.map(item => (
-                        <IngredientsSection key={item.id} {...item} />
+                        <IngredientsSection key={item.id} item={item} />
                     ))}
                 </ul>}
         </>
@@ -48,5 +48,5 @@ export default function IngredientsList({ tabs }) {
 }
 
 IngredientsList.propTypes = {
-    tabs: PropTypes.arrayOf(tabType)
+    tabs: PropTypes.arrayOf(tabType).isRequired
 }

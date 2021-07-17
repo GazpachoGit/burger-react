@@ -1,39 +1,39 @@
 import React from 'react';
 import styles from './ingredients-section.module.css';
 import IngredientsListItem from '../ingredients-list-item/ingredients-list-item';
-import {ingredientsSectionType} from '../../utils/local-types';
+import { ingredientsSectionType } from '../../utils/local-types';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {UPDATE_CURRENT_TAB} from '../../services/actions/';
+import { UPDATE_CURRENT_TAB } from '../../services/actions/';
 
-export default function IngredientsSection(props) {
+export default function IngredientsSection({ item }) {
     const dispatch = useDispatch();
+    const { id, title, ingredients } = item;
 
-    const {ref, inView, entry} = useInView({
+    const { ref, inView, entry } = useInView({
         threshold: [0, 0.25, 0.5, 0.75, 1]
     })
     useEffect(() => {
-        console.log(`${props.id} ${entry ? entry.intersectionRatio: 0}`)
         dispatch({
             type: UPDATE_CURRENT_TAB,
-            id: props.id,
-            ratio: entry ? entry.intersectionRatio: 0
+            id: id,
+            ratio: entry ? entry.intersectionRatio : 0
         });
-    },[inView, entry, dispatch]);
+    }, [inView, entry, dispatch]);
 
 
-    return(
+    return (
         <li ref={ref} className={' mt-10 pb-10'}>
-            <p className="text text_type_main-medium">{props.title}</p>
+            <p className="text text_type_main-medium">{title}</p>
             <div className={styles['section-list'] + ' pt-6 pl-4 pr-4'}>
-                {props.ingredients.map(item => (<IngredientsListItem key={item._id} item={item} />))}
+                {ingredients.map(item => (<IngredientsListItem key={item._id} item={item} />))}
             </div>
         </li>
     )
 }
 
 IngredientsSection.propTypes = {
-    item: ingredientsSectionType
+    item: ingredientsSectionType.isRequired
 }
 

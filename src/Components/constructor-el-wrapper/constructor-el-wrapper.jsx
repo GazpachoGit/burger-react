@@ -5,14 +5,14 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/local-types';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {REMOVE_COMPONENT} from '../../services/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { REMOVE_COMPONENT } from '../../services/actions';
 
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-export default function ConstructorElementWrapper({item, id, index, moveCard, type, isLocked}) {
-
+export default function ConstructorElementWrapper({ item, index, moveCard, type, isLocked }) {
+    const id = item.id;
     const dispatch = useDispatch();
     const optional = useSelector(state => state.ingredients.burgerComponents.optional)
 
@@ -23,7 +23,7 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
     });
 
     const ref = useRef(null);
-    const [{handlerId}, drop] = useDrop({
+    const [{ handlerId }, drop] = useDrop({
         accept: 'component',
         collect(monitor) {
             return {
@@ -78,10 +78,10 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
         }),
     });
     const opacity = isDragging ? 0 : 1;
-    if(item.type !== 'bun') drag(drop(ref));
+    if (item.type !== 'bun') drag(drop(ref));
     const preventDefault = (e) => e.preventDefault();
     return (
-        <div ref={ref} style={{opacity}} onDrop={preventDefault} className={styles.wrapper} data-handler-id={handlerId}>
+        <div ref={ref} style={{ opacity }} onDrop={preventDefault} className={styles.wrapper} data-handler-id={handlerId}>
             <div className={styles.drag}>
                 <span hidden={isLocked}><DragIcon type="primary" /></span>
             </div>
@@ -90,7 +90,7 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
                 isLocked={isLocked}
                 text={item.name}
                 price={item.price}
-                thumbnail={item.image}
+                thumbnail={item.image_mobile}
                 handleClose={removeComponent}>
             </ConstructorElement>
         </div>
@@ -98,11 +98,8 @@ export default function ConstructorElementWrapper({item, id, index, moveCard, ty
 }
 
 ConstructorElementWrapper.propTypes = {
-    item: ingredientType,
-    id: PropTypes.string,
-    index: PropTypes.number,
-    moveCard: PropTypes.func,
-    type: PropTypes.string,
-    isLocked: PropTypes.bool
+    item: ingredientType.isRequired,
+    index: PropTypes.number.isRequired,
+    moveCard: PropTypes.func.isRequired
 }
 
