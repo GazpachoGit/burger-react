@@ -1,0 +1,23 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+.buttomButton {
+    margin-bottom: 54px;
+}
+
+.link {
+    text-decoration: none;
+    color: #4c4cff;
+}

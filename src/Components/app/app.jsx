@@ -6,6 +6,8 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { LoginPage } from '../../pages';
 
 
 function App() {
@@ -39,11 +41,19 @@ function App() {
   return (
     <>
       <AppHeader />
-      <Main />
-      {showIngredientModal && currentIngredientDetails}
-      {showOrderModal && currentOrderModal}
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="/" exact={true}>
+            <Main />
+          </Route>
+        </Switch>
+        {showIngredientModal && currentIngredientDetails}
+        {showOrderModal && currentOrderModal}
+      </Router>
     </>
-    //<Main data={testData}/>
 
   );
 }
