@@ -4,9 +4,13 @@ import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
 
+
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal({title, children, closeHandler}){
+export default function Modal({title, children, closeHandler }){
+
+    
+
 
     const listener = React.useCallback((event)=>{
         const key = event.key;

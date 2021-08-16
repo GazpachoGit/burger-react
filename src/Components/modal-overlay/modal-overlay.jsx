@@ -18,4 +18,5 @@ export default function ModalOverlay(props){
 
 ModalOverlay.propTypes = {
     children: PropTypes.node,
+    closeHandler: PropTypes.func
 };

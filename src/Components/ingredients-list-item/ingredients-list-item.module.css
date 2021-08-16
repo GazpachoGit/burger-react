@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    width: 250px;
+    cursor: pointer;
 }
 
 .info {
@@ -12,4 +14,7 @@
 .cost {
     display: flex;
     justify-content: center;
+}
+.preventPointerEvent{
+    pointer-events: none;
 }

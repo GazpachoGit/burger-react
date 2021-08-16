@@ -3,23 +3,35 @@ import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
 import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/local-types';
+import BunElement from '../bun-element/bun-element';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { ADD_COMPONENT } from '../../services/actions/'
+export default function BurgerConstructor() {
+    const dispatch = useDispatch();
+    const { bun, optional } = useSelector(state => state.ingredients.burgerComponents);
 
-export default function BurgerConstructor(props) {
-    const ingridiens = props.data;
-    const bun = ingridiens.find(item => item.type === 'bun');
-    const optional = ingridiens.filter(item => item.type !== 'bun');
-        return (
-            <section className={styles.section + ' p-1 mt-25 mr-4 ml-4'}>
-                <ConstructorElementWrappar item={bun} isLocked={true} type="top" key="topbun"/>
-                <OptionalComponentsList data={optional} />
-                <ConstructorElementWrappar item={bun} isLocked={true} type="bottom" key="bottombun"/>
-                <ConstructorTotal showOrderModal={props.showOrderModal}/>
-            </section>
-        )
+    //drop
+    const [{ isHover }, dropTarger] = useDrop({
+        accept: 'ingredient',
+        collect: monitor => ({
+            isHover: monitor.isOver()
+        }),
+        drop(item) {
+            dispatch({
+                type: ADD_COMPONENT,
+                item: item
+            })
+        }
+    });
+
+    return (
+        <section ref={dropTarger} className={`${styles.section} p-1 mt-25 mr-4 ml-4 ${isHover ? styles.onHover : ''}`}>
+            {bun && <BunElement item={bun} isLocked={true} type="top" key="topbun" />}
+            <OptionalComponentsList data={optional} />
+            {bun && <BunElement item={bun} isLocked={true} type="bottom" key="bottombun" />}
+            <ConstructorTotal />
+        </section>
+    )
 }
 
-BurgerConstructor.propTypes ={
-    data: PropTypes.arrayOf(ingredientType)
-} 
