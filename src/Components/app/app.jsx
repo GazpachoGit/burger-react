@@ -7,7 +7,7 @@ import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { LoginPage } from '../../pages';
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage } from '../../pages';
 
 
 function App() {
@@ -45,6 +45,21 @@ function App() {
         <Switch>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage />
+          </Route>
+          <Route path="/forgot-password">
+            <ForgotPasswordPage />
+          </Route>
+          <Route path="/reset-password">
+            <ResetPasswordPage />
+          </Route>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/ingredients/:id" exact={true}>
+            <IngredientPage />
           </Route>
           <Route path="/" exact={true}>
             <Main />

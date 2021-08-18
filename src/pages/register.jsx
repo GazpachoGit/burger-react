@@ -3,8 +3,8 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginPage() {
-    const [form, setValue] = useState({ email: '', password: '' });
+export default function RegisterPage() {
+    const [form, setValue] = useState({ name: '', email: '', password: '' });
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
@@ -12,9 +12,15 @@ export default function LoginPage() {
     return (
         <>
             <div className={styles.formContainer}>
-
                 <form className={styles.form + ' pb-20'}>
-                    <h2 className="text text_type_main-medium">Вход</h2>
+                    <h2 className="text text_type_main-medium">Регистрация</h2>
+                    <Input
+                        type={'text'}
+                        size={'default'}
+                        value={form.name}
+                        name={'name'}
+                        placeholder={'Имя'}
+                        onChange={onChange} />
                     <Input
                         type={'text'}
                         size={'default'}
@@ -26,10 +32,9 @@ export default function LoginPage() {
                         onChange={onChange}
                         value={form.password}
                         name={'password'} />
-                    <Button type="primary" size="medium">Войти</Button>
+                    <Button type="primary" size="medium">Зарегистрироваться</Button>
                 </form>
-                <p className="text text_type_main-default">Вы - новый пользователь? <Link className={styles.link} to={'/register'}>Зарегистрироваться</Link></p>
-                <p className="text text_type_main-default"> Забыли пароль? <Link className={styles.link} to={'/forgot-password'}>Восстановить</Link></p>
+                <p className="text text_type_main-default">Вы уже зарегистрированы? <Link className={styles.link} to={'/login'}>Войти</Link></p>
             </div>
         </>
     )

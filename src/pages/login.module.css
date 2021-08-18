@@ -1,9 +1,19 @@
-.main {
+.formContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 100%;
     align-items: center;
+}
+
+.main {
+    display: grid;
+    grid-gap: 0px;
+    height: 100%;
+}
+
+.autoFit {
+    grid-template-columns: 2fr 1fr 2fr;
 }
 
 .form {
