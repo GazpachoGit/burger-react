@@ -1,14 +1,22 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { singIn } from '../services/actions/auth';
+import { useDispatch } from 'react-redux';
 
 export default function RegisterPage() {
     const [form, setValue] = useState({ name: '', email: '', password: '' });
+    const dispatch = useDispatch();
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
+
+    const registerHandler = useCallback((e) => {
+        e.preventDefault();
+        dispatch(singIn(form, 'register'));
+    }, [dispatch, form])
     return (
         <>
             <div className={styles.formContainer}>
@@ -32,7 +40,7 @@ export default function RegisterPage() {
                         onChange={onChange}
                         value={form.password}
                         name={'password'} />
-                    <Button type="primary" size="medium">Зарегистрироваться</Button>
+                    <Button onClick={registerHandler} type="primary" size="medium">Зарегистрироваться</Button>
                 </form>
                 <p className="text text_type_main-default">Вы уже зарегистрированы? <Link className={styles.link} to={'/login'}>Войти</Link></p>
             </div>

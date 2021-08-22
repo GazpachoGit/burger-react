@@ -1,17 +1,12 @@
-import { getCookie } from './utils';
+import { getCookie } from '../utils/cookie-utils';
 import {authUrl} from '../utils/constants';
 
 export const loginRequest = async form => {
   return await fetch(`${authUrl}/auth/login`, {
     method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
     body: JSON.stringify(form)
   });
 };
@@ -19,14 +14,18 @@ export const loginRequest = async form => {
 export const registerRequest = async form => {
   return await fetch(`${authUrl}/auth/register`, {
     method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(form)
+  });
+}
+
+export const forgotPasswordRequest = async form => {
+  return await fetch(`${authUrl}/password-reset`, {
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(form)
   });
 }
@@ -58,3 +57,4 @@ export const logoutRequest = async () => {
     referrerPolicy: 'no-referrer'
   });
 };
+
