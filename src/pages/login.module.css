@@ -12,6 +12,15 @@
     height: 100%;
 }
 
+.navColumn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navContainer{
+    width: 400px
+}
+
 .autoFit {
     grid-template-columns: 2fr 1fr 2fr;
 }

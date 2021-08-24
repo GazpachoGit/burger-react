@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage } from '../../pages';
+import {ProtectedRoute} from '../protected-route/protected-route';
 
 
 function App() {
@@ -55,9 +56,9 @@ function App() {
           <Route path="/reset-password">
             <ResetPasswordPage />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute path="/profile">
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
           <Route path="/ingredients/:id" exact={true}>
             <IngredientPage />
           </Route>
