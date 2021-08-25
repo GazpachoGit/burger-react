@@ -7,7 +7,7 @@ import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage } from '../../pages';
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
 import {ProtectedRoute} from '../protected-route/protected-route';
 
 
@@ -41,8 +41,8 @@ function App() {
 
   return (
     <>
-      <AppHeader />
       <Router>
+      <AppHeader />
         <Switch>
           <Route path="/login">
             <LoginPage />
@@ -56,7 +56,7 @@ function App() {
           <Route path="/reset-password">
             <ResetPasswordPage />
           </Route>
-          <ProtectedRoute path="/profile">
+          <ProtectedRoute path="/profile/:category?" exact={true}>
             <ProfilePage />
           </ProtectedRoute>
           <Route path="/ingredients/:id" exact={true}>
@@ -64,6 +64,9 @@ function App() {
           </Route>
           <Route path="/" exact={true}>
             <Main />
+          </Route>
+          <Route>
+            <NotFound404 />
           </Route>
         </Switch>
         {showIngredientModal && currentIngredientDetails}

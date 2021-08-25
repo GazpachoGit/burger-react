@@ -4,6 +4,7 @@ import ForgotPasswordPage from './forgot-password';
 import ResetPasswordPage from './reset-password';
 import ProfilePage from './profile';
 import IngredientPage from './ingredient';
+import NotFound404 from "./not-found";
 
 export {
     LoginPage,
@@ -11,5 +12,6 @@ export {
     ForgotPasswordPage,
     ResetPasswordPage,
     ProfilePage,
-    IngredientPage
+    IngredientPage,
+    NotFound404
 }

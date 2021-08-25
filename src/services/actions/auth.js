@@ -18,7 +18,8 @@ export function singIn(form, type) {
             })
             .then(data => {
                 if(data.success){
-                    const authToken = data.accessToken.split("Bearer ")[1]
+                    const authToken = data.accessToken.split("Bearer ")[1];
+                    
                     setCookie('token', authToken);
             
                     localStorage.setItem('token', data.refreshToken);
@@ -75,8 +76,9 @@ export function getUser() {
         })
         getUserRequest()
             .then(res => {
-                if (res.ok) return res.json();
-                return Promise.reject(res.status);
+                //if (res.ok) return res.json();
+                //return Promise.reject(res.json());
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
                 if (data.success) {
@@ -91,7 +93,8 @@ export function getUser() {
             })
             .catch(res => {
                 if(res.message === 'jwt expired') {
-                    updateTocken(getUser);
+                    //updateTocken(getUser);
+                    dispatch(updateTocken(getUser()))
                 } else {
                     dispatch({
                         type: USER_LOADED
@@ -103,25 +106,33 @@ export function getUser() {
   };
 
 function updateTocken(callback) {
-    refreshTockenRequest()
+    return function(dispatch) {
+        refreshTockenRequest()
         .then(res => {
-            if (res.ok) return res.json();
+            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
         })
         .then(data => {
             if (data.success) {
-                const authToken = data.accessToken.split("Bearer ")
+                const authToken = data.accessToken.split("Bearer ")[1];
                 setCookie('token', authToken);
                 localStorage.setItem('token', data.refreshToken);
-                callback();
+                dispatch(callback);
             }
         })
+        .catch((res) => {
+            console.log(res.message);
+            dispatch({
+                type: USER_LOADED
+            })
+        })
+    }
 }
 
 export function singOut() {
     return function(dispatch){
         logoutRequest()
             .then(res => {
-                if (res.ok) return res.json();
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
                 if (data.success) {
@@ -132,6 +143,9 @@ export function singOut() {
                     deleteCookie('token');
                     localStorage.removeItem('token');
                 }
+            })
+            .catch((res) => {
+                console.log(res.message);
             })
     }
 }
