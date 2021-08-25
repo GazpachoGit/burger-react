@@ -17,6 +17,7 @@ export default function LoginPage() {
     const loginHandler = useCallback((e) => {
         e.preventDefault();
         dispatch(singIn(form, 'login'));
+        
     }, [dispatch, form])
     return (
         <>

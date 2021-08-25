@@ -40,3 +40,6 @@
     text-decoration: none;
     color: #4c4cff;
 }
+.unselected{
+    color: var(--text-inactive-color);
+}

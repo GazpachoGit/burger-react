@@ -1,5 +1,5 @@
 import { loginRequest, registerRequest, forgotPasswordRequest, getUserRequest, logoutRequest, refreshTockenRequest, resetPasswordRequest } from '../auth-api';
-import { setCookie } from '../../utils/cookie-utils';
+import { setCookie, deleteCookie } from '../../utils/cookie-utils';
 //import {authUrl} from '../../utils/constants';
 
 export const SET_USER = 'SET_USER';
@@ -115,4 +115,23 @@ function updateTocken(callback) {
                 callback();
             }
         })
-  }
+}
+
+export function singOut() {
+    return function(dispatch){
+        logoutRequest()
+            .then(res => {
+                if (res.ok) return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    dispatch({
+                        type: SET_USER,
+                        user: null,
+                    });
+                    deleteCookie('token');
+                    localStorage.removeItem('token');
+                }
+            })
+    }
+}

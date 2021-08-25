@@ -64,6 +64,7 @@ export const getUserRequest = async () =>{
 export const refreshTockenRequest = async () => 
 await fetch(`${authUrl}/auth/token`, {
   method: 'POST',
+  mode: 'cors',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -74,13 +75,10 @@ export const logoutRequest = async () => {
   return await fetch(`${authUrl}/auth/logout`, {
     method: 'POST',
     mode: 'cors',
-    cache: 'no-cache',
-    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json'
     },
-    redirect: 'follow',
-    referrerPolicy: 'no-referrer'
+    body: JSON.stringify(localStorage.getItem('token'))
   });
 };
 
