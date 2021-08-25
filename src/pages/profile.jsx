@@ -20,7 +20,7 @@ export default function ProfilePage() {
         if(params?.category )
             setCategory({name: params.category, desc: descObject[params.category]});
         
-    }, [])
+    }, [params])
 
     const onClick = (name) => {
         const desc = descObject[name] || "";
@@ -32,9 +32,9 @@ export default function ProfilePage() {
             <div className={`${styles.main} ${styles.autoFit} pt-30`}>
                 <div className={`${styles.navColumn} mr-15`}>
                     <div className={styles.navContainer}>
-                            <p onClick={() => onClick("info")} className={`text text_type_main-large pb-3 ${categoty.name !== 'info' && styles.unselected}`}>Профиль</p>
-                            <p onClick={() => onClick("orders")} className={`text text_type_main-large pb-3 ${categoty.name !== 'orders' && styles.unselected}`}>История заказов</p>
-                            <p onClick={() => onClick("logout")} className={`text text_type_main-large pb-3 ${categoty.name !== 'logout' && styles.unselected}`}>Выход</p>
+                            <p onClick={() => onClick("info")} className={`text text_type_main-large pb-3 ${categoty.name !== 'info' && styles.unselected} ${styles.pointer}`}>Профиль</p>
+                            <p onClick={() => onClick("orders")} className={`text text_type_main-large pb-3 ${categoty.name !== 'orders' && styles.unselected} ${styles.pointer}`}>История заказов</p>
+                            <p onClick={() => onClick("logout")} className={`text text_type_main-large pb-3 ${categoty.name !== 'logout' && styles.unselected} ${styles.pointer}`}>Выход</p>
 
                         <p className={ "text text_type_main-default mt-20"}>{categoty.desc}</p>
                     </div>

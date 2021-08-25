@@ -1,11 +1,14 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { forgotPassword } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ForgotPasswordPage() {
+    
+    const user = useSelector(state => state.auth.user);
+    
     const [form, setValue] = useState({ email: '' });
     const changingPassword = useSelector(state => state.auth.changingPassword);
 
@@ -19,6 +22,9 @@ export default function ForgotPasswordPage() {
         e.preventDefault();
         dispatch(forgotPassword(form));
     }
+
+    if(user) return <Redirect to={'/'}/>
+
     return (
         <>
             <div className={styles.formContainer}>

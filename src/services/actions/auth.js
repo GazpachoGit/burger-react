@@ -1,4 +1,4 @@
-import { loginRequest, registerRequest, forgotPasswordRequest, getUserRequest, logoutRequest, refreshTockenRequest, resetPasswordRequest } from '../auth-api';
+import { loginRequest, registerRequest, forgotPasswordRequest, getUserRequest, logoutRequest, refreshTockenRequest, resetPasswordRequest, updateUserRequest } from '../auth-api';
 import { setCookie, deleteCookie } from '../../utils/cookie-utils';
 //import {authUrl} from '../../utils/constants';
 
@@ -122,9 +122,31 @@ function updateTocken(callback) {
         .catch((res) => {
             console.log(res.message);
             dispatch({
+                type: SET_USER,
+                user: null,
+            })
+            dispatch({
                 type: USER_LOADED
             })
         })
+    }
+}
+
+export function updateUser(form) {
+    return function(dispatch) {
+        updateUserRequest(form)
+            .then(res => {
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+            })
+            .then(data => {
+                dispatch({
+                    type: SET_USER,
+                    user: data.user,
+                });
+            })
+            .catch((res) => {
+                console.log(res.message);
+            })
     }
 }
 

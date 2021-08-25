@@ -59,6 +59,24 @@ export const getUserRequest = async () =>{
     referrerPolicy: 'no-referrer'
   });
 }
+
+export const updateUserRequest = async (form) =>{
+  console.log(JSON.stringify(form))
+  return await fetch(`${authUrl}/auth/user`, {
+    method: 'PATCH',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token')
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer',
+    body: JSON.stringify(form)
+  });
+} 
+  
   
 
 export const refreshTockenRequest = async () => 
