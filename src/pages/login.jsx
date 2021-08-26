@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function LoginPage() {
     const [form, setValue] = useState({ email: '', password: '' });
     const user = useSelector(state => state.auth.user);
+    const userLoaded = useSelector(state => state.auth.userLoaded)
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
@@ -23,12 +24,17 @@ export default function LoginPage() {
 
     const {state} = useLocation();
 
+    if(!userLoaded) return(
+        <div className={styles.formContainer}>
+            <p className="text text_type_main-default">Подождите, идет загрузка пользователя</p>
+        </div>
+    ) 
+
     if(user) return <Redirect to={state?.from ? state.from.pathname : '/'}/>
 
     return (
         <>
             <div className={styles.formContainer}>
-
                 <form className={styles.form + ' pb-20'}>
                     <h2 className="text text_type_main-medium">Вход</h2>
                     <Input

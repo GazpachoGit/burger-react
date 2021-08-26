@@ -13,12 +13,12 @@ import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/acti
 
 export default function IngredientsList({ tabs }) {
 
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const { ingredientsRequest, ingredients, ingredientsFailed } = useSelector(state => state.ingredients);
 
-    React.useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
+    // React.useEffect(() => {
+    //     dispatch(getIngredients());
+    // }, []);
 
     const sectionList = React.useMemo(() => {
         const arr = []

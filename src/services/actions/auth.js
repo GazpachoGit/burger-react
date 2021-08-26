@@ -6,6 +6,8 @@ export const SET_USER = 'SET_USER';
 export const SET_CHANGING_PASSWORD = 'SET_CHANGING_PASSWORD';
 export const USER_REQUIRED = 'USER_REQUIRED';
 export const USER_LOADED = 'USER_LOADED';
+export const SHOW_MESSAGE = 'SHOW_MESSAGE';
+export const SET_MESSAGE = 'SET_MESSAGE'
 
 export function singIn(form, type) {
     return function(dispatch){

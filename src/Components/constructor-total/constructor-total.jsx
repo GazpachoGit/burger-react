@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
 import styles from './constructor-total.module.css'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { createOrder, CREATE_ORDER_FAILED, SHOW_ORDER_MODAL } from '../../services/actions/'
+import { createOrder, CREATE_ORDER_FAILED, SHOW_ORDER_MODAL } from '../../services/actions/';
+import {useHistory} from 'react-router-dom';
 
 export default function ConstructorTotal() {
 
@@ -11,19 +12,25 @@ export default function ConstructorTotal() {
     const Ids = useSelector(state => state.ingredients.ingredients
         .filter(item => item.qty)
         .map(item => item._id));
+    const user = useSelector(state => state.auth.user);
 
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const showOrderModal = () => {
-        if(bun)
-            dispatch(createOrder(Ids));
-        else {
+        if(!bun) {
             dispatch({
                 type:CREATE_ORDER_FAILED,
                 message: "Для оформления заказа требуется добавить булку"
             })
-            dispatch({type: SHOW_ORDER_MODAL})
-        }  
+            dispatch({type: SHOW_ORDER_MODAL});
+            return;
+        }
+        if(!user) {
+            history.push('/login');
+        } else {
+            dispatch(createOrder(Ids));
+        }
     }
 
     return (

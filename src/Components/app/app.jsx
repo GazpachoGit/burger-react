@@ -9,6 +9,8 @@ import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
 import {ProtectedRoute} from '../protected-route/protected-route';
+import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
+import {getUser} from '../../services/actions/auth';
 
 
 function App() {
@@ -38,6 +40,11 @@ function App() {
   const currentOrderModal = React.useMemo(() => {
     return <Modal children={<OrderDetails />} closeHandler={closeOrderHandler} />
   }, [closeOrderHandler]);
+
+  React.useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(getUser());
+  }, [dispatch]);
 
   return (
     <>

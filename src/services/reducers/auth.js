@@ -1,9 +1,16 @@
-import {SET_USER, SET_CHANGING_PASSWORD, USER_REQUIRED, USER_LOADED } from '../actions/auth';
+import {    SET_USER,
+            SET_CHANGING_PASSWORD,
+            USER_REQUIRED,
+            USER_LOADED,
+            SHOW_MESSAGE,
+            SET_MESSAGE } from '../actions/auth';
 
 const initialState = {
     user: null,
     changingPassword: false,
-    userLoaded: false
+    userLoaded: false,
+    showMessage: false,
+    authMessage: ""
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -27,6 +34,16 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userLoaded: true
+            }
+        case SHOW_MESSAGE:
+            return {
+                ...state,
+                showMessage: true
+            }
+        case SET_MESSAGE:
+            return {
+                ...state,
+                authMessage: action.message
             }
         default:
             return state;
