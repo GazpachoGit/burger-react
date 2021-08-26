@@ -1,41 +1,29 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from '../../services/actions/auth';
 import styles from '../../pages/./login.module.css';
 
-export function ProtectedRoute({ children, ...rest }) {
+export default function AnonimRoute({ children, ...rest }) {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
-    const userLoaded = useSelector(state => state.auth.userLoaded)
+    const userLoaded = useSelector(state => state.auth.userLoaded);
+    const {state} = useLocation();
 
-    const init = async () => {
-        dispatch(getUser());
-    };
-
-    useEffect(() => {
-        init();
-    }, []);
-
-    if (!userLoaded) {
-        return <div className={styles.formContainer}>
+    if(!userLoaded) return(
+        <div className={styles.formContainer}>
             <p className="text text_type_main-default">Подождите, идет загрузка пользователя</p>
         </div>
-    }
+    ) 
 
     return (
         <Route
             {...rest}
             render={({ location }) =>
-                user ? (
+                !user ? (
                     children
                 ) : (
-                    <Redirect
-                        to={{
-                            pathname: '/login',
-                            state: { from: location }
-                        }}
-                    />
+                    <Redirect to={state?.from ? state.from.pathname : '/'}/>
                 )
             }
         />

@@ -19,7 +19,6 @@ export default function RegisterPage() {
         dispatch(singIn(form, 'register'));
     }, [dispatch, form])
 
-    if(user) return <Redirect to={'/'}/>
     return (
         <>
             <div className={styles.formContainer}>

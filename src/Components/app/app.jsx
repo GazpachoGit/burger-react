@@ -10,12 +10,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
 import {ProtectedRoute} from '../protected-route/protected-route';
 import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
-import {getUser} from '../../services/actions/auth';
+import {getUser, SHOW_MESSAGE} from '../../services/actions/auth';
+import AnonimRoute from '../anonim-route/anonim-route';
+import CommonMessage from '../common-message/common-message';
 
 
 function App() {
 
   const { showIngredientModal, currentIngredient, showOrderModal } = useSelector(state => state.ingredients);
+  const showMessage = useSelector(state => state.auth.showMessage);
 
   const dispatch = useDispatch();
 
@@ -33,6 +36,12 @@ function App() {
     })
   }, [dispatch]);
 
+  const closeCommonMessageHandler = React.useCallback(() => {
+    dispatch({
+      type: SHOW_MESSAGE
+    })
+  }, [dispatch]);
+
   const currentIngredientDetails = React.useMemo(() => {
     return <Modal title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeIngredientHandler} />
   }, [currentIngredient, closeIngredientHandler]);
@@ -40,6 +49,10 @@ function App() {
   const currentOrderModal = React.useMemo(() => {
     return <Modal children={<OrderDetails />} closeHandler={closeOrderHandler} />
   }, [closeOrderHandler]);
+
+  const currentCommonMessage = React.useMemo(() => {
+    return <Modal children={<CommonMessage />} closeHandler={closeCommonMessageHandler} />
+  }, [closeCommonMessageHandler]);
 
   React.useEffect(() => {
     dispatch(getIngredients());
@@ -51,15 +64,15 @@ function App() {
       <Router>
       <AppHeader />
         <Switch>
-          <Route path="/login">
+          <AnonimRoute path="/login">
             <LoginPage />
-          </Route>
-          <Route path="/register" exact={true}>
+          </AnonimRoute>
+          <AnonimRoute path="/register" exact={true}>
             <RegisterPage />
-          </Route>
-          <Route path="/forgot-password">
+          </AnonimRoute>
+          <AnonimRoute path="/forgot-password">
             <ForgotPasswordPage />
-          </Route>
+          </AnonimRoute>
           <Route path="/reset-password">
             <ResetPasswordPage />
           </Route>
@@ -78,6 +91,7 @@ function App() {
         </Switch>
         {showIngredientModal && currentIngredientDetails}
         {showOrderModal && currentOrderModal}
+        {showMessage && currentCommonMessage}
       </Router>
     </>
 

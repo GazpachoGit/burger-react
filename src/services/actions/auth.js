@@ -145,11 +145,24 @@ export function updateUser(form) {
                     type: SET_USER,
                     user: data.user,
                 });
+                dispatch(showMessage("Данные пользователя изменены"));
             })
             .catch((res) => {
-                console.log(res.message);
+                dispatch(showMessage("Ошибка: " + res.message));
             })
     }
+}
+
+function showMessage(message){
+    return function(dispatch) {
+        dispatch({
+            type: SET_MESSAGE,
+            message
+        });
+        dispatch({
+            type: SHOW_MESSAGE
+        })
+    } 
 }
 
 export function singOut() {

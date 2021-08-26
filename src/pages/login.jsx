@@ -24,13 +24,13 @@ export default function LoginPage() {
 
     const {state} = useLocation();
 
-    if(!userLoaded) return(
-        <div className={styles.formContainer}>
-            <p className="text text_type_main-default">Подождите, идет загрузка пользователя</p>
-        </div>
-    ) 
+    // if(!userLoaded) return(
+    //     <div className={styles.formContainer}>
+    //         <p className="text text_type_main-default">Подождите, идет загрузка пользователя</p>
+    //     </div>
+    // ) 
 
-    if(user) return <Redirect to={state?.from ? state.from.pathname : '/'}/>
+    // if(user) return <Redirect to={state?.from ? state.from.pathname : '/'}/>
 
     return (
         <>
