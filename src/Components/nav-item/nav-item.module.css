@@ -1,0 +1,7 @@
+.link{
+    color: var(--text-primary-color);
+    text-decoration: none;
+}
+.unselected {
+    color: var(--text-inactive-color);
+}

@@ -3,14 +3,16 @@ import {    SET_USER,
             USER_REQUIRED,
             USER_LOADED,
             SHOW_MESSAGE,
-            SET_MESSAGE } from '../actions/auth';
+            SET_MESSAGE,
+            SET_ROUTE } from '../actions/auth';
 
 const initialState = {
     user: null,
     changingPassword: false,
     userLoaded: false,
     showMessage: false,
-    authMessage: ""
+    authMessage: "",
+    currentRoute: ""
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -45,6 +47,12 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 authMessage: action.message
             }
+        case SET_ROUTE:{
+            return {
+                ...state,
+                currentRoute: action.route
+            }
+        }
         default:
             return state;
     }
