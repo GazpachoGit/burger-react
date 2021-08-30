@@ -1,7 +1,7 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useCallback } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { singIn } from '../services/actions/auth';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,7 @@ export default function RegisterPage() {
     const registerHandler = useCallback((e) => {
         e.preventDefault();
         dispatch(singIn(form, 'register'));
+        useHistory.push('/');
     }, [dispatch, form])
 
     return (
