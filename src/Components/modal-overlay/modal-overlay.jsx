@@ -6,9 +6,13 @@ export default function ModalOverlay(props){
     return (
         <div onClick={e => e.stopPropagation()} className={styles.wrap}>
             <div className={styles.modal + ' pr-10 pl-10 pt-10 pb-15'}>
-                <div className={styles.modalHead}>
-                    <span className="text text_type_main-medium ">{props.title}</span>
-                    <CloseIcon onClick={props.closeHandler} type="primary" />
+                <div className={props.hideCloseButton ? styles.modalHeadTitle: styles.modalHeadWithClose}>
+                <span className="text text_type_main-medium ">{props.title}</span>
+                {props.hideCloseButton ? 
+                    null : 
+                        <>
+                            <CloseIcon onClick={props.closeHandler} type="primary" />
+                        </>}
                 </div>
                 {props.children}
             </div>           

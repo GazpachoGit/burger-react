@@ -7,15 +7,12 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("react-modals");
 
-export default function Modal({title, children, closeHandler }){
-
-    
-
+export default function Modal({title, children, closeHandler, hideCloseButton }){
 
     const listener = React.useCallback((event)=>{
         const key = event.key;
         if (key === "Escape") {
-            closeHandler();
+            closeHandler(event);
         }
     },[closeHandler]);
 
@@ -28,7 +25,7 @@ export default function Modal({title, children, closeHandler }){
 
     return ReactDOM.createPortal((
         <div className={styles.overlay} onClick={closeHandler}>
-        <ModalOverlay title={title} children={children} closeHandler={closeHandler}/>
+        <ModalOverlay title={title} children={children} closeHandler={closeHandler} hideCloseButton={hideCloseButton}/>
         </div>
     ), modalRoot)
 }

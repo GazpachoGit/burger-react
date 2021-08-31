@@ -14,4 +14,16 @@
     align-items: center;
 }
 
+.modalHeadWithClose{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeadTitle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
