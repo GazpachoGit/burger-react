@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
 import AnonimRoute from '../anonim-route/anonim-route';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Main from '../main/main';
 import {useHistory} from 'react-router-dom';
 import Modal from '../modal/modal';
-import { useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 export default function SwitchWrapper() {

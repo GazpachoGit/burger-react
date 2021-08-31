@@ -1,11 +1,9 @@
 import { Redirect, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getUser } from '../../services/actions/auth';
 import styles from '../../pages/./login.module.css';
+import PropTypes from 'prop-types';
 
 export default function AnonimRoute({ children, ...rest }) {
-    const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
     const userLoaded = useSelector(state => state.auth.userLoaded);
     const {state} = useLocation();
@@ -28,4 +26,8 @@ export default function AnonimRoute({ children, ...rest }) {
             }
         />
     );
+}
+
+AnonimRoute.propTypes = {
+    children: PropTypes.elementType.isRequired
 }

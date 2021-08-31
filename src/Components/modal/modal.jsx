@@ -33,5 +33,6 @@ export default function Modal({title, children, closeHandler, hideCloseButton })
 Modal.propTypes = {
     title: PropTypes.string,
     children: PropTypes.node,
-    closeHandler: PropTypes.func
+    closeHandler: PropTypes.func,
+    hideCloseButton: PropTypes.bool
 };

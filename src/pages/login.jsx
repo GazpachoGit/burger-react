@@ -1,14 +1,12 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useCallback } from 'react';
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { singIn } from '../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function LoginPage() {
     const [form, setValue] = useState({ email: '', password: '' });
-    const user = useSelector(state => state.auth.user);
-    const userLoaded = useSelector(state => state.auth.userLoaded)
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
@@ -21,16 +19,6 @@ export default function LoginPage() {
         dispatch(singIn(form, 'login'));
         
     }, [dispatch, form])
-
-    const {state} = useLocation();
-
-    // if(!userLoaded) return(
-    //     <div className={styles.formContainer}>
-    //         <p className="text text_type_main-default">Подождите, идет загрузка пользователя</p>
-    //     </div>
-    // ) 
-
-    // if(user) return <Redirect to={state?.from ? state.from.pathname : '/'}/>
 
     return (
         <>

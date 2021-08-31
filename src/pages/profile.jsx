@@ -41,14 +41,14 @@ export default function ProfilePage() {
     return (
         <>
             <div className={`${styles.main} ${styles.autoFit} pt-30`}>
-                <div className={`${styles.navColumn} mr-15`}>
-                    <div className={styles.navContainer}>
-                            <p onClick={() => onClick("info")} className={`text text_type_main-large pb-3 ${categoty.name !== 'info' && styles.unselected} ${styles.pointer}`}>Профиль</p>
-                            <p onClick={() => onClick("orders")} className={`text text_type_main-large pb-3 ${categoty.name !== 'orders' && styles.unselected} ${styles.pointer}`}>История заказов</p>
-                            <p onClick={() => onClick("logout")} className={`text text_type_main-large pb-3 ${categoty.name !== 'logout' && styles.unselected} ${styles.pointer}`}>Выход</p>
+                <nav className={`${styles.navColumn} mr-15`}>
+                    <ul className={styles.navContainer}>
+                            <li onClick={() => onClick("info")} className={`text text_type_main-large pb-3 ${categoty.name !== 'info' && styles.unselected} ${styles.pointer}`}>Профиль</li>
+                            <li onClick={() => onClick("orders")} className={`text text_type_main-large pb-3 ${categoty.name !== 'orders' && styles.unselected} ${styles.pointer}`}>История заказов</li>
+                            <li onClick={() => onClick("logout")} className={`text text_type_main-large pb-3 ${categoty.name !== 'logout' && styles.unselected} ${styles.pointer}`}>Выход</li>
                         <p className={ "text text_type_main-default mt-20"}>{categoty.desc}</p>
-                    </div>
-                </div>
+                    </ul>
+                </nav>
                     <Route path={['/profile',`/profile/info`]} exact={true} component={ProfileForm}/>
                     <Route path={`/profile/orders`} exact={true} component={OrdersHostory}/>
                     <Route path={`/profile/logout`} exact={true} component={LogoutForm}/>

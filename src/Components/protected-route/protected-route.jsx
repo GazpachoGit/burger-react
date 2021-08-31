@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getUser } from '../../services/actions/auth';
 import styles from '../../pages/./login.module.css';
+import PropTypes from 'prop-types';
 
 export function ProtectedRoute({ children, ...rest }) {
     const dispatch = useDispatch();
@@ -40,4 +41,7 @@ export function ProtectedRoute({ children, ...rest }) {
             }
         />
     );
+}
+ProtectedRoute.propTypes = {
+    children: PropTypes.elementType.isRequired
 }

@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './nav-item.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 export default function NavItem({ title, to}) {
     const currentRoute = useSelector(state => state.auth.currentRoute);
@@ -32,4 +33,9 @@ export default function NavItem({ title, to}) {
             </Link>
         </>
     )
+}
+
+NavItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired
 }

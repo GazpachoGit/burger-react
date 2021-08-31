@@ -40,7 +40,7 @@ export const authReducer = (state = initialState, action) => {
         case SHOW_MESSAGE:
             return {
                 ...state,
-                showMessage: true
+                showMessage: !state.showMessage
             }
         case SET_MESSAGE:
             return {
