@@ -3,7 +3,6 @@ import {GET_INGREDIENTS_REQUEST,
         GET_INGREDIENTS_FAILED,
         ADD_COMPONENT,
         REMOVE_COMPONENT,
-        SHOW_INGREDIENT_MODAL,
         SHOW_ORDER_MODAL,
         CREATE_ORDER_REQUEST,
         CREATE_ORDER_SUCCESS,
@@ -41,9 +40,6 @@ const initialState = {
         bun: null,
         optional: []
     },
-
-    showIngredientModal: false,
-    currentIngredient:{},
 
     orderRequest: false,
     orderFailed: false,
@@ -130,12 +126,6 @@ export const ingredientsReducer = (state= initialState, action) => {
                 }
             }
         }
-        case SHOW_INGREDIENT_MODAL:
-            return {
-                ...state,
-                showIngredientModal: !state.showIngredientModal,
-                currentIngredient: action.item
-            }
         case SHOW_ORDER_MODAL:
             return {
                 ...state,
