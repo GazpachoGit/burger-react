@@ -11,9 +11,10 @@ import OrdersFeed from '../../pages/orders-feed';
 
 export default function SwitchWrapper() {
     const location = useLocation();
-    let background = location.state?.background;
-
     const history = useHistory();
+    let background = history.action === 'PUSH' ? location.state?.background : null;
+
+    
     const closeIngredientHandler = useCallback(e => {
         e.stopPropagation();
         history.goBack();

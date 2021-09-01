@@ -45,14 +45,12 @@ function App() {
   }, []);
 
   return (
-    <>
       <Router>
         <AppHeader />
         <SwitchWrapper />
         {showOrderModal && currentOrderModal}
         {showMessage && currentCommonMessage}
       </Router>
-    </>
   );
 }
 
