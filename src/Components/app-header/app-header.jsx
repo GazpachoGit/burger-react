@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './app-header.module.css';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import NavItem from '../nav-item/nav-item';
+import {Link} from 'react-router-dom';
 
 
 export default function AppHeader() {
@@ -14,7 +15,9 @@ export default function AppHeader() {
                     <NavItem title="Лента заказов" to="/orders-feed" />
                 </div>
                 <div className={styles.logo}>
+                <Link to="/">
                     <Logo />
+                </Link>
                 </div>
                 <div className={styles.navContainer}>
                     <NavItem title="Личный кабинет" to="/profile" />

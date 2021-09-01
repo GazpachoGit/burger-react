@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import styles from './nav-item.module.css';
-import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { BurgerIcon, ListIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import {useLocation} from 'react-router-dom';
 

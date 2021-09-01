@@ -34,7 +34,7 @@ export default function ResetPasswordPage() {
                     onChange={onChange} />
                 <Button type="primary" size="medium">Сохранить</Button>
             </form>
-            <p className="text text_type_main-default">Вспомнили пароль? <Link className={styles.link} to={'/login'}>Войти</Link></p>
+            <p className="text text_type_main-default">Вспомнили пароль?<Link className={styles.link} to={'/login'}>Войти</Link></p>
             </div> : <Redirect to={{pathname: '/forgot-password'}} />}
         </>
     )
