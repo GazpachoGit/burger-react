@@ -11,13 +11,13 @@ export default function AppHeader() {
             <nav className={styles.nav}>
                 <div className={styles.navContainer}>
                     <NavItem title="Конструктор" to="/" />
-                    <NavItem title="Лента заказов" to="/profile/orders" />
+                    <NavItem title="Лента заказов" to="/orders-feed" />
                 </div>
                 <div className={styles.logo}>
                     <Logo />
                 </div>
                 <div className={styles.navContainer}>
-                    <NavItem title="Личный кабинет" to="/profile/info" />
+                    <NavItem title="Личный кабинет" to="/profile" />
                 </div>
             </nav>
         </header>

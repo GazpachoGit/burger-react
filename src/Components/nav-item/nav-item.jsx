@@ -1,15 +1,21 @@
 import {Link} from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import styles from './nav-item.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
+import {useLocation} from 'react-router-dom';
+
+
 
 export default function NavItem({ title, to}) {
-    const currentRoute = useSelector(state => state.auth.currentRoute);
+    const location = useLocation();
+    const currentRoute = location.pathname;
+
+    const activeNav =  (to === '/' && to === currentRoute) || (to !== '/' && currentRoute.startsWith(to));
+
     let Child = {};
-    const iconType = currentRoute === to ? 'primary' : 'secondary';
+    const iconType = activeNav ? 'primary' : 'secondary';
     
-    const activeStatus = currentRoute !== to && styles.unselected;
+    const activeStatus = !activeNav && styles.unselected;
 
     switch(title){
         case "Конструктор":
@@ -27,7 +33,7 @@ export default function NavItem({ title, to}) {
 
     return (
         <>
-            <Link to={to} className={`${styles.link} text text_type_main-default mt-4 ml-4`}>
+            <Link to={to} className={`${styles.link} text text_type_main-default mt-4 ml-4`} >
                 {Child}
                 <span className={`text text_type_main-default ${activeStatus}`}>{title}</span>
             </Link>

@@ -4,8 +4,6 @@ import { Route, useHistory, useParams} from 'react-router-dom';
 import ProfileForm from '../Components/profile-form/profile-form';
 import LogoutForm from '../Components/logout-form/logout-form';
 import OrdersHostory from '../Components/order-history/order-history';
-import { useDispatch } from 'react-redux';
-import {SET_ROUTE} from '../services/actions/auth';
 
 export default function ProfilePage() {
     const descObject = {
@@ -29,14 +27,6 @@ export default function ProfilePage() {
         setCategory({name, desc});
         history.push(`/profile/${name}`)
     }
-
-    const dispatch = useDispatch();
-    useEffect(() => {
-      dispatch({
-        type: SET_ROUTE,
-        route: `/profile/${categoty.name}`
-      })
-    },[categoty.name]);
 
     return (
         <>

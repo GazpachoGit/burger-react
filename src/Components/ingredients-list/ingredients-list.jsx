@@ -5,12 +5,7 @@ import IngredientsSection from '../ingredients-section/ingredients-section';
 
 import PropTypes from 'prop-types';
 import { tabType } from '../../utils/local-types';
-
-
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
-
-
+import { useSelector } from 'react-redux';
 export default function IngredientsList({ tabs }) {
 
     //const dispatch = useDispatch();

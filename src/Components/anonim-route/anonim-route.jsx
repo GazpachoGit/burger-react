@@ -1,5 +1,5 @@
 import { Redirect, Route, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from '../../pages/./login.module.css';
 import PropTypes from 'prop-types';
 
@@ -29,5 +29,5 @@ export default function AnonimRoute({ children, ...rest }) {
 }
 
 AnonimRoute.propTypes = {
-    children: PropTypes.elementType.isRequired
+    children: PropTypes.node.isRequired
 }

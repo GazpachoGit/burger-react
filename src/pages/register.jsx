@@ -3,12 +3,11 @@ import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burg
 import { useState, useCallback } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { singIn } from '../services/actions/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export default function RegisterPage() {
     const [form, setValue] = useState({ name: '', email: '', password: '' });
     const dispatch = useDispatch();
-    const user = useSelector(state => state.auth.user);
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });

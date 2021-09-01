@@ -7,6 +7,7 @@ import {useHistory} from 'react-router-dom';
 import Modal from '../modal/modal';
 import { useCallback } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrdersFeed from '../../pages/orders-feed';
 
 export default function SwitchWrapper() {
     const location = useLocation();
@@ -44,6 +45,9 @@ export default function SwitchWrapper() {
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientPage />
                 </Route>
+                <ProtectedRoute path="/orders-feed" exact={true}>
+                    <OrdersFeed />
+                </ProtectedRoute>
                 <Route path="/" exact={true}>
                     <Main />
                 </Route>

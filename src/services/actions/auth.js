@@ -7,17 +7,14 @@ export const SET_CHANGING_PASSWORD = 'SET_CHANGING_PASSWORD';
 export const USER_REQUIRED = 'USER_REQUIRED';
 export const USER_LOADED = 'USER_LOADED';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
-export const SET_MESSAGE = 'SET_MESSAGE'
-export const SET_ROUTE = 'SET_ROUTE';
+export const SET_MESSAGE = 'SET_MESSAGE';
 
 export function singIn(form, type) {
     return function(dispatch){
         const request = type === 'login' ? loginRequest : registerRequest;
         request(form)
             .then(res => {
-                if (res.ok)
-                    return res.json();
-                return Promise.reject(res.status);
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
                 if(data.success){
@@ -32,7 +29,10 @@ export function singIn(form, type) {
                         user: data.user,
                     });
                 } 
-            });
+            })
+            .catch(res => {
+                dispatch(showMessage("Ошибка: " + res.message));
+            })
     }
 }
 
@@ -40,9 +40,7 @@ export function forgotPassword(form) {
     return function(dispatch) {
         forgotPasswordRequest(form)
         .then(res => {
-            if (res.ok)
-                return res.json();
-            return Promise.reject(res.status);
+            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
         })
         .then(data => {
             if(data.success){       
@@ -50,7 +48,10 @@ export function forgotPassword(form) {
                     type: SET_CHANGING_PASSWORD
                 });;
             } 
-        });
+        })
+        .catch(res => {
+            dispatch(showMessage("Ошибка: " + res.message));
+        })
     }
 }
 
@@ -58,9 +59,7 @@ export function resetPassword(form) {
     return function(dispatch) {
         resetPasswordRequest(form)
         .then(res => {
-            if (res.ok)
-                return res.json();
-            return Promise.reject(res.status);
+            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
         })
         .then(data => {
             if(data.success){       
@@ -68,7 +67,10 @@ export function resetPassword(form) {
                     type: SET_CHANGING_PASSWORD
                 });;
             } 
-        });
+        })
+        .catch(res => {
+            dispatch(showMessage("Ошибка: " + res.message));
+        })
     }
 }
 
@@ -79,8 +81,6 @@ export function getUser() {
         })
         getUserRequest()
             .then(res => {
-                //if (res.ok) return res.json();
-                //return Promise.reject(res.json());
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
@@ -102,6 +102,7 @@ export function getUser() {
                     dispatch({
                         type: USER_LOADED
                     })
+                    dispatch(showMessage("Ошибка: " + res.message));
                 }
 
             })
@@ -123,14 +124,14 @@ function updateTocken(callback) {
             }
         })
         .catch((res) => {
-            console.log(res.message);
             dispatch({
                 type: SET_USER,
                 user: null,
-            })
+            });
             dispatch({
                 type: USER_LOADED
-            })
+            });
+            dispatch(showMessage("Ошибка: " + res.message));
         })
     }
 }
@@ -183,7 +184,7 @@ export function singOut() {
                 }
             })
             .catch((res) => {
-                console.log(res.message);
+                dispatch(showMessage("Ошибка: " + res.message));
             })
     }
 }

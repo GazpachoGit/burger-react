@@ -1,5 +1,5 @@
 import styles from './login.module.css';
-import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { forgotPassword } from '../services/actions/auth';
