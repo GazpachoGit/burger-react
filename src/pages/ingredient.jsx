@@ -8,7 +8,5 @@ export default function IngredientPage() {
         <div className={styles.center}>
             <ModalOverlay title="Детали ингредиента" children={<IngredientDetails />} hideCloseButton={true}/>
         </div>
-        
-        
     )
 }

@@ -8,12 +8,7 @@ import { tabType } from '../../utils/local-types';
 import { useSelector } from 'react-redux';
 export default function IngredientsList({ tabs }) {
 
-    //const dispatch = useDispatch();
     const { ingredientsRequest, ingredients, ingredientsFailed } = useSelector(state => state.ingredients);
-
-    // React.useEffect(() => {
-    //     dispatch(getIngredients());
-    // }, []);
 
     const sectionList = React.useMemo(() => {
         const arr = []

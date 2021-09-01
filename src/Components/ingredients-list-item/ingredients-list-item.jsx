@@ -37,7 +37,6 @@ export default function IngredientsListItem({ item }) {
                 {!!qty && <Counter count={qty} size="default" />}
             </div>
         </Link>
-
     )
 }
 

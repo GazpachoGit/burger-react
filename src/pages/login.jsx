@@ -21,26 +21,24 @@ export default function LoginPage() {
     }, [dispatch, form])
 
     return (
-        <>
-            <div className={styles.formContainer}>
-                <form className={styles.form + ' pb-20'} onSubmit={loginHandler}>
-                    <h2 className="text text_type_main-medium">Вход</h2>
-                    <Input
-                        type={'text'}
-                        size={'default'}
-                        value={form.email}
-                        name={'email'}
-                        placeholder={'e-mail'}
-                        onChange={onChange} />
-                    <PasswordInput
-                        onChange={onChange}
-                        value={form.password}
-                        name={'password'} />
-                    <Button type="primary" size="medium">Войти</Button>
-                </form>
-                <p className="text text_type_main-default">Вы - новый пользователь? <Link className={styles.link} to={'/register'}>Зарегистрироваться</Link></p>
-                <p className="text text_type_main-default"> Забыли пароль? <Link className={styles.link} to={'/forgot-password'}>Восстановить</Link></p>
-            </div>
-        </>
+        <div className={styles.formContainer}>
+            <form className={styles.form + ' pb-20'} onSubmit={loginHandler}>
+                <h2 className="text text_type_main-medium">Вход</h2>
+                <Input
+                    type={'text'}
+                    size={'default'}
+                    value={form.email}
+                    name={'email'}
+                    placeholder={'e-mail'}
+                    onChange={onChange} />
+                <PasswordInput
+                    onChange={onChange}
+                    value={form.password}
+                    name={'password'} />
+                <Button type="primary" size="medium">Войти</Button>
+            </form>
+            <p className="text text_type_main-default">Вы - новый пользователь? <Link className={styles.link} to={'/register'}>Зарегистрироваться</Link></p>
+            <p className="text text_type_main-default"> Забыли пароль? <Link className={styles.link} to={'/forgot-password'}>Восстановить</Link></p>
+        </div>
     )
 }

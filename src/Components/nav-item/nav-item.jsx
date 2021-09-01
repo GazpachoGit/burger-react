@@ -32,12 +32,10 @@ export default function NavItem({ title, to}) {
     }
 
     return (
-        <>
-            <Link to={to} className={`${styles.link} text text_type_main-default mt-4 ml-4`} >
-                {Child}
-                <span className={`text text_type_main-default ${activeStatus}`}>{title}</span>
-            </Link>
-        </>
+        <Link to={to} className={`${styles.link} text text_type_main-default mt-4 ml-4`} >
+            {Child}
+            <span className={`text text_type_main-default ${activeStatus}`}>{title}</span>
+        </Link>
     )
 }
 

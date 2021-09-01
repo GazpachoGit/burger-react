@@ -59,7 +59,6 @@ export default function SwitchWrapper() {
             {background && <Route path="/ingredients/:id">
                 <CurrentIngredientDetails />    
             </Route>}
-
         </>
     )
 }

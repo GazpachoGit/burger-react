@@ -11,10 +11,8 @@ export default function LogoutForm() {
         history.push('/');
     }
     return(
-        <>
-            <div>
-                <Button onClick={logoutHandler} type="primary" size="medium">Выйти</Button>
-            </div>
-        </>
+        <div>
+            <Button onClick={logoutHandler} type="primary" size="medium">Выйти</Button>
+        </div>
     )
 }

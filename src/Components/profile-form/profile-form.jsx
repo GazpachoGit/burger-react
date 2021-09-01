@@ -28,31 +28,29 @@ export default function ProfileForm() {
         setValue({ email: user.email, password:'' , name: user.name }) 
     }
     return (
-        <>
-            <form className={styles.form + ' pb-20'} onSubmit={updateUserHandler}>
-                <Input
-                    type={'text'}
-                    size={'default'}
-                    value={form.name}
-                    name={'name'}
-                    placeholder={'Имя'}
-                    onChange={onChange} />
-                <Input
-                    type={'text'}
-                    size={'default'}
-                    value={form.email}
-                    name={'email'}
-                    placeholder={'e-mail'}
-                    onChange={onChange} />
-                <PasswordInput
-                    onChange={onChange}
-                    value={form.password}
-                    name={'password'} />
-                <div className={styles.buttonContainer}>
-                    <Button type="primary" size="medium">Сохранить</Button>
-                    <Button onClick={revertHandler} type="primary" size="medium">Отмена</Button>
-                </div>
-            </form>
-        </>
+        <form className={styles.form + ' pb-20'} onSubmit={updateUserHandler}>
+            <Input
+                type={'text'}
+                size={'default'}
+                value={form.name}
+                name={'name'}
+                placeholder={'Имя'}
+                onChange={onChange} />
+            <Input
+                type={'text'}
+                size={'default'}
+                value={form.email}
+                name={'email'}
+                placeholder={'e-mail'}
+                onChange={onChange} />
+            <PasswordInput
+                onChange={onChange}
+                value={form.password}
+                name={'password'} />
+            <div className={styles.buttonContainer}>
+                <Button type="primary" size="medium">Сохранить</Button>
+                <Button onClick={revertHandler} type="primary" size="medium">Отмена</Button>
+            </div>
+        </form>
     )
 }

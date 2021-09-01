@@ -26,25 +26,23 @@ export default function ForgotPasswordPage() {
     if(user) return <Redirect to={'/'}/>
 
     return (
-        <>
-            <div className={styles.formContainer}>
-                {!changingPassword &&
-                 <form className={styles.form + ' pb-20'} onSubmit={forgotPasswordHandler}>
-                    <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-                    <Input
-                        type={'text'}
-                        size={'default'}
-                        value={form.email}
-                        name={'email'}
-                        placeholder={'Укажите e-mail'}
-                        onChange={onChange} />
-                    <Button type="primary" size="medium">Восстановить</Button>
-                </form>}
-                {changingPassword &&
-                    <Link className="mb-10" to={'/reset-password'}><Button type="primary" size="medium">Далее</Button></Link>
-                }
-                <p className="text text_type_main-default">Вспомнили пароль? <Link className={styles.link} to={'/login'}>Войти</Link></p>
-            </div>
-        </>
+        <div className={styles.formContainer}>
+            {!changingPassword &&
+                <form className={styles.form + ' pb-20'} onSubmit={forgotPasswordHandler}>
+                <h2 className="text text_type_main-medium">Восстановление пароля</h2>
+                <Input
+                    type={'text'}
+                    size={'default'}
+                    value={form.email}
+                    name={'email'}
+                    placeholder={'Укажите e-mail'}
+                    onChange={onChange} />
+                <Button type="primary" size="medium">Восстановить</Button>
+            </form>}
+            {changingPassword &&
+                <Link className="mb-10" to={'/reset-password'}><Button type="primary" size="medium">Далее</Button></Link>
+            }
+            <p className="text text_type_main-default">Вспомнили пароль? <Link className={styles.link} to={'/login'}>Войти</Link></p>
+        </div>
     )
 }
