@@ -29,7 +29,7 @@ export default function ForgotPasswordPage() {
         <>
             <div className={styles.formContainer}>
                 {!changingPassword &&
-                 <form className={styles.form + ' pb-20'}>
+                 <form className={styles.form + ' pb-20'} onSubmit={forgotPasswordHandler}>
                     <h2 className="text text_type_main-medium">Восстановление пароля</h2>
                     <Input
                         type={'text'}
@@ -38,7 +38,7 @@ export default function ForgotPasswordPage() {
                         name={'email'}
                         placeholder={'Укажите e-mail'}
                         onChange={onChange} />
-                    <Button onClick={forgotPasswordHandler} type="primary" size="medium">Восстановить</Button>
+                    <Button type="primary" size="medium">Восстановить</Button>
                 </form>}
                 {changingPassword &&
                     <Link className="mb-10" to={'/reset-password'}><Button type="primary" size="medium">Далее</Button></Link>

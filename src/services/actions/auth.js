@@ -102,7 +102,7 @@ export function getUser() {
                     dispatch({
                         type: USER_LOADED
                     })
-                    dispatch(showMessage("Ошибка: " + res.message));
+                    console.error(res.message);
                 }
 
             })

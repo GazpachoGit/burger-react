@@ -29,7 +29,7 @@ export default function ProfileForm() {
     }
     return (
         <>
-            <form className={styles.form + ' pb-20'}>
+            <form className={styles.form + ' pb-20'} onSubmit={updateUserHandler}>
                 <Input
                     type={'text'}
                     size={'default'}
@@ -49,7 +49,7 @@ export default function ProfileForm() {
                     value={form.password}
                     name={'password'} />
                 <div className={styles.buttonContainer}>
-                    <Button onClick={updateUserHandler} type="primary" size="medium">Сохранить</Button>
+                    <Button type="primary" size="medium">Сохранить</Button>
                     <Button onClick={revertHandler} type="primary" size="medium">Отмена</Button>
                 </div>
             </form>

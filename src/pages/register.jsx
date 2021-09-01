@@ -22,7 +22,7 @@ export default function RegisterPage() {
     return (
         <>
             <div className={styles.formContainer}>
-                <form className={styles.form + ' pb-20'}>
+                <form className={styles.form + ' pb-20'} onSubmit={registerHandler}>
                     <h2 className="text text_type_main-medium">Регистрация</h2>
                     <Input
                         type={'text'}
@@ -42,7 +42,7 @@ export default function RegisterPage() {
                         onChange={onChange}
                         value={form.password}
                         name={'password'} />
-                    <Button onClick={registerHandler} type="primary" size="medium">Зарегистрироваться</Button>
+                    <Button type="primary" size="medium">Зарегистрироваться</Button>
                 </form>
                 <p className="text text_type_main-default">Вы уже зарегистрированы? <Link className={styles.link} to={'/login'}>Войти</Link></p>
             </div>
