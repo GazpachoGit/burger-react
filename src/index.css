@@ -17,6 +17,7 @@ body {
 
 ul {
 	padding: 0px;
+	list-style-type: none;
 }
 
 
@@ -32,4 +33,9 @@ ul {
 	background: #8585AD;
 	border: 3px solid #2F2F37;
 	border-radius: 6px;
+}
+
+.link-drop-style{
+	color: var(--text-primary-color);
+	text-decoration: none;
 }

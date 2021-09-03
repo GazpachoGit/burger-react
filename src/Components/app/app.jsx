@@ -1,25 +1,22 @@
 import React from 'react';
 import AppHeader from '../app-header/app-header';
-import Main from '../main/main';
 import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
-import { SHOW_INGREDIENT_MODAL, SHOW_ORDER_MODAL } from '../../services/actions';
+import { SHOW_ORDER_MODAL } from '../../services/actions';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
+import { getUser, SHOW_MESSAGE } from '../../services/actions/auth';
+import CommonMessage from '../common-message/common-message';
+import SwitchWrapper from '../switch-wrapper/switch-wrapper';
 
 
 function App() {
 
-  const { showIngredientModal, currentIngredient, showOrderModal } = useSelector(state => state.ingredients);
+  const { showOrderModal } = useSelector(state => state.ingredients);
+  const showMessage = useSelector(state => state.auth.showMessage);
 
   const dispatch = useDispatch();
-
-  const closeIngredientHandler = React.useCallback(() => {
-    dispatch({
-      type: SHOW_INGREDIENT_MODAL,
-      item: null
-    })
-  }, [dispatch]);
 
   const closeOrderHandler = React.useCallback(() => {
     dispatch({
@@ -28,23 +25,32 @@ function App() {
     })
   }, [dispatch]);
 
-  const currentIngredientDetails = React.useMemo(() => {
-    return <Modal title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeIngredientHandler} />
-  }, [currentIngredient, closeIngredientHandler]);
+  const closeCommonMessageHandler = React.useCallback(() => {
+    dispatch({
+      type: SHOW_MESSAGE
+    })
+  }, [dispatch]);
 
   const currentOrderModal = React.useMemo(() => {
     return <Modal children={<OrderDetails />} closeHandler={closeOrderHandler} />
   }, [closeOrderHandler]);
 
-  return (
-    <>
-      <AppHeader />
-      <Main />
-      {showIngredientModal && currentIngredientDetails}
-      {showOrderModal && currentOrderModal}
-    </>
-    //<Main data={testData}/>
+  const currentCommonMessage = React.useMemo(() => {
+    return <Modal children={<CommonMessage />} closeHandler={closeCommonMessageHandler} />
+  }, [closeCommonMessageHandler]);
 
+  React.useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(getUser());
+  }, []);
+
+  return (
+      <Router>
+        <AppHeader />
+        <SwitchWrapper />
+        {showOrderModal && currentOrderModal}
+        {showMessage && currentCommonMessage}
+      </Router>
   );
 }
 

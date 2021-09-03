@@ -14,7 +14,6 @@ export default class NavBar extends React.Component {
                     Лента заказов
                 </a>
             </nav>
-
         )
     }
 }

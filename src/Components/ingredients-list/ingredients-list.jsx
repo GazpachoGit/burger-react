@@ -5,20 +5,10 @@ import IngredientsSection from '../ingredients-section/ingredients-section';
 
 import PropTypes from 'prop-types';
 import { tabType } from '../../utils/local-types';
-
-
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
-
-
+import { useSelector } from 'react-redux';
 export default function IngredientsList({ tabs }) {
 
-    const dispatch = useDispatch();
     const { ingredientsRequest, ingredients, ingredientsFailed } = useSelector(state => state.ingredients);
-
-    React.useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     const sectionList = React.useMemo(() => {
         const arr = []

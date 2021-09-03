@@ -2,20 +2,11 @@ import React from 'react';
 import styles from './ingredients-list-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientType } from '../../utils/local-types';
-import { useDispatch } from 'react-redux';
-import { ADD_COMPONENT, SHOW_INGREDIENT_MODAL } from '../../services/actions';
 import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function IngredientsListItem({ item }) {
-    const { name, price, image, qty } = item;
-
-    const dispatch = useDispatch();
-    const showIngredientModal = React.useCallback(() => {
-        dispatch({
-            type: SHOW_INGREDIENT_MODAL,
-            item: item
-        });
-    }, [dispatch, item]);
+    const { _id, name, price, image, qty } = item;
 
     //drag
     const [{ opacity }, dragRef] = useDrag({
@@ -26,18 +17,26 @@ export default function IngredientsListItem({ item }) {
         })
     })
 
+    const location = useLocation();
+
     return (
-        <div ref={dragRef} className={styles.general} style={{ opacity }} onClick={showIngredientModal}>
-            <div className={styles.info + ' pr-4 pl-4'}>
-                <img className={styles.preventPointerEvent} alt={name} src={image} />
-                <span className="text text_type_digits-default mt-1 mb-1">
-                    {price}
-                    <CurrencyIcon type="primary" />
-                </span>
+        <Link className="link-drop-style"
+            to={{
+                pathname: `/ingredients/${_id}`,
+                state: { background: location }
+            }}>
+            <div ref={dragRef} className={styles.general} style={{ opacity }}>
+                <div className={styles.info + ' pr-4 pl-4'}>
+                    <img className={styles.preventPointerEvent} alt={name} src={image} />
+                    <span className="text text_type_digits-default mt-1 mb-1">
+                        {price}
+                        <CurrencyIcon type="primary" />
+                    </span>
+                </div>
+                <span className="text text_type_main-default">{name}</span>
+                {!!qty && <Counter count={qty} size="default" />}
             </div>
-            <span className="text text_type_main-default">{name}</span>
-            {!!qty && <Counter count={qty} size="default" />}
-        </div>
+        </Link>
     )
 }
 

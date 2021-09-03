@@ -1,12 +1,12 @@
 import { mainUrl, createOrderUrl } from '../../utils/constants';
 import {data} from '../../utils/data';
+import { getCookie } from '../../utils/cookie-utils';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 export const ADD_COMPONENT = 'ADD_COMPONENT';
 export const REMOVE_COMPONENT = 'REMOVE_COMPONENT';
-export const SHOW_INGREDIENT_MODAL = 'SHOW_INGREDIENT_MODAL';
 export const SHOW_ORDER_MODAL = 'SHOW_ORDER_MODAL';
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
@@ -51,7 +51,8 @@ export function createOrder(Ids) {
     fetch(createOrderUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + getCookie('token')
       },
       body: JSON.stringify({"ingredients": Ids})
     })

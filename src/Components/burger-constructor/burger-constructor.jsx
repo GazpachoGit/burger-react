@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
-import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
 import BunElement from '../bun-element/bun-element';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';

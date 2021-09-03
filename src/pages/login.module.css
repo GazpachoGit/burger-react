@@ -1,0 +1,55 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
+}
+
+.main {
+    display: grid;
+    grid-gap: 0px;
+    height: 100%;
+}
+
+.navColumn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navContainer{
+    width: 400px
+}
+
+.autoFit {
+    grid-template-columns: 2fr 1fr 2fr;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+.buttomButton {
+    margin-bottom: 54px;
+}
+
+.link {
+    text-decoration: none;
+    color: #4c4cff;
+}
+.unselected{
+    color: var(--text-inactive-color);
+}
+.center {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items:center;
+}
+
+.pointer{
+    cursor: pointer;
+}
