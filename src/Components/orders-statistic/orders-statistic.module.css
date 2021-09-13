@@ -15,10 +15,18 @@
 }
 
 .statisticsGrid{
+    
     display: grid;
     grid-template-areas:
     'readyOrders inProgressOrders'
     'total total'
     'totalToday totalToday';
     grid-gap: 60px 36px;
+}
+.ordersList{
+    display: flex;
+    gap: 10px;
+    flex-flow: column wrap;
+    overflow: hidden;
+    max-height: 20vh;
 }

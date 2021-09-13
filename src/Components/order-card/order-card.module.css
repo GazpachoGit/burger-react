@@ -12,12 +12,12 @@
 }
 
 .imgContainer{
-    border: 1px solid blue;
-    border-radius: 50%;
+    border: 1px solid #743ad5;
+    border-radius: 100%;
     width: 64px;
     height: 64px;
     margin-left: -20px;
-    background-color:red;
+    background-color: #1C1C21;
     object-fit: cover;
 }
 
@@ -28,4 +28,13 @@
 }
 .imgContainer:last-child {
     margin-left: 0px;
+}
+.rest{
+    position: relative;
+    right: 50px;
+    top:25px;
+    z-index: 2;
+}
+.notLast {
+    filter: contrast(80%);
 }

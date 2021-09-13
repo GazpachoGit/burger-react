@@ -4,7 +4,9 @@ export default function OrdersStatistic() {
         <div className={styles.statisticsGrid}>
             <div className={styles.readyOrders}>
                 <p className="text text_type_main-medium">Готовы:</p>
-                <ul>
+                <ul className={styles.ordersList}>
+                    <li className={"text text_type_digits-medium " + styles.colorSuccess}>123</li>
+                    <li className={"text text_type_digits-medium " + styles.colorSuccess}>123</li>
                     <li className={"text text_type_digits-medium " + styles.colorSuccess}>123</li>
                     <li className={"text text_type_digits-medium " + styles.colorSuccess}>123</li>
                     <li className={"text text_type_digits-medium " + styles.colorSuccess}>123</li>
@@ -14,7 +16,7 @@ export default function OrdersStatistic() {
             </div>
             <div className={styles.inProgressOrders}>
                 <p className="text text_type_main-medium">В работе:</p>
-                <ul>
+                <ul className={styles.ordersList}>
                     <li className="text text_type_digits-medium">123</li>
                     <li className="text text_type_digits-medium">123</li>
                     <li className="text text_type_digits-medium">123</li>
