@@ -1,0 +1,31 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    background-color: #1C1C21;
+    border-radius: 24px;
+    gap: 24px;
+}
+.header, .footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imgContainer{
+    border: 1px solid blue;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    margin-left: -20px;
+    background-color:red;
+    object-fit: cover;
+}
+
+.imgsList{
+    display: flex;
+    justify-content: start;
+    flex-direction: row-reverse;
+}
+.imgContainer:last-child {
+    margin-left: 0px;
+}

@@ -1,0 +1,24 @@
+.readyOrders{
+    grid-area: readyOrders;
+}
+.inProgressOrders{
+    grid-area: inProgressOrders;
+}
+.total{
+    grid-area: total;
+}
+.totalToday{
+    grid-area: totalToday;
+}
+.colorSuccess {
+    color:#00CCCC
+}
+
+.statisticsGrid{
+    display: grid;
+    grid-template-areas:
+    'readyOrders inProgressOrders'
+    'total total'
+    'totalToday totalToday';
+    grid-gap: 60px 36px;
+}

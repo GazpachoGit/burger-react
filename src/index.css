@@ -39,3 +39,6 @@ ul {
 	color: var(--text-primary-color);
 	text-decoration: none;
 }
+.gray-text {
+	color: #8585AD;
+}

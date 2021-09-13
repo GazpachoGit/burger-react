@@ -46,9 +46,9 @@ export default function SwitchWrapper() {
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientPage />
                 </Route>
-                <ProtectedRoute path="/orders-feed" exact={true}>
+                <Route path="/orders-feed" exact={true}>
                     <OrdersFeed />
-                </ProtectedRoute>
+                </Route>
                 <Route path="/" exact={true}>
                     <Main />
                 </Route>
