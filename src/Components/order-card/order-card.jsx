@@ -3,14 +3,15 @@ import styles from './order-card.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function OrderCard({order}) {
+    const displayQuantity = 6;
     const initialIngredients = useSelector(state => state.ingredients.ingredients.filter(ing => order.ingredients.includes(ing._id)));
     const ingredients = [];
     initialIngredients.forEach(ing => {
-        let currentIng = ingredients.find(item => item._id === ing._id);
-        currentIng ? currentIng.qty++ : ingredients.push({...ing, qty: 1});
+        let currentIngId = ingredients.findIndex(item => item._id === ing._id);
+        currentIngId !== -1 ? ingredients[currentIngId].qty++ : ingredients.push({...ing, qty: 1});
     });
-    const displayQuantity = 3;
-    const displayIngredients = ingredients.length > displayQuantity ? ingredients.slice(displayQuantity - 1) : ingredients
+    
+    const displayIngredients = ingredients.length > displayQuantity ? ingredients.slice(0, displayQuantity) : ingredients
     if(initialIngredients.length === 0 ) {
         return null;
     }
@@ -23,8 +24,11 @@ export default function OrderCard({order}) {
             <p className="text text_type_main-medium">Death Star Starship Main бургер</p>
             <div className={styles.footer}>
                 <div className={styles.imgsList}>  
-                {displayIngredients.length === displayQuantity && <span className={styles.rest + " text text_type_digits-default"}>+12</span>}
-                    {displayIngredients.map((ing, index) => <img key={ing._id} style={{zIndex: index+1}} className={`${styles.imgContainer} ${displayIngredients.length === displayQuantity && index === 0 && styles.notLast}`} alt="img" src={ing.image_mobile} />)}                    
+                    {ingredients.length > displayQuantity && <span className={styles.rest + " text text_type_digits-default"}>+{ingredients.length - displayQuantity}</span>}
+
+                    {displayIngredients.map((ing, index) => 
+                        <img key={ing._id} style={{zIndex: index+1}} className={`${styles.imgContainer} ${ingredients.length > displayQuantity && index === 0 && styles.notLast}`} alt="img" src={ing.image_mobile} />
+                    )}                    
                 </div>
                 <div><span className="text text_type_digits-medium">480<CurrencyIcon type="primary" /></span></div>
             </div>
