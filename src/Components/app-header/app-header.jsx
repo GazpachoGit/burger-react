@@ -12,7 +12,7 @@ export default function AppHeader() {
             <nav className={styles.nav}>
                 <div className={styles.navContainer}>
                     <NavItem title="Конструктор" to="/" />
-                    <NavItem title="Лента заказов" to="/orders-feed" />
+                    <NavItem title="Лента заказов" to="/feed" />
                 </div>
                 <div className={styles.logo}>
                 <Link to="/">

@@ -1,5 +1,13 @@
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, IngredientPage, NotFound404 } from '../../pages';
+import { LoginPage,
+        RegisterPage,
+        ForgotPasswordPage,
+        ResetPasswordPage,
+        ProfilePage,
+        IngredientPage,
+        OrderPage,
+        NotFound404
+     } from '../../pages';
 import AnonimRoute from '../anonim-route/anonim-route';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Main from '../main/main';
@@ -8,6 +16,7 @@ import Modal from '../modal/modal';
 import { useCallback } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrdersFeed from '../../pages/orders-feed';
+import OpenedOrderDetails from '../opened-order-details/opened-order-details';
 
 export default function SwitchWrapper() {
     const location = useLocation();
@@ -15,15 +24,13 @@ export default function SwitchWrapper() {
     let background = history.action === 'PUSH' ? location.state?.background : null;
 
     
-    const closeIngredientHandler = useCallback(e => {
+    const closeHandler = useCallback(e => {
         e.stopPropagation();
         history.goBack();
     }, []);
 
-    const CurrentIngredientDetails = () => <Modal title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeIngredientHandler} />;
-
-    //изменить начинку модалки брать id из url
-    //прописать здесь команду закрытия(в других модалках закрытие же старое)
+    const CurrentIngredientDetails = () => <Modal title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeHandler} />;
+    const CurrentOpenedOrderDetails = () => <Modal children={<OpenedOrderDetails />} closeHandler={closeHandler} />;
 
     return (
         <>
@@ -46,8 +53,11 @@ export default function SwitchWrapper() {
                 <Route path="/ingredients/:id" exact={true}>
                     <IngredientPage />
                 </Route>
-                <Route path="/orders-feed" exact={true}>
+                <Route path="/feed" exact={true}>
                     <OrdersFeed />
+                </Route>
+                <Route path={['/feed/:id',`/profile/orders/:id`]} exact={true}>
+                    <OrderPage />
                 </Route>
                 <Route path="/" exact={true}>
                     <Main />
@@ -58,6 +68,9 @@ export default function SwitchWrapper() {
             </Switch>
             {background && <Route path="/ingredients/:id">
                 <CurrentIngredientDetails />    
+            </Route>}
+            {background && <Route path={['/feed/:id',`/profile/orders/:id`]}>
+                <CurrentOpenedOrderDetails />    
             </Route>}
         </>
     )

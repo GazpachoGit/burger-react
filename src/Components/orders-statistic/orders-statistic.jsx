@@ -6,7 +6,7 @@ export default function OrdersStatistic({statistics}) {
                 <div className={styles.readyOrders}>
                     <p className="text text_type_main-medium">Готовы:</p>
                     <ul className={styles.ordersList + ' scrollable'}>
-                        {readyOrders.map(item => <li key={item} className={"text text_type_digits-medium " + styles.colorSuccess}>{item}</li>)}
+                        {readyOrders.map(item => <li key={item} className={"text text_type_digits-medium success-text"}>{item}</li>)}
                     </ul>
                 </div>
                 <div className={styles.inProgressOrders}>

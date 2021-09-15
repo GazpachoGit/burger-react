@@ -131,7 +131,7 @@ function updateTocken(callback) {
             dispatch({
                 type: USER_LOADED
             });
-            dispatch(showMessage("Ошибка: " + res.message));
+            //dispatch(showMessage("Ошибка: " + res.message));
         })
     }
 }

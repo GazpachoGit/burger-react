@@ -38,13 +38,18 @@ export default function socketMiddleware(wsUrl, wsActions, auth) {
             const { data } = event;
             const parsedData = JSON.parse(data);
             const { success, ...restParsedData } = parsedData;
+            if(restParsedData && restParsedData.message) {
+              dispatch({ type: wsError, error: restParsedData.message });
+            } else {
+              dispatch({ type: wsMessage, payload: restParsedData });
+            }
   
-            dispatch({ type: wsMessage, payload: restParsedData });
+            
           };
   
           socket.onclose = event => {
             if(!event.wasClean) {
-              dispatch({ type: wsClosed, code: {code: event.code} });
+              dispatch({ type: wsClosed, code: {code: event.code.code} });
             }
           };
         }

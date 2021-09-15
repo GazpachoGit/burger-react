@@ -1,6 +1,7 @@
 import styles from './order-ingredients.module.css';
 import { useSelector } from "react-redux";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {formatIngredientsList, getTotal} from '../../utils/order-service';
 
 export default function OrderIngredients({orderIngredients}) {
     const displayQuantity = 6;
@@ -8,14 +9,9 @@ export default function OrderIngredients({orderIngredients}) {
     if(ingredientsList.length === 0 ) {
         return <p className="text text_type_main-default">Загрузка ингредиентов</p>;
     }
-    const initialIngredients = ingredientsList.filter(ing => orderIngredients.includes(ing._id));
-    const ingredients = [];
-    initialIngredients.forEach(ing => {
-        let currentIngId = ingredients.findIndex(item => item._id === ing._id);
-        currentIngId !== -1 ? ingredients[currentIngId].qty++ : ingredients.push({...ing, qty: 1});
-    });
+    const ingredients = formatIngredientsList(orderIngredients, ingredientsList);
     const displayIngredients = ingredients.length > displayQuantity ? ingredients.slice(0, displayQuantity) : ingredients
-    const total = ingredients.reduce((total, item) => item.qty ? total + item.price * item.qty : total, 0);
+    const total = getTotal(ingredients);
     return (
         <div className={styles.footer}>
                 <div className={styles.imgsList}>  

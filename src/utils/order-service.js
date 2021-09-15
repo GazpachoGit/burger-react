@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export function getDate(dateString) {
+export function getFormatedDate(dateString) {
     const date = new Date(dateString);
     const month = date.getMonth();
     const day = date.getDate();
@@ -27,3 +27,21 @@ export function getDate(dateString) {
     }
     return relativeDay + moment(date).format(", HH:mm [i-GMT]Z")
 }
+
+export function formatIngredientsList(ids, ingredients) {
+    const res = [];
+    ids.forEach(ing => {
+        let ingIndex = res.findIndex(item => item._id === ing);
+        if(ingIndex === -1) {
+            res.push({...ingredients.find(item => item._id === ing), qty: 1});
+        } else {
+            res[ingIndex].qty++
+        }
+    });
+    return res;
+}
+
+export function getTotal(ingredients){
+    return ingredients.reduce((total, item) => item.qty ? total + item.price * item.qty : total, 0);
+}
+
