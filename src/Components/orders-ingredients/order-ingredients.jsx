@@ -15,6 +15,7 @@ export default function OrderIngredients({orderIngredients}) {
         currentIngId !== -1 ? ingredients[currentIngId].qty++ : ingredients.push({...ing, qty: 1});
     });
     const displayIngredients = ingredients.length > displayQuantity ? ingredients.slice(0, displayQuantity) : ingredients
+    const total = ingredients.reduce((total, item) => item.qty ? total + item.price * item.qty : total, 0);
     return (
         <div className={styles.footer}>
                 <div className={styles.imgsList}>  
@@ -24,7 +25,7 @@ export default function OrderIngredients({orderIngredients}) {
                         <img key={ing._id} style={{zIndex: index+1}} className={`${styles.imgContainer} ${ingredients.length > displayQuantity && index === 0 && styles.notLast}`} alt="img" src={ing.image_mobile} />
                     )}                    
                 </div>
-                <div><span className="text text_type_digits-medium">480<CurrencyIcon type="primary" /></span></div>
+                <div><span className="text text_type_digits-medium">{total}<CurrencyIcon type="primary" /></span></div>
             </div>
     )
 }

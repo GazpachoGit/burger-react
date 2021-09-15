@@ -59,12 +59,12 @@
     grid-row: 1;
     justify-self: start;
 }
-.ordersCards {
-    grid-column: 2;
-    grid-row: 2;
-}
 .ordersStatistics{
     grid-column: 3;
+    grid-row: 2;
+}
+.ordersCards {
+    grid-column: 2;
     grid-row: 2;
 }
 .ordersFeedSection{
@@ -76,8 +76,4 @@
     grid-template-areas:
         'title title' 
         'ordersCards ordersStatistics';
-}
-.ordersList {
-    overflow: auto;
-    height: 75vh;
 }

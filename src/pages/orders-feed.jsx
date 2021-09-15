@@ -1,9 +1,9 @@
 import styles from "./login.module.css";
 import data from '../utils/orders-feed-test-data';
-import { useEffect, useState } from "react";
-import OrderCard from '../Components/order-card/order-card';
+import { useEffect } from "react";
 import OrdersStatistic from '../Components/orders-statistic/orders-statistic';
 import { useDispatch, useSelector } from "react-redux";
+import OrdersList from '../Components/orders-list/orders-list';
 import {WS_COMMON_ORDERS_CONNECTION_START, WS_CONNECTION_CLOSE} from '../services/actions/wsActions';
 
 export default function OrdersFeed() {
@@ -21,19 +21,12 @@ export default function OrdersFeed() {
         <>
             <section className={styles.ordersFeedSection + " mt-10"}>
             <h2 className={styles.title + " text text_type_main-large"}>Лента заказов</h2>
-                <article className={styles.ordersCards}>
-                    {orders.length > 0 ?
-                        <ul className={styles.ordersList + ' scrollable'}>
-                        {orders.map(order => 
-                            <OrderCard order={order} />    
-                        )}
-                        </ul> : 
-                        <p className="text text_type_main-default">Заказы отсутствуют</p>
-                    }
-                </article>
-                <article className={styles.ordersStatistics}>
-                    <OrdersStatistic statistics={statistics} />
-                </article>
+            <article className={styles.ordersCards}>
+                <OrdersList orders={orders}/>
+            </article>
+            <article className={styles.ordersStatistics}>
+                <OrdersStatistic statistics={statistics} />
+            </article>
             </section>
         </> : code || error ? 
         <>
