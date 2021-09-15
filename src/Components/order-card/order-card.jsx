@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux";
-import { useState } from "react";
 import styles from './order-card.module.css';
 import OrderIngredients from '../orders-ingredients/order-ingredients';
 import {getDate} from '../../utils/date-utils';
-import data from "../../utils/orders-feed-test-data";
 
 export default function OrderCard({order}) {
     const date = getDate(order.createdAt);

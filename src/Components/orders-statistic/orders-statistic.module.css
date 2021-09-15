@@ -24,9 +24,10 @@
     grid-gap: 60px 36px;
 }
 .ordersList{
-    display: flex;
-    gap: 10px;
-    flex-flow: column wrap;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto auto;
+    word-break: initial;
     max-height: 20vh;
+    overflow: auto;
+    gap:10px
 }

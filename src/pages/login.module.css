@@ -66,12 +66,11 @@
 .ordersStatistics{
     grid-column: 3;
     grid-row: 2;
-    justify-self: start;
 }
 .ordersFeedSection{
     word-break: break-all;
     display: grid;
-    gap: 60px;
+    gap: 10px 60px;
     grid-template-columns: 5%  minmax(0, 1fr)  minmax(0, 1fr)  5%;
     grid-template-rows: auto auto;
     grid-template-areas:
