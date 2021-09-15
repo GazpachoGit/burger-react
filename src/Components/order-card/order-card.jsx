@@ -15,7 +15,7 @@ export default function OrderCard({order, showStatus}) {
             }}>
             <div className={styles.mainContainer + " p-6 m-4"}>
                 <div className={styles.header}>
-                    <p className="text text_type_main-default">{order.number}</p>
+                    <p className="text text_type_main-medium">#{order.number}</p>
                     <p className="text text_type_main-default gray-text">{date}</p>
                 </div>
                 <p className="text text_type_main-medium">{order.name}</p>

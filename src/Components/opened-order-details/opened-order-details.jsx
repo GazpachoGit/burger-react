@@ -31,7 +31,7 @@ export default function OpenedOrderDetails() {
         <div className={styles.container}>
             {openOrderRequest ? <p>Загрузка заказа</p> : openOrderFailed ? <p>Ошибка: {openOrderFailedMessage}</p> :
             <>
-                <p className={"text text_type_digits-default mb-10 " + styles.center}>{order.number}</p>
+                <p className={"text text_type_digits-medium mb-10 " + styles.center}>#{order.number}</p>
                 <p className="text text_type_main-medium mb-3">{order.name}</p>
                 <OrderStatus status={order.status} />
                 <p className="text text_type_main-medium mt-15">Состав</p>
