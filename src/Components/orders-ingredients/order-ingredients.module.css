@@ -1,0 +1,33 @@
+.header, .footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.imgContainer{
+    border: 1px solid #743ad5;
+    border-radius: 100%;
+    width: 64px;
+    height: 64px;
+    margin-left: -20px;
+    background-color: #1C1C21;
+    object-fit: cover;
+}
+
+.imgsList{
+    display: flex;
+    justify-content: start;
+    flex-direction: row-reverse;
+}
+.imgContainer:last-child {
+    margin-left: 0px;
+}
+.rest{
+    position: relative;
+    right: 50px;
+    top:25px;
+    z-index: 2;
+}
+.notLast {
+    filter: contrast(80%);
+}
