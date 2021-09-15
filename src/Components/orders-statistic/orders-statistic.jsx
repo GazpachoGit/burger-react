@@ -15,7 +15,7 @@ export default function OrdersStatistic({statistics}) {
                         {inProgressOrders.map(item => <li key={item} className="text text_type_digits-medium">{item}</li>)}
                     </ul></div>
                 <div className={styles.total}>
-                <p className="text text_type_main-medium">Выполнено за сегодня:</p>
+                <p className="text text_type_main-medium">Выполнено за всё время:</p>
                     <p className="text text_type_digits-large">{total}</p>
                 </div>
                 <div className={styles.totalToday}>

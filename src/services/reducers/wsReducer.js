@@ -1,4 +1,6 @@
 import {
+    WS_COMMON_ORDERS_CONNECTION_START,
+    WS_USER_ORDERS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
@@ -24,6 +26,10 @@ const initialState = {
 
 export const wsReducer = (state = initialState, action) => {
     switch (action.type) {
+      case WS_COMMON_ORDERS_CONNECTION_START:
+        return initialState;
+      case WS_USER_ORDERS_CONNECTION_START:
+        return initialState;
       case WS_CONNECTION_SUCCESS:
         return {
             ...state,
