@@ -15,7 +15,7 @@ import {GET_INGREDIENTS_REQUEST,
         GET_ORDER_FAILED    
     } from '../actions'
 
-const initialState = {
+export const initialState = {
 
     tabs: [
         {
