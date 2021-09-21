@@ -8,7 +8,7 @@ import {
     WS_GET_USER_ORDERS
   } from '../actions/wsActions';
 
-const initialState = {
+export const initialState = {
     wsConnected: false,
     code: "",
     error: "",
@@ -62,10 +62,10 @@ export const wsReducer = (state = initialState, action) => {
               total: action.payload.total,
               totalToday: action.payload.totalToday,
               readyOrders: action.payload.orders
-                .filter(item => item.status === 'done')
+                .filter(item =>item.status && item.status === 'done')
                 .map(item => item.number),
               inProgressOrders: action.payload.orders
-                .filter(item => item.status !== 'done')
+                .filter(item =>item.status && item.status !== 'done')
                 .map(item => item.number)
             }
           }
