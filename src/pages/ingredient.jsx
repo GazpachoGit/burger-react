@@ -1,12 +1,12 @@
 import IngredientDetails from '../Components/ingredient-details/ingredient-details';
-import ModalOverlay from '../Components/modal-overlay/modal-overlay';
+import ModalContent from '../Components/modal-content/modal-content';
 import styles from './login.module.css';
 
 export default function IngredientPage() {
 
     return (
         <div className={styles.center}>
-            <ModalOverlay title="Детали ингредиента" children={<IngredientDetails />} hideCloseButton={true}/>
+            <ModalContent title="Детали ингредиента" children={<IngredientDetails />} hideCloseButton={true}/>
         </div>
     )
 }
