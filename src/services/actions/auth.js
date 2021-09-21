@@ -173,18 +173,16 @@ export function singOut() {
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
-            .then(data => {
-                if (data.success) {
-                    dispatch({
-                        type: SET_USER,
-                        user: null,
-                    });
-                    deleteCookie('token');
-                    localStorage.removeItem('token');
-                }
-            })
             .catch((res) => {
                 dispatch(showMessage("Ошибка: " + res.message));
+            })
+            .finally(()=>{
+                dispatch({
+                    type: SET_USER,
+                    user: null,
+                });
+                deleteCookie('token');
+                localStorage.removeItem('token');
             })
     }
 }

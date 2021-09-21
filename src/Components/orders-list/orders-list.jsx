@@ -7,7 +7,7 @@ export default function OrdersList({orders, showStatus}) {
             {orders && orders.length > 0 ?
                 <ul className={styles.ordersList + ' scrollable'}>
                 {orders.map(order => 
-                    <OrderCard key={order._id}order={order} showStatus={showStatus}/>    
+                    <OrderCard key={order._id} order={order} showStatus={showStatus}/>    
                 )}
                 </ul> : 
                 <p className="text text_type_main-default">Заказы отсутствуют</p>

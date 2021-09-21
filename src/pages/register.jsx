@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 export default function RegisterPage() {
     const [form, setValue] = useState({ name: '', email: '', password: '' });
     const dispatch = useDispatch();
+    const history = useHistory()
 
     const onChange = e => {
         setValue({ ...form, [e.target.name]: e.target.value });
@@ -16,7 +17,7 @@ export default function RegisterPage() {
     const registerHandler = useCallback((e) => {
         e.preventDefault();
         dispatch(singIn(form, 'register'));
-        useHistory.push('/');
+        history.push('/');
     }, [dispatch, form])
 
     return (
