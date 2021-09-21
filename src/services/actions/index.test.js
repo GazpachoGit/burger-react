@@ -10,11 +10,10 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
-describe('async actions', () => {
+describe('async actions corresponding to ingredients', () => {
     beforeEach(() => {
         fetch.resetMocks();
     })
-
     it('dispatch GET_INGREDIENTS_SUCCESS on success request result', () => {
         const data = [{
             _id:"60d3b41abdacab0026a733c6",
@@ -37,10 +36,20 @@ describe('async actions', () => {
             {type: actions.GET_INGREDIENTS_REQUEST},
             {type: actions.GET_INGREDIENTS_SUCCESS, items: data}
         ]
-        const store = mockStore({a: 0})
-        console.log(actions.getIngredients);
+        const store = mockStore({})
         return store.dispatch(actions.getIngredients()).then(() => {
-            // Возвращаем асинхронный экшен
+            expect(store.getActions()).toEqual(expectedActions)
+          })
+    })
+    it('dispatch GET_INGREDIENTS_FAILED on reject', () => {
+        fetch.mockReject(new Error());
+        const expectedActions = [
+            {type: actions.GET_INGREDIENTS_REQUEST},
+            {type: actions.GET_INGREDIENTS_FAILED}
+        ]
+        const store = mockStore({})
+        return store.dispatch(actions.getIngredients
+            ()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
           })
     })
