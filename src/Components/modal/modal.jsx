@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
-import ModalOverlay from '../modal-overlay/modal-overlay';
+import ModalContent from '../modal-content/modal-content';
 import PropTypes from 'prop-types';
 
 
@@ -25,7 +25,7 @@ export default function Modal({title, children, closeHandler, hideCloseButton })
 
     return ReactDOM.createPortal((
         <div className={styles.overlay} onClick={closeHandler}>
-        <ModalOverlay title={title} children={children} closeHandler={closeHandler} hideCloseButton={hideCloseButton}/>
+        <ModalContent title={title} children={children} closeHandler={closeHandler} hideCloseButton={hideCloseButton}/>
         </div>
     ), modalRoot)
 }
