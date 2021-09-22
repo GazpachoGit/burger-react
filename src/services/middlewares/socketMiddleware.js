@@ -1,4 +1,5 @@
 import {getCookie} from '../../utils/cookie-utils';
+import testData from '../../utils/orders-feed-test-data';
 
 export default function socketMiddleware(wsUrl, wsActions, auth) {
     return store => {
@@ -42,6 +43,7 @@ export default function socketMiddleware(wsUrl, wsActions, auth) {
               dispatch({ type: wsError, error: restParsedData.message });
             } else {
               dispatch({ type: wsMessage, payload: restParsedData });
+              //dispatch({ type: wsMessage, payload: testData });
             }
   
             
