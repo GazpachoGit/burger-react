@@ -13,7 +13,7 @@ describe('app works correctly with routes', function() {
         cy.contains('Детали ингредиента')
     })
     it('check close button works', () => {
-        cy.get('[class^="modal-overlay_modalHeadWithClose"]')
+        cy.get('[class^="modal-content_modalHeadWithClose"]')
             .find('svg')
             .click()
     })
