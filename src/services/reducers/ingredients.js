@@ -9,7 +9,11 @@ import {GET_INGREDIENTS_REQUEST,
         CREATE_ORDER_FAILED,
         CLEAN_CONSTRUCTOR,
         UPDATE_OPTIONAL,
-        UPDATE_CURRENT_TAB} from '../actions'
+        UPDATE_CURRENT_TAB,
+        GET_ORDER_REQUEST,
+        GET_ORDER_SUCCESS,
+        GET_ORDER_FAILED    
+    } from '../actions'
 
 const initialState = {
 
@@ -46,7 +50,16 @@ const initialState = {
 
     currentOrder:{},
     orderNumber: null,
-    showOrderModal: false
+    showOrderModal: false,
+
+    openedOrder: {
+        openOrderRequest: false,
+        openOrderFailed: false,
+        openOrderFailedMessage:"",
+        order: {}
+    }
+
+    
 }
 
 export const ingredientsReducer = (state= initialState, action) => {
@@ -173,6 +186,36 @@ export const ingredientsReducer = (state= initialState, action) => {
                 ...state,
                 tabs: state.tabs.map(tab => tab.id === action.id ? {...tab, ratio: action.ratio} : tab)
             }
+        case GET_ORDER_REQUEST:
+            return {
+                ...state,
+                openedOrder:{
+                    openOrderRequest: true,
+                    openOrderFailed: false,
+                    openOrderFailedMessage:"",
+                    order: {}
+                }
+            }
+            case GET_ORDER_FAILED:
+                return {
+                    ...state,
+                    openedOrder:{
+                        ...state.openedOrder,
+                        openOrderRequest: false,
+                        openOrderFailed: true,
+                        openOrderFailedMessage:action.message
+                    }
+                }
+            case GET_ORDER_SUCCESS:
+                return {
+                    ...state,
+                    openedOrder:{
+                        ...state.openedOrder,
+                        openOrderRequest: false,
+                        openOrderFailed: false,
+                        order: action.order
+                    }
+                }
         default:
             return state;
     }
