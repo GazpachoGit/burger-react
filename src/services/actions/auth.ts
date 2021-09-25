@@ -1,34 +1,58 @@
 import { loginRequest, registerRequest, forgotPasswordRequest, getUserRequest, logoutRequest, refreshTockenRequest, resetPasswordRequest, updateUserRequest } from '../auth-api';
 import { setCookie, deleteCookie } from '../../utils/cookie-utils';
+import { TUser } from '../types/data';
 //import {authUrl} from '../../utils/constants';
 
-export const SET_USER = 'SET_USER';
-export const SET_CHANGING_PASSWORD = 'SET_CHANGING_PASSWORD';
-export const USER_REQUIRED = 'USER_REQUIRED';
-export const USER_LOADED = 'USER_LOADED';
-export const SHOW_MESSAGE = 'SHOW_MESSAGE';
-export const SET_MESSAGE = 'SET_MESSAGE';
+export const SET_USER: 'SET_USER' = 'SET_USER';
+export const SET_CHANGING_PASSWORD: 'SET_CHANGING_PASSWORD' = 'SET_CHANGING_PASSWORD';
+export const USER_REQUIRED: 'USER_REQUIRED' = 'USER_REQUIRED';
+export const USER_LOADED: 'USER_LOADED' = 'USER_LOADED';
+export const SHOW_MESSAGE: 'SHOW_MESSAGE' = 'SHOW_MESSAGE';
+export const SET_MESSAGE: 'SET_MESSAGE' = 'SET_MESSAGE';
+
+export interface ISetUser {
+    readonly type: typeof SET_USER;
+    readonly user: TUser
+}
+export interface ISetChangePassword {
+    readonly type: typeof SET_CHANGING_PASSWORD;
+}
+export interface IUserRequired {
+    readonly type: typeof USER_REQUIRED;
+}
+export interface IUserLoaded {
+    readonly type: typeof USER_LOADED;
+}
+export interface IShowMessage {
+    readonly type: typeof SHOW_MESSAGE;
+}
+export interface ISetMessage {
+    readonly type: typeof SET_MESSAGE;
+    readonly message: string;
+}
+
+export type TAuthActions = ISetUser | ISetChangePassword | IUserRequired | IUserRequired | IUserLoaded | IShowMessage | ISetMessage
 
 export function singIn(form, type) {
-    return function(dispatch){
+    return function (dispatch) {
         const request = type === 'login' ? loginRequest : registerRequest;
         return request(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
-                if(data.success){
+                if (data.success) {
                     const authToken = data.accessToken.split("Bearer ")[1];
-                    
+
                     setCookie('token', authToken);
-            
+
                     localStorage.setItem('token', data.refreshToken);
-            
+
                     return dispatch({
                         type: SET_USER,
                         user: data.user,
                     });
-                } 
+                }
             })
             .catch(res => {
                 dispatch(showMessage("Ошибка: " + res.message));
@@ -37,45 +61,45 @@ export function singIn(form, type) {
 }
 
 export function forgotPassword(form) {
-    return function(dispatch) {
+    return function (dispatch) {
         forgotPasswordRequest(form)
-        .then(res => {
-            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
-        })
-        .then(data => {
-            if(data.success){       
-                dispatch({
-                    type: SET_CHANGING_PASSWORD
-                });;
-            } 
-        })
-        .catch(res => {
-            dispatch(showMessage("Ошибка: " + res.message));
-        })
+            .then(res => {
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+            })
+            .then(data => {
+                if (data.success) {
+                    dispatch({
+                        type: SET_CHANGING_PASSWORD
+                    });;
+                }
+            })
+            .catch(res => {
+                dispatch(showMessage("Ошибка: " + res.message));
+            })
     }
 }
 
 export function resetPassword(form) {
-    return function(dispatch) {
+    return function (dispatch) {
         resetPasswordRequest(form)
-        .then(res => {
-            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
-        })
-        .then(data => {
-            if(data.success){       
-                dispatch({
-                    type: SET_CHANGING_PASSWORD
-                });;
-            } 
-        })
-        .catch(res => {
-            dispatch(showMessage("Ошибка: " + res.message));
-        })
+            .then(res => {
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+            })
+            .then(data => {
+                if (data.success) {
+                    dispatch({
+                        type: SET_CHANGING_PASSWORD
+                    });;
+                }
+            })
+            .catch(res => {
+                dispatch(showMessage("Ошибка: " + res.message));
+            })
     }
 }
 
 export function getUser() {
-    return function(dispatch){
+    return function (dispatch) {
         dispatch({
             type: USER_REQUIRED
         })
@@ -84,7 +108,7 @@ export function getUser() {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
-                
+
                 if (data.success) {
                     dispatch({
                         type: SET_USER,
@@ -96,8 +120,8 @@ export function getUser() {
                 } else Promise.reject(data);
             })
             .catch(res => {
-                if(res.message === 'jwt expired') {
-                  return dispatch(updateTocken(getUser()))
+                if (res.message === 'jwt expired') {
+                    return dispatch(updateTocken(getUser()))
                 } else {
                     dispatch({
                         type: USER_LOADED
@@ -107,39 +131,39 @@ export function getUser() {
 
             })
     }
-  };
+};
 
 function updateTocken(callback) {
-    return function(dispatch) {
+    return function (dispatch) {
         return refreshTockenRequest()
-        .then(res => {
-            
-            return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
-        })
-        .then(data => {
-            console.log(data)
-            if (data.success) {
-                const authToken = data.accessToken.split("Bearer ")[1];
-                setCookie('token', authToken);
-                localStorage.setItem('token', data.refreshToken);
-                return dispatch(callback);
-            } else Promise.reject(data)
-        })
-        .catch((res) => {
-            dispatch({
-                type: SET_USER,
-                user: null,
-            });
-            return dispatch({
-                type: USER_LOADED
-            });
-            //dispatch(showMessage("Ошибка: " + res.message));
-        })
+            .then(res => {
+
+                return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+            })
+            .then(data => {
+                console.log(data)
+                if (data.success) {
+                    const authToken = data.accessToken.split("Bearer ")[1];
+                    setCookie('token', authToken);
+                    localStorage.setItem('token', data.refreshToken);
+                    return dispatch(callback);
+                } else Promise.reject(data)
+            })
+            .catch((res) => {
+                dispatch({
+                    type: SET_USER,
+                    user: null,
+                });
+                return dispatch({
+                    type: USER_LOADED
+                });
+                //dispatch(showMessage("Ошибка: " + res.message));
+            })
     }
 }
 
 export function updateUser(form) {
-    return function(dispatch) {
+    return function (dispatch) {
         updateUserRequest(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -157,8 +181,8 @@ export function updateUser(form) {
     }
 }
 
-function showMessage(message){
-    return function(dispatch) {
+function showMessage(message) {
+    return function (dispatch) {
         dispatch({
             type: SET_MESSAGE,
             message
@@ -166,11 +190,11 @@ function showMessage(message){
         dispatch({
             type: SHOW_MESSAGE
         })
-    } 
+    }
 }
 
 export function singOut() {
-    return function(dispatch){
+    return function (dispatch) {
         logoutRequest()
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -178,7 +202,7 @@ export function singOut() {
             .catch((res) => {
                 dispatch(showMessage("Ошибка: " + res.message));
             })
-            .finally(()=>{
+            .finally(() => {
                 dispatch({
                     type: SET_USER,
                     user: null,

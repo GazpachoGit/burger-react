@@ -1,27 +1,38 @@
-import {    SET_USER,
-            SET_CHANGING_PASSWORD,
-            USER_REQUIRED,
-            USER_LOADED,
-            SHOW_MESSAGE,
-            SET_MESSAGE
-         } from '../actions/auth';
+import {
+    SET_USER,
+    SET_CHANGING_PASSWORD,
+    USER_REQUIRED,
+    USER_LOADED,
+    SHOW_MESSAGE,
+    SET_MESSAGE,
+    TAuthActions
+} from '../actions/auth';
+import { TUser } from '../types/data';
 
-export const initialState = {
-    user: null,
+type TAuthState = {
+    user?: TUser,
+    changingPassword: boolean,
+    userLoaded: boolean,
+    showMessage: boolean,
+    authMessage: string
+}
+
+export const initialState: TAuthState = {
+    user: undefined,
     changingPassword: false,
     userLoaded: false,
     showMessage: false,
     authMessage: ""
 }
 
-export const authReducer = (state = initialState, action) => {
-    switch(action.type) {
+export const authReducer = (state = initialState, action: TAuthActions) => {
+    switch (action.type) {
         case SET_USER:
             return {
                 ...state,
                 user: action.user
             }
-        case SET_CHANGING_PASSWORD: 
+        case SET_CHANGING_PASSWORD:
             return {
                 ...state,
                 changingPassword: !state.changingPassword
