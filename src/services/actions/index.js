@@ -1,4 +1,4 @@
-import { mainUrl, createOrderUrl } from '../../utils/constants';
+import { mainUrl, orderUrl } from '../../utils/constants';
 import {data} from '../../utils/data';
 import { getCookie } from '../../utils/cookie-utils';
 
@@ -14,29 +14,32 @@ export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 export const CLEAN_CONSTRUCTOR = 'CLEAN_CONSTRUCTOR';
 export const UPDATE_OPTIONAL = 'UPDATE_OPTIONAL';
 export const UPDATE_CURRENT_TAB = 'UPDATE_CURRENT_TAB';
+export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
+export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
+export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 export function getIngredients() {
     return function(dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });
-        fetch(mainUrl)
+      return fetch(mainUrl)
         .then(res => {
           if (res.ok)
             return res.json();
           return Promise.reject(res.status);
         })
-        .then(({ data }) => {
+        .then(({ data }) => 
           dispatch({
               type:GET_INGREDIENTS_SUCCESS,
               items: data
           })
-        })
-        .catch(e => {
+        )
+        .catch(e => 
           dispatch({
               type:GET_INGREDIENTS_FAILED
           })
-        })
+        )
     }
 }
 
@@ -48,7 +51,7 @@ export function createOrder(Ids) {
     dispatch({
       type: SHOW_ORDER_MODAL,
     })
-    fetch(createOrderUrl, {
+    fetch(orderUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,4 +89,33 @@ export function getIngredientsWhenYandexAFK(){
       items: data
     })
  }
+}
+
+export function getOrder(id) {
+  return dispatch => {
+    dispatch({
+      type: GET_ORDER_REQUEST
+    })
+    fetch(`${orderUrl}/${id}`, {
+      method: 'GET',
+      'Content-Type': 'application/json'
+    })
+    .then(res => {
+      return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+    })
+    .then(data => {
+      if(data.success){       
+        dispatch({
+            type: GET_ORDER_SUCCESS,
+            order: data.orders[0]
+        });;
+      } 
+    })
+    .catch(err => {
+      dispatch({
+        type: GET_ORDER_FAILED,
+        message: err.message
+      })
+    })
+  }
 }

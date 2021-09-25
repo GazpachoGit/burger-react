@@ -13,7 +13,7 @@ import SwitchWrapper from '../switch-wrapper/switch-wrapper';
 
 function App() {
 
-  const { showOrderModal } = useSelector(state => state.ingredients);
+  const showOrderModal = useSelector(state => state.ingredients.showOrderModal);
   const showMessage = useSelector(state => state.auth.showMessage);
 
   const dispatch = useDispatch();

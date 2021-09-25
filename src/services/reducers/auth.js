@@ -6,7 +6,7 @@ import {    SET_USER,
             SET_MESSAGE
          } from '../actions/auth';
 
-const initialState = {
+export const initialState = {
     user: null,
     changingPassword: false,
     userLoaded: false,

@@ -12,7 +12,7 @@ export const SET_MESSAGE = 'SET_MESSAGE';
 export function singIn(form, type) {
     return function(dispatch){
         const request = type === 'login' ? loginRequest : registerRequest;
-        request(form)
+        return request(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
@@ -24,7 +24,7 @@ export function singIn(form, type) {
             
                     localStorage.setItem('token', data.refreshToken);
             
-                    dispatch({
+                    return dispatch({
                         type: SET_USER,
                         user: data.user,
                     });
@@ -79,11 +79,12 @@ export function getUser() {
         dispatch({
             type: USER_REQUIRED
         })
-        getUserRequest()
+        return getUserRequest()
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
+                
                 if (data.success) {
                     dispatch({
                         type: SET_USER,
@@ -92,17 +93,16 @@ export function getUser() {
                     dispatch({
                         type: USER_LOADED
                     })
-                }
+                } else Promise.reject(data);
             })
             .catch(res => {
                 if(res.message === 'jwt expired') {
-                    //updateTocken(getUser);
-                    dispatch(updateTocken(getUser()))
+                  return dispatch(updateTocken(getUser()))
                 } else {
                     dispatch({
                         type: USER_LOADED
                     })
-                    console.error(res.message);
+                    //console.error(res.message);
                 }
 
             })
@@ -111,27 +111,29 @@ export function getUser() {
 
 function updateTocken(callback) {
     return function(dispatch) {
-        refreshTockenRequest()
+        return refreshTockenRequest()
         .then(res => {
+            
             return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
         })
         .then(data => {
+            console.log(data)
             if (data.success) {
                 const authToken = data.accessToken.split("Bearer ")[1];
                 setCookie('token', authToken);
                 localStorage.setItem('token', data.refreshToken);
-                dispatch(callback);
-            }
+                return dispatch(callback);
+            } else Promise.reject(data)
         })
         .catch((res) => {
             dispatch({
                 type: SET_USER,
                 user: null,
             });
-            dispatch({
+            return dispatch({
                 type: USER_LOADED
             });
-            dispatch(showMessage("Ошибка: " + res.message));
+            //dispatch(showMessage("Ошибка: " + res.message));
         })
     }
 }
@@ -173,18 +175,16 @@ export function singOut() {
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
-            .then(data => {
-                if (data.success) {
-                    dispatch({
-                        type: SET_USER,
-                        user: null,
-                    });
-                    deleteCookie('token');
-                    localStorage.removeItem('token');
-                }
-            })
             .catch((res) => {
                 dispatch(showMessage("Ошибка: " + res.message));
+            })
+            .finally(()=>{
+                dispatch({
+                    type: SET_USER,
+                    user: null,
+                });
+                deleteCookie('token');
+                localStorage.removeItem('token');
             })
     }
 }

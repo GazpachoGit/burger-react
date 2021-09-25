@@ -1,0 +1,31 @@
+.readyOrders{
+    grid-area: readyOrders;
+}
+.inProgressOrders{
+    grid-area: inProgressOrders;
+}
+.total{
+    grid-area: total;
+}
+.totalToday{
+    grid-area: totalToday;
+}
+
+.statisticsGrid{
+    
+    display: grid;
+    grid-template-areas:
+    'readyOrders inProgressOrders'
+    'total total'
+    'totalToday totalToday';
+    grid-gap: 60px 36px;
+}
+.ordersList{
+    display: grid;
+    grid-template-columns: auto auto;
+    word-break: initial;
+    max-height: 20vh;
+    overflow: auto;
+    gap:10px
+}
+
