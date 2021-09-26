@@ -8,7 +8,7 @@ import {
   WS_GET_COMMON_ORDERS,
   WS_GET_USER_ORDERS
 } from '../actions/wsActions';
-import { TOrder } from '../types/data';
+import { TOrder, TWsOrdersResponse } from '../types/data';
 
 type TWSOrdersState = {
   wsConnected: boolean,
@@ -23,7 +23,7 @@ type TWSOrdersState = {
       inProgressOrders: Array<string>
     }
   },
-  userOrders: Array<TOrder>
+  userOrders: TWsOrdersResponse | []
 }
 
 export const initialState: TWSOrdersState = {
@@ -42,7 +42,7 @@ export const initialState: TWSOrdersState = {
   userOrders: []
 }
 
-export const wsReducer = (state = initialState, action: TWSActions) => {
+export const wsReducer = (state = initialState, action: TWSActions): TWSOrdersState => {
   switch (action.type) {
     case WS_COMMON_ORDERS_CONNECTION_START:
       return initialState;

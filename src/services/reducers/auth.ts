@@ -25,7 +25,7 @@ export const initialState: TAuthState = {
     authMessage: ""
 }
 
-export const authReducer = (state = initialState, action: TAuthActions) => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch (action.type) {
         case SET_USER:
             return {
@@ -50,7 +50,8 @@ export const authReducer = (state = initialState, action: TAuthActions) => {
         case SHOW_MESSAGE:
             return {
                 ...state,
-                showMessage: !state.showMessage
+                showMessage: !state.showMessage,
+                authMessage: action.message
             }
         case SET_MESSAGE:
             return {

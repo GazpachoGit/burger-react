@@ -2,6 +2,7 @@ import { mainUrl, orderUrl } from '../../utils/constants';
 import { data } from '../../utils/data';
 import { getCookie } from '../../utils/cookie-utils';
 import { TIngredient, TCreatedOrder, TOrder } from '../types/data';
+import { AppDispatch, AppThunk } from '../types';
 
 export const GET_INGREDIENTS_REQUEST: 'GET_INGREDIENTS_REQUEST' = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_INGREDIENTS_SUCCESS' = 'GET_INGREDIENTS_SUCCESS';
@@ -57,7 +58,7 @@ export interface ICreateOrderFailed {
 }
 export interface IUpdateOptional {
   readonly type: typeof UPDATE_OPTIONAL;
-  readonly optional: TIngredient
+  readonly optional: Array<TIngredient>
 }
 export interface IUpdateCurrentTab {
   readonly type: typeof UPDATE_CURRENT_TAB;
@@ -77,35 +78,35 @@ export interface IGetOrderSuccess {
 }
 export type TIngredientsActions = IGetIngredientsRequest | IGetIngredientsSuccess | IGetIngredientsFailed | IAddComponent | IRemoveComponent | IShowOrderModal | ICleanConstructor | ICreateOrderRequest | ICreateOrderSuccess | ICreateOrderFailed | IUpdateOptional | IUpdateCurrentTab | IGetOrderRequest | IGetOrderFailed | IGetOrderSuccess
 
-export function getIngredients() {
-  return function (dispatch) {
+export function getIngredients(): AppThunk {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    return fetch(mainUrl)
+    fetch(mainUrl)
       .then(res => {
         if (res.ok)
           return res.json();
         return Promise.reject(res.status);
       })
-      .then(({ data }) =>
+      .then(({ data }) => {
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           items: data
         })
-      )
-      .catch(e =>
+      })
+      .catch(e => {
         dispatch({
           type: GET_INGREDIENTS_FAILED
         })
-      )
+      })
   }
 }
 
 
 
-export function createOrder(Ids) {
-  return function (dispatch) {
+export function createOrder(Ids: Array<string>): AppThunk {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: CREATE_ORDER_REQUEST
     });
@@ -143,8 +144,8 @@ export function createOrder(Ids) {
   }
 }
 
-export function getIngredientsWhenYandexAFK() {
-  return function (dispatch) {
+export function getIngredientsWhenYandexAFK(): AppThunk {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_SUCCESS,
       items: data
@@ -152,14 +153,16 @@ export function getIngredientsWhenYandexAFK() {
   }
 }
 
-export function getOrder(id) {
-  return dispatch => {
+export function getOrder(id: string) {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: GET_ORDER_REQUEST
     })
     fetch(`${orderUrl}/${id}`, {
       method: 'GET',
-      'Content-Type': 'application/json'
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
       .then(res => {
         return res.ok ? res.json() : res.json().then(err => Promise.reject(err));

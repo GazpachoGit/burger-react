@@ -10,7 +10,7 @@ export type TIngredient = {
     readonly image: string,
     readonly image_mobile: string,
     readonly image_large: string,
-    id?: number,
+    id?: string,
     qty?: number
 }
 
@@ -43,4 +43,7 @@ export type TWsOrdersResponse = {
     orders: Array<TOrder>,
     total: number,
     totalToday: number
+}
+export type TForm = {
+    [key: string]: string | boolean | number
 }

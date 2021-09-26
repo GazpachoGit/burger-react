@@ -30,13 +30,14 @@ type TIngredientsState = {
     },
     orderRequest: boolean,
     orderFailed: boolean,
+    orderFailedMessage?: string,
     currentOrder?: TCreatedOrder,
-    orderNumber?: string,
+    orderNumber?: number,
     showOrderModal: boolean,
     openedOrder: {
         openOrderRequest: boolean,
         openOrderFailed: boolean,
-        openOrderFailedMessage: string,
+        openOrderFailedMessage?: string,
         order?: TOrder
     }
 }
@@ -73,6 +74,7 @@ export const initialState: TIngredientsState = {
 
     orderRequest: false,
     orderFailed: false,
+    orderFailedMessage: "",
 
     currentOrder: undefined,
     orderNumber: undefined,
@@ -88,7 +90,7 @@ export const initialState: TIngredientsState = {
 
 }
 
-export const ingredientsReducer = (state = initialState, action: TIngredientsActions) => {
+export const ingredientsReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST:
             return {
@@ -149,7 +151,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
                     ingredients: state.ingredients.map(item => item._id === action.item._id ? { ...item, qty: 0 } : item),
                     burgerComponents: {
                         ...state.burgerComponents,
-                        bun: null
+                        bun: undefined
                     }
                 }
             } else {
@@ -181,16 +183,16 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
                 ...state,
                 orderRequest: true,
                 orderFailed: false,
-                currentOrder: null,
-                orderNumber: null,
-                orderFailedMessage: null
+                currentOrder: undefined,
+                orderNumber: undefined,
+                orderFailedMessage: undefined
             }
         case CREATE_ORDER_SUCCESS:
             return {
                 ...state,
                 orderRequest: false,
                 currentOrder: action.order,
-                orderNumber: action.order ? action.order.order.number : null
+                orderNumber: action.order ? action.order.order.number : undefined
             }
         case CREATE_ORDER_FAILED:
             return {
@@ -219,7 +221,7 @@ export const ingredientsReducer = (state = initialState, action: TIngredientsAct
                     openOrderRequest: true,
                     openOrderFailed: false,
                     openOrderFailedMessage: "",
-                    order: {}
+                    order: undefined
                 }
             }
         case GET_ORDER_FAILED:
