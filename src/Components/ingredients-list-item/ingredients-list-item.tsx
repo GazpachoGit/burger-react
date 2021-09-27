@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './ingredients-list-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientType } from '../../utils/local-types';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
+import { TIngredient } from '../../services/types/data';
 
-export default function IngredientsListItem({ item }) {
+export const IngredientsListItem: FC<{ item: TIngredient }> = ({ item }) => {
     const { _id, name, price, image, qty } = item;
 
     //drag
@@ -39,7 +39,4 @@ export default function IngredientsListItem({ item }) {
         </Link>
     )
 }
-
-IngredientsListItem.propTypes = {
-    item: ingredientType.isRequired
-}
+export default IngredientsListItem

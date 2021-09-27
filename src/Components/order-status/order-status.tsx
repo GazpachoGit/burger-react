@@ -1,7 +1,9 @@
-export default function OrderStatus({status}) {
-    let orderStatus="";
+import { FC } from "react";
+
+export const OrderStatus: FC<{ status: string }> = ({ status }) => {
+    let orderStatus = "";
     let ready = "";
-    switch(status) {
+    switch (status) {
         case 'done':
             orderStatus = 'Выполнено';
             ready = " success-text"
@@ -14,3 +16,5 @@ export default function OrderStatus({status}) {
         <p className={"text text_type_main-default" + ready}>{orderStatus}</p>
     )
 }
+
+export default OrderStatus

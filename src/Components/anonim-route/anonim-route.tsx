@@ -2,11 +2,14 @@ import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/hooks';
 import styles from '../../pages/./login.module.css';
 import PropTypes from 'prop-types';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 
 type TPros = {
-    [key: string]: number | boolean | string;
+    // [key: string]: number | boolean | string;
+    children: ReactNode,
+    path: string,
+    exact?: boolean
 }
 
 interface state {

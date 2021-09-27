@@ -1,23 +1,26 @@
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './nav-item.module.css';
-import { BurgerIcon, ListIcon, ProfileIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import {useLocation} from 'react-router-dom';
+import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useLocation } from 'react-router-dom';
+import { FC } from 'react';
 
+type TProps = {
+    title: string,
+    to: string
+}
 
-
-export default function NavItem({ title, to}) {
+export const NavItem: FC<TProps> = ({ title, to }) => {
     const location = useLocation();
     const currentRoute = location.pathname;
 
-    const activeNav =  (to === '/' && to === currentRoute) || (to !== '/' && currentRoute.startsWith(to));
+    const activeNav = (to === '/' && to === currentRoute) || (to !== '/' && currentRoute.startsWith(to));
 
     let Child = {};
     const iconType = activeNav ? 'primary' : 'secondary';
-    
+
     const activeStatus = !activeNav && styles.unselected;
 
-    switch(title){
+    switch (title) {
         case "Конструктор":
             Child = <BurgerIcon type={iconType} />
             break;
@@ -39,7 +42,4 @@ export default function NavItem({ title, to}) {
     )
 }
 
-NavItem.propTypes = {
-    title: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired
-}
+export default NavItem

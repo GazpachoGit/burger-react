@@ -1,29 +1,35 @@
 import { Switch, Route, useLocation } from 'react-router-dom';
-import { LoginPage,
-        RegisterPage,
-        ForgotPasswordPage,
-        ResetPasswordPage,
-        ProfilePage,
-        IngredientPage,
-        OrderPage,
-        NotFound404
-     } from '../../pages';
+import {
+    LoginPage,
+    RegisterPage,
+    ForgotPasswordPage,
+    ResetPasswordPage,
+    ProfilePage,
+    IngredientPage,
+    OrderPage,
+    NotFound404
+} from '../../pages';
 import AnonimRoute from '../anonim-route/anonim-route';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Main from '../main/main';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Modal from '../modal/modal';
-import { useCallback } from 'react';
+import { FC, useCallback } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrdersFeed from '../../pages/orders-feed';
 import OpenedOrderDetails from '../opened-order-details/opened-order-details';
+import * as H from 'history';
 
-export default function SwitchWrapper() {
-    const location = useLocation();
+interface TLocation extends H.Location {
+    background?: H.Location
+}
+
+export const SwitchWrapper: FC<{}> = () => {
+    const location = useLocation<TLocation>();
     const history = useHistory();
-    let background = history.action === 'PUSH' ? location.state?.background : null;
+    let background = history.action === 'PUSH' ? location.state?.background : undefined;
 
-    
+
     const closeHandler = useCallback(e => {
         e.stopPropagation();
         history.goBack();
@@ -56,7 +62,7 @@ export default function SwitchWrapper() {
                 <Route path="/feed" exact={true}>
                     <OrdersFeed />
                 </Route>
-                <Route path={['/feed/:id',`/profile/orders/:id`]} exact={true}>
+                <Route path={['/feed/:id', `/profile/orders/:id`]} exact={true}>
                     <OrderPage />
                 </Route>
                 <Route path="/" exact={true}>
@@ -67,11 +73,13 @@ export default function SwitchWrapper() {
                 </Route>
             </Switch>
             {background && <Route path="/ingredients/:id">
-                <CurrentIngredientDetails />    
+                <CurrentIngredientDetails />
             </Route>}
-            {background && <Route path={['/feed/:id',`/profile/orders/:id`]}>
-                <CurrentOpenedOrderDetails />    
+            {background && <Route path={['/feed/:id', `/profile/orders/:id`]}>
+                <CurrentOpenedOrderDetails />
             </Route>}
         </>
     )
 }
+
+export default SwitchWrapper;

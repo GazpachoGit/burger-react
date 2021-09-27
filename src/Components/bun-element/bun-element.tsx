@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from '../constructor-el-wrapper/constructor-el-wrapper.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TIngredient } from '../../services/types/data';
 
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/local-types';
+type TProps = {
+    item: TIngredient,
+    type?: 'top' | 'bottom',
+    isLocked: boolean
+}
 
-export default function BunElement({ item, type, isLocked }) {
+export const BunElement: FC<TProps> = ({ item, type, isLocked }) => {
 
     return (
         <div className={styles.wrapper}>
@@ -21,11 +25,5 @@ export default function BunElement({ item, type, isLocked }) {
             </ConstructorElement>
         </div>
     )
-}
-
-BunElement.propTypes = {
-    item: ingredientType.isRequired,
-    type: PropTypes.string.isRequired,
-    isLocked: PropTypes.bool.isRequired
 }
 
