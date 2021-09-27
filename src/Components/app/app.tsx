@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { SHOW_ORDER_MODAL } from '../../services/actions';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { getIngredients, getIngredientsWhenYandexAFK } from '../../services/actions';
@@ -11,7 +11,7 @@ import CommonMessage from '../common-message/common-message';
 import SwitchWrapper from '../switch-wrapper/switch-wrapper';
 
 
-function App() {
+const App: FC<{}> = () => {
 
   const showOrderModal = useSelector(state => state.ingredients.showOrderModal);
   const showMessage = useSelector(state => state.auth.showMessage);

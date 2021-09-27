@@ -1,7 +1,8 @@
 import { loginRequest, registerRequest, forgotPasswordRequest, getUserRequest, logoutRequest, refreshTockenRequest, resetPasswordRequest, updateUserRequest } from '../auth-api';
 import { setCookie, deleteCookie } from '../../utils/cookie-utils';
-import { TUser } from '../types/data';
+import { TUser, TForm } from '../types/data';
 //import {authUrl} from '../../utils/constants';
+import { AppDispatch, AppThunk } from '../types';
 
 export const SET_USER: 'SET_USER' = 'SET_USER';
 export const SET_CHANGING_PASSWORD: 'SET_CHANGING_PASSWORD' = 'SET_CHANGING_PASSWORD';
@@ -12,7 +13,7 @@ export const SET_MESSAGE: 'SET_MESSAGE' = 'SET_MESSAGE';
 
 export interface ISetUser {
     readonly type: typeof SET_USER;
-    readonly user: TUser
+    readonly user?: TUser
 }
 export interface ISetChangePassword {
     readonly type: typeof SET_CHANGING_PASSWORD;
@@ -25,6 +26,7 @@ export interface IUserLoaded {
 }
 export interface IShowMessage {
     readonly type: typeof SHOW_MESSAGE;
+    readonly message: string;
 }
 export interface ISetMessage {
     readonly type: typeof SET_MESSAGE;
@@ -33,8 +35,8 @@ export interface ISetMessage {
 
 export type TAuthActions = ISetUser | ISetChangePassword | IUserRequired | IUserRequired | IUserLoaded | IShowMessage | ISetMessage
 
-export function singIn(form, type) {
-    return function (dispatch) {
+export function singIn(form: TForm, type: string): AppThunk {
+    return function (dispatch: AppDispatch) {
         const request = type === 'login' ? loginRequest : registerRequest;
         return request(form)
             .then(res => {
@@ -55,13 +57,16 @@ export function singIn(form, type) {
                 }
             })
             .catch(res => {
-                dispatch(showMessage("Ошибка: " + res.message));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: res.message
+                });
             })
     }
 }
 
-export function forgotPassword(form) {
-    return function (dispatch) {
+export function forgotPassword(form: TForm): AppThunk {
+    return function (dispatch: AppDispatch) {
         forgotPasswordRequest(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -74,13 +79,16 @@ export function forgotPassword(form) {
                 }
             })
             .catch(res => {
-                dispatch(showMessage("Ошибка: " + res.message));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: res.message
+                });
             })
     }
 }
 
-export function resetPassword(form) {
-    return function (dispatch) {
+export function resetPassword(form: TForm): AppThunk {
+    return function (dispatch: AppDispatch) {
         resetPasswordRequest(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -93,13 +101,16 @@ export function resetPassword(form) {
                 }
             })
             .catch(res => {
-                dispatch(showMessage("Ошибка: " + res.message));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: res.message
+                });
             })
     }
 }
 
-export function getUser() {
-    return function (dispatch) {
+export function getUser(): AppThunk {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: USER_REQUIRED
         })
@@ -121,7 +132,7 @@ export function getUser() {
             })
             .catch(res => {
                 if (res.message === 'jwt expired') {
-                    return dispatch(updateTocken(getUser()))
+                    updateTocken(getUser)
                 } else {
                     dispatch({
                         type: USER_LOADED
@@ -133,9 +144,9 @@ export function getUser() {
     }
 };
 
-function updateTocken(callback) {
-    return function (dispatch) {
-        return refreshTockenRequest()
+const updateTocken = (callback: Function) => {
+    return async function (dispatch: AppDispatch) {
+        refreshTockenRequest()
             .then(res => {
 
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -146,15 +157,15 @@ function updateTocken(callback) {
                     const authToken = data.accessToken.split("Bearer ")[1];
                     setCookie('token', authToken);
                     localStorage.setItem('token', data.refreshToken);
-                    return dispatch(callback);
+                    callback();
                 } else Promise.reject(data)
             })
             .catch((res) => {
                 dispatch({
                     type: SET_USER,
-                    user: null,
+                    user: undefined,
                 });
-                return dispatch({
+                dispatch({
                     type: USER_LOADED
                 });
                 //dispatch(showMessage("Ошибка: " + res.message));
@@ -162,8 +173,8 @@ function updateTocken(callback) {
     }
 }
 
-export function updateUser(form) {
-    return function (dispatch) {
+export function updateUser(form: TForm): AppThunk {
+    return function (dispatch: AppDispatch) {
         updateUserRequest(form)
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
@@ -173,39 +184,36 @@ export function updateUser(form) {
                     type: SET_USER,
                     user: data.user,
                 });
-                dispatch(showMessage("Данные пользователя изменены"));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: "Данные пользователя изменены"
+                });
             })
             .catch((res) => {
-                dispatch(showMessage("Ошибка: " + res.message));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: res.message
+                });
             })
     }
 }
 
-function showMessage(message) {
-    return function (dispatch) {
-        dispatch({
-            type: SET_MESSAGE,
-            message
-        });
-        dispatch({
-            type: SHOW_MESSAGE
-        })
-    }
-}
-
-export function singOut() {
-    return function (dispatch) {
+export function singOut(): AppThunk {
+    return function (dispatch: AppDispatch) {
         logoutRequest()
             .then(res => {
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .catch((res) => {
-                dispatch(showMessage("Ошибка: " + res.message));
+                dispatch({
+                    type: SHOW_MESSAGE,
+                    message: res.message
+                });
             })
             .finally(() => {
                 dispatch({
                     type: SET_USER,
-                    user: null,
+                    user: undefined,
                 });
                 deleteCookie('token');
                 localStorage.removeItem('token');

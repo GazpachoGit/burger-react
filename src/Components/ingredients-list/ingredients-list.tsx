@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import styles from './ingredients-list.module.css';
 import IngredientsSection from '../ingredients-section/ingredients-section';
 
-import PropTypes from 'prop-types';
-import { tabType } from '../../utils/local-types';
-import { useSelector } from 'react-redux';
-export default function IngredientsList({ tabs }) {
+import { TTab, TabSection } from '../../services/types/data';
+import { useSelector } from '../../services/hooks';
+
+type TProps = {
+    tabs: Array<TTab>
+}
+
+export const IngredientsList: FC<TProps> = ({ tabs }) => {
 
     const { ingredientsRequest, ingredients, ingredientsFailed } = useSelector(state => state.ingredients);
 
     const sectionList = React.useMemo(() => {
-        const arr = []
+        let arr: TabSection[] = [];
         tabs.forEach((tab, i) => {
             arr.push({
                 id: tab.id,
@@ -37,6 +41,4 @@ export default function IngredientsList({ tabs }) {
     )
 }
 
-IngredientsList.propTypes = {
-    tabs: PropTypes.arrayOf(tabType).isRequired
-}
+export default IngredientsList;

@@ -42,8 +42,8 @@ export default function socketMiddleware(wsUrl, wsActions, auth) {
             if(restParsedData && restParsedData.message) {
               dispatch({ type: wsError, error: restParsedData.message });
             } else {
-              //dispatch({ type: wsMessage, payload: restParsedData });
-              dispatch({ type: wsMessage, payload: testData })
+              dispatch({ type: wsMessage, payload: restParsedData });
+              //dispatch({ type: wsMessage, payload: testData })
             }
   
             

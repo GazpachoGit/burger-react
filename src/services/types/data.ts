@@ -47,3 +47,8 @@ export type TWsOrdersResponse = {
 export type TForm = {
     [key: string]: string | boolean | number
 }
+export type TabSection = {
+    id: string,
+    title: string,
+    ingredients: Array<TIngredient>
+}
