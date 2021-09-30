@@ -13,7 +13,7 @@ import AnonimRoute from '../anonim-route/anonim-route';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import Main from '../main/main';
 import { useHistory } from 'react-router-dom';
-import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 import { FC, useCallback } from 'react';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrdersFeed from '../../pages/orders-feed';
@@ -35,8 +35,8 @@ export const SwitchWrapper: FC<{}> = () => {
         history.goBack();
     }, []);
 
-    const CurrentIngredientDetails = () => <Modal title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeHandler} />;
-    const CurrentOpenedOrderDetails = () => <Modal children={<OpenedOrderDetails />} closeHandler={closeHandler} />;
+    const CurrentIngredientDetails = () => <ModalOverlay title="Детали ингредиента" children={<IngredientDetails />} closeHandler={closeHandler} />;
+    const CurrentOpenedOrderDetails = () => <ModalOverlay children={<OpenedOrderDetails />} closeHandler={closeHandler} />;
 
     return (
         <>

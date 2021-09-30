@@ -8,7 +8,7 @@ import { TOrder } from '../../services/types/data';
 
 type TProps = {
     order: TOrder,
-    showStatus: boolean
+    showStatus?: boolean
 }
 
 export const OrderCard: FC<TProps> = ({ order, showStatus }) => {

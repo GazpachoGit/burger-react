@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import AppHeader from '../app-header/app-header';
-import Modal from '../modal/modal';
+import ModalOverlay from '../modal-overlay/modal-overlay';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { SHOW_ORDER_MODAL } from '../../services/actions';
@@ -32,11 +32,11 @@ const App: FC<{}> = () => {
   }, [dispatch]);
 
   const currentOrderModal = React.useMemo(() => {
-    return <Modal children={<OrderDetails />} closeHandler={closeOrderHandler} />
+    return <ModalOverlay children={<OrderDetails />} closeHandler={closeOrderHandler} />
   }, [closeOrderHandler]);
 
   const currentCommonMessage = React.useMemo(() => {
-    return <Modal children={<CommonMessage />} closeHandler={closeCommonMessageHandler} />
+    return <ModalOverlay children={<CommonMessage />} closeHandler={closeCommonMessageHandler} />
   }, [closeCommonMessageHandler]);
 
   React.useEffect(() => {

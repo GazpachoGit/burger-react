@@ -23,6 +23,7 @@ export const OpenedOrderDetails: FC<{}> = () => {
     useEffect(()=> {
         dispatch(getOrder(id));
     },[getOrder, dispatch, id]);
+    if(!order) return null;
     let displayIngredients: Array<TIngredient> = [];
     let total = 0
     if(order.ingredients) {
