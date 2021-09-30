@@ -23,7 +23,7 @@ type TWSOrdersState = {
       inProgressOrders: Array<string>
     }
   },
-  userOrders: TWsOrdersResponse | []
+  userOrders?: TWsOrdersResponse
 }
 
 export const initialState: TWSOrdersState = {
@@ -39,7 +39,7 @@ export const initialState: TWSOrdersState = {
       inProgressOrders: []
     }
   },
-  userOrders: []
+  userOrders: undefined
 }
 
 export const wsReducer = (state = initialState, action: TWSActions): TWSOrdersState => {

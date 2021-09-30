@@ -5,7 +5,7 @@ import { FC } from "react";
 
 type TProps = {
     orders: Array<TOrder>
-    showStatus: boolean
+    showStatus?: boolean
 }
 
 export const OrdersList: FC<TProps> = ({ orders, showStatus }) => {

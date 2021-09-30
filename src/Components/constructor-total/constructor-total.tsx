@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './constructor-total.module.css'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { createOrder, CREATE_ORDER_FAILED, SHOW_ORDER_MODAL } from '../../services/actions/';
+import { useDispatch, useSelector } from '../../services/hooks';
+import { createOrder, CREATE_ORDER_FAILED, SHOW_ORDER_MODAL } from '../../services/actions';
 import {useHistory} from 'react-router-dom';
 
-export default function ConstructorTotal() {
+export const ConstructorTotal: FC<{}> = () => {
 
     const total = useSelector(state => state.ingredients.ingredients.reduce((total, item) => item.qty ? total + item.price * item.qty : total, 0));
     const bun = useSelector(state => state.ingredients.burgerComponents.bun);
@@ -47,3 +47,5 @@ export default function ConstructorTotal() {
         </div>
     )
 }
+
+export default ConstructorTotal;

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './burger-constructor.module.css'
 import OptionalComponentsList from '../optional-components-list/optional-components-list';
 import ConstructorTotal from '../constructor-total/constructor-total';
 import BunElement from '../bun-element/bun-element';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
-import { ADD_COMPONENT } from '../../services/actions/'
-export default function BurgerConstructor() {
+import { ADD_COMPONENT } from '../../services/actions';
+
+export const BurgerConstructor: FC<{}> = () => {
     const dispatch = useDispatch();
     const { bun, optional } = useSelector(state => state.ingredients.burgerComponents);
 
@@ -33,4 +34,6 @@ export default function BurgerConstructor() {
         </section>
     )
 }
+
+export default BurgerConstructor;
 

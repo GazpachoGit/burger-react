@@ -1,26 +1,29 @@
 import styles from './opened-order-details.module.css';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { getOrder } from '../../services/actions/index';
 import {useParams} from 'react-router-dom';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import {formatIngredientsList, getTotal, getFormatedDate} from '../../utils/order-service';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderStatus from '../order-status/order-status';
+import { TIngredient, TOrder } from '../../services/types/data';
 
-export default function OpenedOrderDetails() {
+export const OpenedOrderDetails: FC<{}> = () => {
     const {openOrderRequest,
             openOrderFailed,
             openOrderFailedMessage,
-            order
+            order: incomeOrder
         } = useSelector(state => state.ingredients.openedOrder);
     const ingredients = useSelector(state => state.ingredients.ingredients);
 
-    const {id} = useParams();
+    const order = incomeOrder as TOrder;
+
+    const {id} = useParams<{id: string}>();
     const dispatch = useDispatch();
     useEffect(()=> {
         dispatch(getOrder(id));
     },[getOrder, dispatch, id]);
-    let displayIngredients = [];
+    let displayIngredients: Array<TIngredient> = [];
     let total = 0
     if(order.ingredients) {
       displayIngredients =  formatIngredientsList(order.ingredients, ingredients);
@@ -61,3 +64,5 @@ export default function OpenedOrderDetails() {
         </div>
     )
 }
+
+export default OpenedOrderDetails;

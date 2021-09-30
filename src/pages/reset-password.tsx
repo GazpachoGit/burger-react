@@ -1,8 +1,8 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { resetPassword } from '../services/actions/auth';
 
 export default function ResetPasswordPage() {
@@ -10,7 +10,7 @@ export default function ResetPasswordPage() {
     const dispatch = useDispatch();
     const changingPassword = useSelector(state => state.auth.changingPassword);
 
-    const onChange = e => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
     const resetHandler = useCallback((e) => {
@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
                 <Button type="primary" size="medium">Сохранить</Button>
             </form>
             <p className="text text_type_main-default">Вспомнили пароль?<Link className={styles.link} to={'/login'}>Войти</Link></p>
-            </div> : <Redirect to={{pathname: '/forgot-password'}} />}
+        </div> : <Redirect to={{ pathname: '/forgot-password' }} />}
         </>
     )
 }

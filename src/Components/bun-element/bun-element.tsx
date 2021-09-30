@@ -27,3 +27,5 @@ export const BunElement: FC<TProps> = ({ item, type, isLocked }) => {
     )
 }
 
+export default BunElement;
+

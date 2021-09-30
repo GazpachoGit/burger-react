@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { DragEventHandler, FC } from 'react';
 import styles from './constructor-el-wrapper.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/local-types';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { REMOVE_COMPONENT } from '../../services/actions';
 
 import { useRef } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag, useDrop, XYCoord } from 'react-dnd';
+import { TIngredient } from '../../services/types/data';
 
-export default function ConstructorElementWrapper({ item, index, moveCard, type, isLocked }) {
+type TProps = {
+    item: TIngredient,
+    index: number,
+    moveCard: Function,
+    type?: 'top' | 'bottom',
+    isLocked?: boolean
+}
+
+export const ConstructorElementWrapper: FC<TProps> = ({ item, index, moveCard, type, isLocked }) => {
     const id = item.id;
     const dispatch = useDispatch();
     const optional = useSelector(state => state.ingredients.burgerComponents.optional)
@@ -22,7 +29,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard, type,
         index: optional.indexOf(item)
     });
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
     const [{ handlerId }, drop] = useDrop({
         accept: 'component',
         collect(monitor) {
@@ -30,7 +37,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard, type,
                 handlerId: monitor.getHandlerId()
             }
         },
-        hover(item, monitor) {
+        hover(item: {index: number}, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -45,7 +52,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard, type,
             // Get vertical middle
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             // Determine mouse position
-            const clientOffset = monitor.getClientOffset();
+            const clientOffset = monitor.getClientOffset() as XYCoord;
             // Get pixels to the top
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             // Only perform the move when the mouse has crossed half of the items height
@@ -79,7 +86,7 @@ export default function ConstructorElementWrapper({ item, index, moveCard, type,
     });
     const opacity = isDragging ? 0 : 1;
     if (item.type !== 'bun') drag(drop(ref));
-    const preventDefault = (e) => e.preventDefault();
+    const preventDefault: DragEventHandler<HTMLDivElement> = (e) => e.preventDefault();
     return (
         <div ref={ref} style={{ opacity }} onDrop={preventDefault} className={styles.wrapper} data-handler-id={handlerId}>
             <div className={styles.drag}>
@@ -97,9 +104,4 @@ export default function ConstructorElementWrapper({ item, index, moveCard, type,
     )
 }
 
-ConstructorElementWrapper.propTypes = {
-    item: ingredientType.isRequired,
-    index: PropTypes.number.isRequired,
-    moveCard: PropTypes.func.isRequired
-}
-
+export default ConstructorElementWrapper;

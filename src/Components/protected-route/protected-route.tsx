@@ -1,11 +1,16 @@
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { FC, ReactNode, useEffect } from 'react';
 import { getUser } from '../../services/actions/auth';
 import styles from '../../pages/./login.module.css';
-import PropTypes from 'prop-types';
 
-export function ProtectedRoute({ children, ...rest }) {
+type TProps = {
+    children: ReactNode,
+    path: string,
+    exact?: boolean
+}
+
+export const ProtectedRoute: FC<TProps> = ({ children, ...rest }) => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.auth.user);
     const userLoaded = useSelector(state => state.auth.userLoaded)
@@ -41,7 +46,4 @@ export function ProtectedRoute({ children, ...rest }) {
             }
         />
     );
-}
-ProtectedRoute.propTypes = {
-    children: PropTypes.node.isRequired
 }

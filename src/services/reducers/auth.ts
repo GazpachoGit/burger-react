@@ -9,7 +9,7 @@ import {
 } from '../actions/auth';
 import { TUser } from '../types/data';
 
-type TAuthState = {
+export type TAuthState = {
     user?: TUser,
     changingPassword: boolean,
     userLoaded: boolean,

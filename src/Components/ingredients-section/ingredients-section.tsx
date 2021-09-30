@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './ingredients-section.module.css';
 import IngredientsListItem from '../ingredients-list-item/ingredients-list-item';
 import { ingredientsSectionType } from '../../utils/local-types';
 import { useInView } from 'react-intersection-observer';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { UPDATE_CURRENT_TAB } from '../../services/actions/';
+import { UPDATE_CURRENT_TAB } from '../../services/actions';
+import { TabSection } from '../../services/types/data';
 
-export default function IngredientsSection({ item }) {
+export const IngredientsSection: FC<{item: TabSection}> = ({ item }) => {
     const dispatch = useDispatch();
     const { id, title, ingredients } = item;
 
@@ -33,7 +34,5 @@ export default function IngredientsSection({ item }) {
     )
 }
 
-IngredientsSection.propTypes = {
-    item: ingredientsSectionType.isRequired
-}
+export default IngredientsSection;
 

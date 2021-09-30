@@ -1,16 +1,16 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { singIn } from '../services/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/hooks';
 
 export default function RegisterPage() {
     const [form, setValue] = useState({ name: '', email: '', password: '' });
     const dispatch = useDispatch();
     const history = useHistory()
 
-    const onChange = e => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 

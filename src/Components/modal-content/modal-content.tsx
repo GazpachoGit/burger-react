@@ -4,9 +4,9 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react';
 
 type TPros = {
-    title: string,
-    closeHandler: () => void,
-    hideCloseButton: boolean
+    title?: string,
+    closeHandler?: () => void,
+    hideCloseButton?: boolean
 }
 
 export const ModalContent: FC<TPros> = ({ title, children, hideCloseButton, closeHandler }) => {

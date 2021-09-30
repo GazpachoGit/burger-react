@@ -3,6 +3,7 @@ import { setCookie, deleteCookie } from '../../utils/cookie-utils';
 import { TUser, TForm } from '../types/data';
 //import {authUrl} from '../../utils/constants';
 import { AppDispatch, AppThunk } from '../types';
+import { ActionCreator } from 'redux';
 
 export const SET_USER: 'SET_USER' = 'SET_USER';
 export const SET_CHANGING_PASSWORD: 'SET_CHANGING_PASSWORD' = 'SET_CHANGING_PASSWORD';
@@ -36,7 +37,7 @@ export interface ISetMessage {
 export type TAuthActions = ISetUser | ISetChangePassword | IUserRequired | IUserRequired | IUserLoaded | IShowMessage | ISetMessage
 
 export function singIn(form: TForm, type: string): AppThunk {
-    return function (dispatch: AppDispatch) {
+    return async function (dispatch: AppDispatch) {
         const request = type === 'login' ? loginRequest : registerRequest;
         return request(form)
             .then(res => {
@@ -110,7 +111,7 @@ export function resetPassword(form: TForm): AppThunk {
 }
 
 export function getUser(): AppThunk {
-    return function (dispatch: AppDispatch) {
+    return function (dispatch: AppDispatch | ActionCreator<AppThunk>) {
         dispatch({
             type: USER_REQUIRED
         })
@@ -132,7 +133,7 @@ export function getUser(): AppThunk {
             })
             .catch(res => {
                 if (res.message === 'jwt expired') {
-                    updateTocken(getUser)
+                    dispatch(updateTocken(getUser));
                 } else {
                     dispatch({
                         type: USER_LOADED
@@ -145,7 +146,7 @@ export function getUser(): AppThunk {
 };
 
 const updateTocken = (callback: Function) => {
-    return async function (dispatch: AppDispatch) {
+    return async function (dispatch: AppDispatch | ActionCreator<AppThunk>) {
         refreshTockenRequest()
             .then(res => {
 
@@ -157,7 +158,7 @@ const updateTocken = (callback: Function) => {
                     const authToken = data.accessToken.split("Bearer ")[1];
                     setCookie('token', authToken);
                     localStorage.setItem('token', data.refreshToken);
-                    callback();
+                    dispatch(callback());
                 } else Promise.reject(data)
             })
             .catch((res) => {

@@ -1,12 +1,19 @@
 import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk'
+import thunk, { ThunkDispatch } from 'redux-thunk'
 import * as actions from './auth'
 import { enableFetchMocks } from 'jest-fetch-mock'
 import fetchMock from 'jest-fetch-mock'
+import { ActionCreator, AnyAction } from 'redux';
+import { TAuthState, initialState } from '../reducers/auth';
+import { AppDispatch, AppThunk, RootState } from '../types/';
+
+
 enableFetchMocks()
 
+type DispatchExt = ThunkDispatch<TAuthState, void, actions.TAuthActions>;
+
 const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
+const mockStore = configureMockStore<RootState, ActionCreator<AppThunk<Promise<void>>>>(middlewares);
 
 describe('async actions corresponding to auth', () => {
     beforeEach(() => {
@@ -31,9 +38,9 @@ describe('async actions corresponding to auth', () => {
             { type: actions.SET_USER, user }
         ]
         //mock for a store
-        const store = mockStore({})
+        const store = mockStore(initialState);
         //dispatch action -> return promise
-        return store.dispatch(actions.singIn({ password: "", email: "" })).then(() => {
+        return store.dispatch(actions.singIn({ password: "", email: "" }, 'register')).then(() => {
             //get all generated actions -> compare with expected result
             expect(store.getActions()).toEqual(expectedActions)
         })

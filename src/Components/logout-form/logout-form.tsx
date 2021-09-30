@@ -1,9 +1,10 @@
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { singOut } from '../../services/actions/auth';
 import { useHistory } from 'react-router-dom';
+import { FC } from 'react';
 
-export default function LogoutForm() {
+export const LogoutForm: FC<{}> = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const logoutHandler = () => {
@@ -16,3 +17,5 @@ export default function LogoutForm() {
         </div>
     )
 }
+
+export default LogoutForm;

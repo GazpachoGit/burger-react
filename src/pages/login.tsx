@@ -1,14 +1,14 @@
 import styles from './login.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { singIn } from '../services/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../services/hooks';
 
 export default function LoginPage() {
     const [form, setValue] = useState({ email: '', password: '' });
 
-    const onChange = e => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
 
@@ -17,7 +17,7 @@ export default function LoginPage() {
     const loginHandler = useCallback((e) => {
         e.preventDefault();
         dispatch(singIn(form, 'login'));
-        
+
     }, [dispatch, form])
 
     return (

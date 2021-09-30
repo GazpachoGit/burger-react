@@ -6,7 +6,7 @@ export default function IngredientPage() {
 
     return (
         <div className={styles.center}>
-            <ModalContent title="Детали ингредиента" children={<IngredientDetails />} hideCloseButton={true}/>
+            <ModalContent title="Детали ингредиента" children={<IngredientDetails />} hideCloseButton={true} />
         </div>
     )
 }

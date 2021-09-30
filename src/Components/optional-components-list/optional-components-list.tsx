@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './optional-components-list.module.css';
 import ConstructorElementWrappar from '../constructor-el-wrapper/constructor-el-wrapper';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/local-types';
 import { useCallback } from 'react';
 import update from 'immutability-helper';
 import { useDispatch } from 'react-redux';
-import { UPDATE_OPTIONAL } from '../../services/actions/'
+import { UPDATE_OPTIONAL } from '../../services/actions'
+import { TIngredient } from '../../services/types/data';
 
-export default function OptionalComponentsList({ data }) {
+export const OptionalComponentsList: FC<{data: Array<TIngredient>}> = ({ data }) => {
     const dispatch = useDispatch();
     const moveCard = useCallback((dragIndex, hoverIndex) => {
         const dragCard = data[dragIndex];
@@ -32,8 +31,5 @@ export default function OptionalComponentsList({ data }) {
         }</ul>
     )
 }
-
-OptionalComponentsList.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired
-}
+export default OptionalComponentsList;
 

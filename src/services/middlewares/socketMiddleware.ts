@@ -13,7 +13,7 @@ type TActions = {
   wsMessage: string
 }
 
-export default function socketMiddleware(wsUrl: string, wsActions: TActions, auth: boolean): Middleware {
+export default function socketMiddleware(wsUrl: string, wsActions: TActions, auth?: boolean): Middleware {
   return (store: MiddlewareAPI) => {
     let socket: WebSocket;
 

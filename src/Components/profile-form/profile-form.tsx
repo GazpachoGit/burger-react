@@ -1,31 +1,33 @@
-import { Input, PasswordInput , Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {updateUser} from '../../services/actions/auth';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { updateUser } from '../../services/actions/auth';
 import { useEffect } from 'react';
 import styles from './profile-form.module.css';
+import { TUser } from '../../services/types/data';
 
 
 export default function ProfileForm() {
-    const user = useSelector(state => state.auth.user);
+    const incomeUser = useSelector(state => state.auth.user);
+    const user = incomeUser as TUser;
 
-    const [form, setValue] = useState({ email: '', password:'' , name: '' });
+    const [form, setValue] = useState({ email: '', password: '', name: '' });
     const dispatch = useDispatch();
 
-    const onChange = e => {
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
-    function updateUserHandler(e) {
+    function updateUserHandler(e: FormEvent) {
         e.preventDefault();
         dispatch(updateUser(form))
     }
     useEffect(() => {
-        setValue({ email: user.email, password:'' , name: user.name })
-    },[user])
+        setValue({ email: user.email, password: '', name: user.name })
+    }, [user])
 
-    function revertHandler(e) {
-        e.preventDefault();
-        setValue({ email: user.email, password:'' , name: user.name }) 
+    function revertHandler() {
+        //e.preventDefault();
+        setValue({ email: user.email, password: '', name: user.name })
     }
     return (
         <form className={styles.form + ' pb-20'} onSubmit={updateUserHandler}>
