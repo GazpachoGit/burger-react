@@ -1,23 +1,18 @@
 import configureMockStore from 'redux-mock-store';
-import thunk, { ThunkDispatch } from 'redux-thunk'
+import thunk from 'redux-thunk'
 import * as actions from './auth'
 import { enableFetchMocks } from 'jest-fetch-mock'
-import fetchMock from 'jest-fetch-mock'
-import { ActionCreator, AnyAction } from 'redux';
-import { TAuthState, initialState } from '../reducers/auth';
-import { AppDispatch, AppThunk, RootState } from '../types/';
+import { initialState } from '../reducers/auth';
 
 
 enableFetchMocks()
 
-type DispatchExt = ThunkDispatch<TAuthState, void, actions.TAuthActions>;
-
 const middlewares = [thunk];
-const mockStore = configureMockStore<RootState, ActionCreator<AppThunk<Promise<void>>>>(middlewares);
+const mockStore = configureMockStore(middlewares);
 
 describe('async actions corresponding to auth', () => {
     beforeEach(() => {
-        fetchMock.resetMocks();
+        fetch.resetMocks();
     })
 
     it('sing in with success', () => {
@@ -26,7 +21,7 @@ describe('async actions corresponding to auth', () => {
             name: "qwerty1"
         }
         //global mock of any fetch method for all resonses
-        fetchMock.mockResponse(JSON.stringify({
+        fetch.mockResponse(JSON.stringify({
             success: true,
             user,
             accessToken: "Bearer 123",
@@ -47,12 +42,11 @@ describe('async actions corresponding to auth', () => {
     })
     it('sing in with fail', () => {
         const message = "ups..."
-        fetchMock.mockReject(new Error(message))
+        fetch.mockReject(new Error(message))
         const expectedActions = [
-            { type: actions.SET_MESSAGE, message: "Ошибка: " + message },
-            { type: actions.SHOW_MESSAGE }
+            { type: actions.SHOW_MESSAGE, message: message }
         ]
-        const store = mockStore({})
+        const store = mockStore(initialState)
         return store.dispatch(actions.singIn({ password: "", email: "" }, 'login')).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
         })
@@ -62,7 +56,7 @@ describe('async actions corresponding to auth', () => {
             email: "qwerty@mail.ru",
             name: "qwerty1"
         }
-        fetchMock.mockResponse(JSON.stringify({
+        fetch.mockResponse(JSON.stringify({
             success: true,
             user
         }))
@@ -72,7 +66,7 @@ describe('async actions corresponding to auth', () => {
             { type: actions.USER_LOADED }
         ]
 
-        const store = mockStore({})
+        const store = mockStore(initialState)
         return store.dispatch(actions.getUser()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
         })
@@ -82,7 +76,7 @@ describe('async actions corresponding to auth', () => {
             email: "qwerty@mail.ru",
             name: "qwerty1"
         }
-        fetchMock.mockResponses([
+        fetch.mockResponses([
             JSON.stringify({
                 success: false,
                 message: "jwt expired"
@@ -92,12 +86,12 @@ describe('async actions corresponding to auth', () => {
                 success: true,
                 accessToken: "Bearer 123",
                 refreshToken: "321"
-            }), {}
+            })
         ], [
             JSON.stringify({
                 success: true,
                 user
-            }), {}
+            })
         ])
 
         const expectedActions = [
@@ -113,7 +107,7 @@ describe('async actions corresponding to auth', () => {
         })
     })
     it('get user failed by other reason', () => {
-        fetchMock.mockReject(new Error("damn..."))
+        fetch.mockReject(new Error("damn..."))
 
         const expectedActions = [
             { type: actions.USER_REQUIRED },
@@ -126,7 +120,7 @@ describe('async actions corresponding to auth', () => {
         })
     })
     it('update token failed durring getUser()', () => {
-        fetchMock.mockResponses([
+        fetch.mockResponses([
             JSON.stringify({
                 success: false,
                 message: "jwt expired"
@@ -140,7 +134,7 @@ describe('async actions corresponding to auth', () => {
 
         const expectedActions = [
             { type: actions.USER_REQUIRED },
-            { type: actions.SET_USER, user: null },
+            { type: actions.SET_USER, user: undefined },
             { type: actions.USER_LOADED }
         ]
 

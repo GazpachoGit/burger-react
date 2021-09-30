@@ -74,7 +74,7 @@ export function forgotPassword(form: TForm): AppThunk {
             })
             .then(data => {
                 if (data.success) {
-                    dispatch({
+                    return dispatch({
                         type: SET_CHANGING_PASSWORD
                     });;
                 }
@@ -133,7 +133,7 @@ export function getUser(): AppThunk {
             })
             .catch(res => {
                 if (res.message === 'jwt expired') {
-                    dispatch(updateTocken(getUser));
+                  return dispatch(updateTocken(getUser()));
                 } else {
                     dispatch({
                         type: USER_LOADED
@@ -146,10 +146,9 @@ export function getUser(): AppThunk {
 };
 
 const updateTocken = (callback: Function) => {
-    return async function (dispatch: AppDispatch | ActionCreator<AppThunk>) {
-        refreshTockenRequest()
+    return function (dispatch: AppDispatch | ActionCreator<AppThunk>) {
+       return refreshTockenRequest()
             .then(res => {
-
                 return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
             })
             .then(data => {
@@ -158,7 +157,7 @@ const updateTocken = (callback: Function) => {
                     const authToken = data.accessToken.split("Bearer ")[1];
                     setCookie('token', authToken);
                     localStorage.setItem('token', data.refreshToken);
-                    dispatch(callback());
+                    return dispatch(callback);
                 } else Promise.reject(data)
             })
             .catch((res) => {

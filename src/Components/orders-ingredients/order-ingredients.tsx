@@ -19,7 +19,7 @@ export const OrderIngredients: FC<{ orderIngredients: Array<string> }> = ({ orde
                 {ingredients.length > displayQuantity && <span className={styles.rest + " text text_type_digits-default"}>+{ingredients.length - displayQuantity}</span>}
 
                 {displayIngredients.map((ing, index) =>
-                    <img key={ing._id} style={{ zIndex: index + 1 }} className={`${styles.imgContainer} ${ingredients.length > displayQuantity && index === 0 && styles.notLast}`} alt="img" src={ing.image_mobile} />
+                    <img key={ing._id + index} style={{ zIndex: index + 1 }} className={`${styles.imgContainer} ${ingredients.length > displayQuantity && index === 0 && styles.notLast}`} alt="img" src={ing.image_mobile} />
                 )}
             </div>
             <div><span className="text text_type_digits-medium">{total}<CurrencyIcon type="primary" /></span></div>

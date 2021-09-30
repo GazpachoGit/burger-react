@@ -431,7 +431,7 @@ describe('ingredients reducer', () => {
             ...previousState,
             ingredients: [{ ...bun, qty: 0 }, optional],
             burgerComponents: {
-                bun: null,
+                bun: undefined,
                 optional: [optional]
             }
         })

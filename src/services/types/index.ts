@@ -7,5 +7,5 @@ import { TWSActions } from '../actions/wsActions';
 
 export type TApplicationActions = TIngredientsActions | TAuthActions | TWSActions;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, TApplicationActions> | ActionCreator<ThunkAction<ReturnType, Action, RootState, TApplicationActions>>;
-export type AppDispatch = Dispatch<TApplicationActions>;
+export type AppThunk<ReturnType = void> =  ThunkAction<ReturnType, RootState, unknown, TApplicationActions>;
+export type AppDispatch = Dispatch<TApplicationActions> 

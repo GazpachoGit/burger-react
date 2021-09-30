@@ -12,7 +12,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('async actions corresponding to ingredients', () => {
     beforeEach(() => {
-        fetchMock.resetMocks();
+        fetch.resetMocks();
     })
     it('dispatch GET_INGREDIENTS_SUCCESS on success request result', () => {
         const data = [{
@@ -28,7 +28,7 @@ describe('async actions corresponding to ingredients', () => {
             image_mobile: "https://code.s3.yandex.net/react/code/,bun-02-mobile.png",
             image_large: "https://code.s3.yandex.net/react/code/,bun-02-large.png"
         }]
-        fetchMock.mockResponse(JSON.stringify({
+        fetch.mockResponse(JSON.stringify({
             success: true,
             data
         }))
@@ -42,7 +42,7 @@ describe('async actions corresponding to ingredients', () => {
         })
     })
     it('dispatch GET_INGREDIENTS_FAILED on reject', () => {
-        fetchMock.mockReject(new Error());
+        fetch.mockReject(new Error());
         const expectedActions = [
             { type: actions.GET_INGREDIENTS_REQUEST },
             { type: actions.GET_INGREDIENTS_FAILED }

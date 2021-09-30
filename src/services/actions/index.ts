@@ -79,22 +79,22 @@ export interface IGetOrderSuccess {
 export type TIngredientsActions = IGetIngredientsRequest | IGetIngredientsSuccess | IGetIngredientsFailed | IAddComponent | IRemoveComponent | IShowOrderModal | ICleanConstructor | ICreateOrderRequest | ICreateOrderSuccess | ICreateOrderFailed | IUpdateOptional | IUpdateCurrentTab | IGetOrderRequest | IGetOrderFailed | IGetOrderSuccess
 
 export function getIngredients(): AppThunk {
-  return async function (dispatch: AppDispatch) {
+  return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    fetch(mainUrl)
+    return fetch(mainUrl)
       .then(res => {
         if (res.ok)
           return res.json();
         return Promise.reject(res.status);
       })
-      .then(({ data }) => {
+      .then(({ data }) => 
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
           items: data
         })
-      })
+      )
       .catch(e => {
         dispatch({
           type: GET_INGREDIENTS_FAILED
