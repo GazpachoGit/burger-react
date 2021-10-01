@@ -34,6 +34,9 @@ export interface IWsGetUserOrders {
     readonly type: typeof WS_GET_USER_ORDERS;
     readonly payload: TWsOrdersResponse
 }
+export interface IWsConnectionClose {
+    readonly type: typeof WS_CONNECTION_CLOSE
+}
 
-export type TWSActions = IWsGetUserOrders | IWsGetCommonOrders | IWsConnectionClosed | IWsConnectionFailed | IWsConnectionSuccess | IUserOrdersConnectionStart | ICommonOrdersConnectionStart
+export type TWSActions = IWsGetUserOrders | IWsGetCommonOrders | IWsConnectionClosed | IWsConnectionFailed | IWsConnectionSuccess | IUserOrdersConnectionStart | ICommonOrdersConnectionStart | IWsConnectionClose
 
