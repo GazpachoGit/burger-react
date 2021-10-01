@@ -19,7 +19,7 @@ export const BunElement: FC<TProps> = ({ item, type, isLocked }) => {
             <ConstructorElement
                 type={type}
                 isLocked={isLocked}
-                text={item.name}
+                text={(type === 'bottom') ? item.name + ' (низ)' : item.name + ' (верх)'}
                 price={item.price}
                 thumbnail={item.image_mobile}>
             </ConstructorElement>
