@@ -2,6 +2,9 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
 import * as actions from './auth'
 import { enableFetchMocks } from 'jest-fetch-mock'
+import { initialState } from '../reducers/auth';
+
+
 enableFetchMocks()
 
 const middlewares = [thunk];
@@ -27,29 +30,28 @@ describe('async actions corresponding to auth', () => {
         }))
 
         const expectedActions = [
-            {type: actions.SET_USER, user}
+            { type: actions.SET_USER, user }
         ]
         //mock for a store
-        const store = mockStore({})
+        const store = mockStore(initialState);
         //dispatch action -> return promise
-        return store.dispatch(actions.singIn({password: "", email: ""})).then(() => {
+        return store.dispatch(actions.singIn({ password: "", email: "" }, 'register')).then(() => {
             //get all generated actions -> compare with expected result
             expect(store.getActions()).toEqual(expectedActions)
-          })
+        })
     })
     it('sing in with fail', () => {
         const message = "ups..."
         fetch.mockReject(new Error(message))
         const expectedActions = [
-            {type: actions.SET_MESSAGE, message: "Ошибка: " + message},
-            {type: actions.SHOW_MESSAGE}
+            { type: actions.SHOW_MESSAGE, message: message }
         ]
-        const store = mockStore({})
-        return store.dispatch(actions.singIn({password: "", email: ""}, 'login')).then(() => {
+        const store = mockStore(initialState)
+        return store.dispatch(actions.singIn({ password: "", email: "" }, 'login')).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
-          })
+        })
     })
-     it('get user success',() => {
+    it('get user success', () => {
         const user = {
             email: "qwerty@mail.ru",
             name: "qwerty1"
@@ -59,16 +61,16 @@ describe('async actions corresponding to auth', () => {
             user
         }))
         const expectedActions = [
-            {type: actions.USER_REQUIRED},
-            {type: actions.SET_USER,user},
-            {type: actions.USER_LOADED}
+            { type: actions.USER_REQUIRED },
+            { type: actions.SET_USER, user },
+            { type: actions.USER_LOADED }
         ]
 
-        const store = mockStore({})
+        const store = mockStore(initialState)
         return store.dispatch(actions.getUser()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
-          })
-     })
+        })
+    })
     it('get user failed due to "jwt expired"', () => {
         const user = {
             email: "qwerty@mail.ru",
@@ -78,14 +80,14 @@ describe('async actions corresponding to auth', () => {
             JSON.stringify({
                 success: false,
                 message: "jwt expired"
-            }), {status: 403}
-        ],[
+            }), { status: 403 }
+        ], [
             JSON.stringify({
                 success: true,
                 accessToken: "Bearer 123",
                 refreshToken: "321"
             })
-        ],[
+        ], [
             JSON.stringify({
                 success: true,
                 user
@@ -93,52 +95,52 @@ describe('async actions corresponding to auth', () => {
         ])
 
         const expectedActions = [
-            {type: actions.USER_REQUIRED},
-            {type: actions.USER_REQUIRED},
-            {type: actions.SET_USER,user},
-            {type: actions.USER_LOADED}
-        ]
-
-        const store = mockStore({})
-        return store.dispatch(actions.getUser()).then(() => {
-            expect(store.getActions()).toEqual(expectedActions)
-          })
-    })
-     it('get user failed by other reason', () => {
-        fetch.mockReject(new Error("damn..."))
-        
-        const expectedActions = [
-            {type: actions.USER_REQUIRED},
-            {type: actions.USER_LOADED}
+            { type: actions.USER_REQUIRED },
+            { type: actions.USER_REQUIRED },
+            { type: actions.SET_USER, user },
+            { type: actions.USER_LOADED }
         ]
 
         const store = mockStore({})
         return store.dispatch(actions.getUser()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
         })
-     })
-     it('update token failed durring getUser()', () => {
+    })
+    it('get user failed by other reason', () => {
+        fetch.mockReject(new Error("damn..."))
+
+        const expectedActions = [
+            { type: actions.USER_REQUIRED },
+            { type: actions.USER_LOADED }
+        ]
+
+        const store = mockStore({})
+        return store.dispatch(actions.getUser()).then(() => {
+            expect(store.getActions()).toEqual(expectedActions)
+        })
+    })
+    it('update token failed durring getUser()', () => {
         fetch.mockResponses([
             JSON.stringify({
                 success: false,
                 message: "jwt expired"
-            }), {status: 503}
+            }), { status: 503 }
         ],
-        [
-            JSON.stringify({
-                message: "ups..."
-            }), {status: 503}
-        ])
+            [
+                JSON.stringify({
+                    message: "ups..."
+                }), { status: 503 }
+            ])
 
         const expectedActions = [
-            {type: actions.USER_REQUIRED},
-            {type: actions.SET_USER, user: null},
-            {type: actions.USER_LOADED}
+            { type: actions.USER_REQUIRED },
+            { type: actions.SET_USER, user: undefined },
+            { type: actions.USER_LOADED }
         ]
 
         const store = mockStore({})
         return store.dispatch(actions.getUser()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
         })
-     })
+    })
 })

@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
 import * as actions from './index'
-// import fetchMock from 'jest-fetch-mock'
+import fetchMock from 'jest-fetch-mock'
 // import {mainUrl} from '../../utils/constants';
 import { enableFetchMocks } from 'jest-fetch-mock'
 enableFetchMocks()
@@ -16,41 +16,41 @@ describe('async actions corresponding to ingredients', () => {
     })
     it('dispatch GET_INGREDIENTS_SUCCESS on success request result', () => {
         const data = [{
-            _id:"60d3b41abdacab0026a733c6",
-            name:"Краторная булка N-200i",
-            type:"bun",
-            proteins:80,
-            fat:24,
-            carbohydrates:53,
-            calories:420,
-            price:1255,
-            image:"https://code.s3.yandex.net/react/code/bun-02.png",
-            image_mobile:"https://code.s3.yandex.net/react/code/,bun-02-mobile.png",
-            image_large:"https://code.s3.yandex.net/react/code/,bun-02-large.png"
+            _id: "60d3b41abdacab0026a733c6",
+            name: "Краторная булка N-200i",
+            type: "bun",
+            proteins: 80,
+            fat: 24,
+            carbohydrates: 53,
+            calories: 420,
+            price: 1255,
+            image: "https://code.s3.yandex.net/react/code/bun-02.png",
+            image_mobile: "https://code.s3.yandex.net/react/code/,bun-02-mobile.png",
+            image_large: "https://code.s3.yandex.net/react/code/,bun-02-large.png"
         }]
         fetch.mockResponse(JSON.stringify({
             success: true,
-            data 
+            data
         }))
         const expectedActions = [
-            {type: actions.GET_INGREDIENTS_REQUEST},
-            {type: actions.GET_INGREDIENTS_SUCCESS, items: data}
+            { type: actions.GET_INGREDIENTS_REQUEST },
+            { type: actions.GET_INGREDIENTS_SUCCESS, items: data }
         ]
         const store = mockStore({})
         return store.dispatch(actions.getIngredients()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)
-          })
+        })
     })
     it('dispatch GET_INGREDIENTS_FAILED on reject', () => {
         fetch.mockReject(new Error());
         const expectedActions = [
-            {type: actions.GET_INGREDIENTS_REQUEST},
-            {type: actions.GET_INGREDIENTS_FAILED}
+            { type: actions.GET_INGREDIENTS_REQUEST },
+            { type: actions.GET_INGREDIENTS_FAILED }
         ]
         const store = mockStore({})
         return store.dispatch(actions.getIngredients
             ()).then(() => {
-            expect(store.getActions()).toEqual(expectedActions)
-          })
+                expect(store.getActions()).toEqual(expectedActions)
+            })
     })
 })
